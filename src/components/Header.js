@@ -1,17 +1,22 @@
 import React, {Component} from 'react'
+import {Link} from "react-router-dom"
+import { Position, Tooltip } from "@blueprintjs/core";
 
 class Header extends Component {
   render() {
     return (
-      <nav className="pt-navbar">
+      <nav className="pt-navbar pt-dark">
         <div className="pt-navbar-group pt-align-left">
-          <div className="pt-navbar-heading">Chord Creator</div>
-          <input className="pt-input" placeholder="Search songs..." type="text"/>
+          <Link className="pt-button pt-minimal pt-icon-dashboard" to="/">Dashboard</Link>
+          <Link className="pt-button pt-minimal pt-icon-console" to="/socket-event-log">Socket Event Log</Link>
         </div>
         <div className="pt-navbar-group pt-align-right">
           <span className="pt-navbar-divider"/>
-          <button className="pt-button pt-minimal pt-icon-user"/>
-          <button className="pt-button pt-minimal pt-icon-cog"/>
+          <Tooltip content="View source on Github" position={Position.BOTTOM_RIGHT}>
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/Achse/coinrat_ui">
+              <button className="pt-button pt-minimal pt-icon-git-branch"/>
+            </a>
+          </Tooltip>
         </div>
       </nav>
     )

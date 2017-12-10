@@ -1,19 +1,28 @@
 import React, {Component} from 'react'
-import './App.css'
-import {Intent, Spinner} from "@blueprintjs/core"
+import {BrowserRouter, Route} from "react-router-dom"
+
 import Header from "./components/Header"
+import Footer from "./components/Footer"
 import SocketEventLogComponent from "./components/SocketEventLogComponent"
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Header />
-        <header className="App-header">
-          <h1 className="App-title">Coinrat - Auto-Trading platform</h1>
-        </header>
-        <Spinner intent={Intent.PRIMARY}/>
-        <SocketEventLogComponent />
+      <div>
+        <BrowserRouter>
+          <div>
+            <Header/>
+            <div className="main-content" style={{padding: "1em"}}>
+              <div className="workspace">
+                <Route exact path="/" render={(props) => {
+                  return <div></div>
+                }}/>
+                <Route path="/socket-event-log" component={SocketEventLogComponent}/>
+              </div>
+            </div>
+            <Footer/>
+          </div>
+        </BrowserRouter>
       </div>
     )
   }
