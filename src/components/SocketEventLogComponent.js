@@ -4,13 +4,13 @@ import socket from '../socket'
 class SocketEventLogComponent extends React.Component {
   constructor() {
     super()
-    this.state = {log: []}
+    this.state = {log: {}}
   }
 
   logMessage(message) {
-    const log = {...this.state.log}
-    log.push({message: message, timestamp: new Date().getTime()})
-    this.setState({log})
+    const log = this.state.log
+    log[new Date().getTime()] = message
+    this.setState({log: log})
   }
 
   componentWillMount() {
@@ -21,7 +21,7 @@ class SocketEventLogComponent extends React.Component {
       this.logMessage(data)
     })
     socket.on('disconnect', () => {
-      this.logMessage('Connect')
+      this.logMessage('Disconnect')
     })
   }
 
@@ -29,11 +29,13 @@ class SocketEventLogComponent extends React.Component {
   }
 
   render() {
+    const log = this.state.log
+    const logIds = Object.keys(log)
 
     return <div>
       <ul>
-        {this.state.log.map(function (result, index) {
-          return <li><code>[{index}] {result.timestamp}: {result.message}</code></li>
+        {logIds.map((logId) => {
+          return <li key={logId}><code>[{logId}] {log[logId]}</code></li>
         })}
       </ul>
     </div>

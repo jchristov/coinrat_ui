@@ -1,4 +1,8 @@
 const io = require('socket.io-client');
-const socket = io(process.env.BACKEND_SOCKET_URL)
+
+const url = process.env.REACT_APP_BACKEND_SOCKET_URL
+console.log(url)
+
+const socket = io(url)
 
 export default socket
