@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {BrowserRouter, Route} from "react-router-dom"
 
 import Header from "./components/Header"
-import Footer from "./components/Footer"
 import SocketEventLogComponent from "./components/SocketEventLogComponent"
 
 class App extends Component {
@@ -20,7 +19,6 @@ class App extends Component {
                 <Route path="/socket-event-log" component={SocketEventLogComponent}/>
               </div>
             </div>
-            <Footer/>
           </div>
         </BrowserRouter>
       </div>
