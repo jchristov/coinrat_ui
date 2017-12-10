@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Intent, Icon, Position, Tooltip} from "@blueprintjs/core"
 import {socket} from '../socket'
 
-class StatusIndicator extends Component {
+class StatusIndicatorComponent extends Component {
   constructor() {
     super()
     this.state = {online: false}
@@ -35,4 +35,4 @@ class StatusIndicator extends Component {
   }
 }
 
-export default StatusIndicator
+export default StatusIndicatorComponent

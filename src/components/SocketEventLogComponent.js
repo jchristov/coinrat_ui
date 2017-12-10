@@ -1,5 +1,5 @@
 import React from "react"
-import {socket, PING_REQUEST, PING_RESPONSE} from '../socket'
+import {socket, EVENT_PING_REQUEST, EVENT_PING_RESPONSE} from '../socket'
 
 class SocketEventLogComponent extends React.Component {
   constructor() {
@@ -17,12 +17,12 @@ class SocketEventLogComponent extends React.Component {
     socket.on('connect', () => {
       this.logMessage('Connect')
     })
-    socket.on(PING_REQUEST, (data) => {
-      this.logMessage(PING_REQUEST + ' - ' + data['ping_id'])
+    socket.on(EVENT_PING_REQUEST, (data) => {
+      this.logMessage(EVENT_PING_REQUEST + ' - ' + data['ping_id'])
     })
-    socket.on(PING_RESPONSE, (data) => {
+    socket.on(EVENT_PING_RESPONSE, (data) => {
       const delay = data['request_timestamp'] - data['response_timestamp']
-      this.logMessage(PING_RESPONSE + ' - ' + data['ping_id'] + ' (delay: ' + (Math.floor(delay * 1000) / 1000) + 's)')
+      this.logMessage(EVENT_PING_RESPONSE + ' - ' + data['ping_id'] + ' (delay: ' + (Math.floor(delay * 1000) / 1000) + 's)')
     })
     socket.on('disconnect', () => {
       this.logMessage('Disconnect')

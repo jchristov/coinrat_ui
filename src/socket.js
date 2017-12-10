@@ -2,11 +2,12 @@ const url = process.env.REACT_APP_BACKEND_SOCKET_URL
 const socket = require('socket.io-client')(url)
 const uuidv4 = require('uuid/v4')
 
-const PING_REQUEST = 'ping_request'
-const PING_RESPONSE = 'ping_response'
+const EVENT_PING_REQUEST = 'ping_request'
+const EVENT_PING_RESPONSE = 'ping_response'
+const EVENT_CANDLES = 'candles'
 
 setTimeout(function next() {
-  socket.emit(PING_REQUEST, {
+  socket.emit(EVENT_PING_REQUEST, {
     ping_id: uuidv4(),
     request_timestamp: (new Date()).getTime() / 1000,
     response_timestamp: null
@@ -16,6 +17,7 @@ setTimeout(function next() {
 
 export {
   socket,
-  PING_REQUEST,
-  PING_RESPONSE
+  EVENT_PING_REQUEST,
+  EVENT_PING_RESPONSE,
+  EVENT_CANDLES
 }
