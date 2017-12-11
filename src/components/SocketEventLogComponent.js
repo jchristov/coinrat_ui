@@ -2,10 +2,7 @@ import React from "react"
 import {socket, EVENT_PING_REQUEST, EVENT_PING_RESPONSE} from '../socket'
 
 class SocketEventLogComponent extends React.Component {
-  constructor() {
-    super()
-    this.state = {log: {}}
-  }
+  state = {log: {}}
 
   logMessage(message) {
     const log = this.state.log

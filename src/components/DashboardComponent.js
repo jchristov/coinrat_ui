@@ -4,11 +4,7 @@ import CandlestickChartComponent from "./CandlestickChartComponent"
 import {Spinner} from "@blueprintjs/core/dist/components/spinner/spinner"
 
 class DashboardComponent extends Component {
-  constructor() {
-    super()
-    this.updateData.bind(this)
-    this.state = null
-  }
+  state = null
 
   componentWillMount() {
     // Todo: make selectable

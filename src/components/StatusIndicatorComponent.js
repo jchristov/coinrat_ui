@@ -3,10 +3,7 @@ import {Intent, Icon, Position, Tooltip} from "@blueprintjs/core"
 import {socket} from '../socket'
 
 class StatusIndicatorComponent extends Component {
-  constructor() {
-    super()
-    this.state = {online: false}
-  }
+  state = {online: false}
 
   componentWillMount() {
     socket.on('connect', () => {

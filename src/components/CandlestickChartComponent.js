@@ -11,11 +11,7 @@ import {last, timeIntervalBarWidth} from "react-stockcharts/lib/utils"
 import {socket, EVENT_CANDLES} from '../socket'
 
 class CandlestickChartComponent extends Component {
-  constructor() {
-    super()
-    this.updateData.bind(this)
-    this.state = null
-  }
+  state = null
 
   componentWillMount() {
     // Todo: make selectable
@@ -40,7 +36,7 @@ class CandlestickChartComponent extends Component {
     })
   }
 
-  updateData(data) {
+  updateData = (data) => {
     this.setState({data: data})
   }
 
