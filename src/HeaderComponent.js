@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {Link} from "react-router-dom"
 import {Position, Tooltip} from "@blueprintjs/core"
-import StatusIndicator from "./../StatusIndicator/StatusIndicatorComponent"
-import statusIndicatorStore from "../StatusIndicator/StatusIndicatorStore"
+import StatusIndicator from "./Sockets/StatusIndicator/StatusIndicatorComponent"
+import statusIndicatorStore from "./Sockets/StatusIndicator/StatusIndicatorStore"
 
 class HeaderComponent extends Component {
   render() {

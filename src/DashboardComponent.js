@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import {socket, EVENT_CANDLES} from '../socket'
-import CandlestickChartComponent from "./CandlestickChartComponent"
+import {socket, EVENT_CANDLES} from './Sockets/socket'
+import CandlestickChartComponent from "./Candlestick/CandlestickChartComponent"
 import {Spinner} from "@blueprintjs/core/dist/components/spinner/spinner"
 
 class DashboardComponent extends Component {

@@ -8,7 +8,7 @@ import {CandlestickSeries} from "react-stockcharts/lib/series"
 import {XAxis, YAxis} from "react-stockcharts/lib/axes"
 import {fitWidth} from "react-stockcharts/lib/helper"
 import {last, timeIntervalBarWidth} from "react-stockcharts/lib/utils"
-import {socket, EVENT_CANDLES} from '../socket'
+import {socket, EVENT_CANDLES} from '../Sockets/socket'
 
 class CandlestickChartComponent extends Component {
   state = null
