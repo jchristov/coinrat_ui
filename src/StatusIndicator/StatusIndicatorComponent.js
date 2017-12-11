@@ -1,25 +1,13 @@
 import React, {Component} from 'react'
 import {Intent, Icon, Position, Tooltip} from "@blueprintjs/core"
-import {socket} from '../socket'
+import {observer} from "mobx-react"
 
-class StatusIndicatorComponent extends Component {
-  state = {online: false}
-
-  componentWillMount() {
-    socket.on('connect', () => {
-      this.setState({online: true})
-    })
-    socket.on('disconnect', () => {
-      this.setState({online: false})
-    })
-  }
-
-  componentWillUnmount() {
-  }
-
+const StatusIndicatorComponent = observer(class StatusIndicatorComponent extends Component {
   render() {
-    const intent = this.state.online ? Intent.SUCCESS : Intent.DANGER
-    const tooltipContent = this.state.online
+    const isOnline = this.props.store.isOnline
+
+    const intent = isOnline ? Intent.SUCCESS : Intent.DANGER
+    const tooltipContent = isOnline
       ? 'Connection with backend is just OK.'
       : 'Connection with backend cannot be established.'
 
@@ -30,6 +18,6 @@ class StatusIndicatorComponent extends Component {
       </Tooltip>
     )
   }
-}
+})
 
 export default StatusIndicatorComponent
