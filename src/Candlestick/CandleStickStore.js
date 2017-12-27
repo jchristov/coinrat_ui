@@ -1,4 +1,4 @@
-import {EVENT_CANDLES, socket} from "../Sockets/socket"
+import {EVENT_GET_CANDLES, socket} from "../Sockets/socket"
 import {extendObservable} from "mobx"
 
 class CandleStickStore {
@@ -9,11 +9,17 @@ class CandleStickStore {
   }
 
   getData(pair, market_name, interval) {
-    socket.emit(EVENT_CANDLES, {
+    interval = {
+      since: interval.since !== null ? interval.since.toISOString() : null,
+      till: interval.till !== null ? interval.till.toISOString() : null,
+    }
+
+    socket.emit(EVENT_GET_CANDLES, {
       pair: pair,
       market_name: market_name,
       interval: interval
     }, (status, data) => {
+      console.log(data)
       this.data = data.map((candle) => {
         return {
           date: new Date(Date.parse(candle.time)),

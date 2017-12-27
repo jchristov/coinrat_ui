@@ -26,7 +26,7 @@ class CandleStickStockScaleChart extends React.Component {
   } = xScaleProvider(initialData);
   const xExtents = [
    xAccessor(last(data)),
-   xAccessor(data[data.length - 100])
+   xAccessor(data[0])
   ];
 
   return (

@@ -8,7 +8,10 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
   constructor(props) {
     super(props)
 
-    this.props.store.getData('USD_BTC', 'bittrex', {since: null, till: null})
+    var since = new Date()
+    since.setHours(since.getHours() - 2)
+
+    this.props.store.getData('USD_BTC', 'bittrex', {since: since, till: null})
   }
 
   render() {

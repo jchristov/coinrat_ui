@@ -1,5 +1,5 @@
 import {extendObservable} from "mobx"
-import {EVENT_PING_REQUEST, EVENT_PING_RESPONSE, socket} from "../socket"
+import {EVENT_PING_REQUEST, EVENT_PING_RESPONSE, EVENT_GET_CANDLES, EVENT_NEW_CANDLES, socket} from "../socket"
 
 class SocketEventLogStore {
   constructor() {
@@ -17,14 +17,22 @@ class SocketEventLogStore {
       const delay = data['request_timestamp'] - data['response_timestamp']
       this.logMessage(EVENT_PING_RESPONSE + ' - ' + data['ping_id'] + ' (delay: ' + (Math.floor(delay * 1000) / 1000) + 's)')
     })
+    socket.on(EVENT_GET_CANDLES, (data) => {
+      this.logMessage(EVENT_GET_CANDLES + ' - Got ' + data.length + ' candles.')
+    })
+    socket.on(EVENT_NEW_CANDLES, (data) => {
+      this.logMessage(EVENT_NEW_CANDLES + ' - ' + data)
+    })
     socket.on('disconnect', () => {
       this.logMessage('Disconnect')
     })
   }
 
-
   logMessage(message) {
-    this.log[new Date().getTime()] = message
+    const log = this.log
+    log[new Date().getTime()] = message
+
+    this.log = log
   }
 
 }
