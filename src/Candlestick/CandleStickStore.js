@@ -3,11 +3,23 @@ import {extendObservable} from "mobx"
 
 class CandleStickStore {
   constructor() {
+
+    let since = new Date()
+    since.setHours(since.getHours() - 2)
+
     extendObservable(this, {
       data: {},
+      selectedPair: 'USD_BTC',
+      selectedMarket: 'bittrex',
+      selectedInterval: {since: since, till: null}
     })
 
     socket.on(EVENT_NEW_CANDLES, (candleRaw) => {
+      if (candleRaw.pair !== this.selectedPair) {
+        console.log('Ignoring candle of pair', candleRaw.pair, ', pair mismatch')
+        return
+      }
+
       const data = this.data
       const candle = CandleStickStore.parseOneCandleFromData(candleRaw)
       data[candle.date.toISOString()] = candle
@@ -15,21 +27,26 @@ class CandleStickStore {
     })
   }
 
-  getData(pair, market_name, interval) {
-    interval = {
-      since: interval.since !== null ? interval.since.toISOString() : null,
-      till: interval.till !== null ? interval.till.toISOString() : null,
+  changeSelectedPair(pair) {
+    this.selectedPair = pair
+
+    this.reloadData()
+  }
+
+  reloadData() {
+    console.log('Reloading data... ', this.selectedPair, this.selectedMarket, this.selectedInterval.since, this.selectedInterval.till)
+    const interval = {
+      since: this.selectedInterval.since !== null ? this.selectedInterval.since.toISOString() : null,
+      till: this.selectedInterval.till !== null ? this.selectedInterval.till.toISOString() : null,
     }
 
     socket.emit(EVENT_GET_CANDLES, {
-      pair: pair,
-      market_name: market_name,
+      pair: this.selectedPair,
+      market_name: this.selectedMarket,
       interval: interval
     }, (status, candles) => {
-      if (candles.length === 0) {
-        return
-      }
       this.data = CandleStickStore.parseCandlesDataIntoStateObject(candles)
+      console.log('Recieved ', Object.values(this.data).length, 'candels!')
     })
   }
 
