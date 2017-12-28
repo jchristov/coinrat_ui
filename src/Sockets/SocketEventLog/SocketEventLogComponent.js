@@ -1,9 +1,12 @@
-import React from "react"
+import React, {Component} from 'react'
+import {observer} from "mobx-react"
 
-class SocketEventLogComponent extends React.Component {
+const SocketEventLogComponent = observer(class SocketEventLogComponent extends Component {
   render() {
     const log = this.props.store.log
     const logIds = Object.keys(log)
+
+    console.log('refresh')
 
     return <div>
       <ul>
@@ -13,6 +16,6 @@ class SocketEventLogComponent extends React.Component {
       </ul>
     </div>
   }
-}
+})
 
 export default SocketEventLogComponent

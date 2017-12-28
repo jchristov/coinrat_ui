@@ -7,5 +7,7 @@ import '@blueprintjs/core/dist/blueprint.css'
 
 require('dotenv').config()
 
+localStorage.debug = '';
+
 ReactDOM.render(<App/>, document.getElementById('root'))
 registerServiceWorker()

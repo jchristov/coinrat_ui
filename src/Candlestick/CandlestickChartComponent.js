@@ -8,16 +8,16 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
   constructor(props) {
     super(props)
 
-    var since = new Date()
+    let since = new Date()
     since.setHours(since.getHours() - 2)
 
     this.props.store.getData('USD_BTC', 'bittrex', {since: since, till: null})
   }
 
   render() {
-    const data = this.props.store.data
+    const data = Object.values(this.props.store.data)
 
-    if (data === null) {
+    if (data.length === 0) {
       return <Spinner/>
     }
 

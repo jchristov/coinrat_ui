@@ -4,7 +4,7 @@ import {EVENT_PING_REQUEST, EVENT_PING_RESPONSE, EVENT_GET_CANDLES, EVENT_NEW_CA
 class SocketEventLogStore {
   constructor() {
     extendObservable(this, {
-      log: {}
+      log: {},
     })
 
     socket.on('connect', () => {
@@ -21,7 +21,7 @@ class SocketEventLogStore {
       this.logMessage(EVENT_GET_CANDLES + ' - Got ' + data.length + ' candles.')
     })
     socket.on(EVENT_NEW_CANDLES, (data) => {
-      this.logMessage(EVENT_NEW_CANDLES + ' - ' + data)
+      this.logMessage(EVENT_NEW_CANDLES + ' - ' + JSON.stringify(data))
     })
     socket.on('disconnect', () => {
       this.logMessage('Disconnect')
@@ -29,9 +29,9 @@ class SocketEventLogStore {
   }
 
   logMessage(message) {
+    console.log(message)
     const log = this.log
     log[new Date().getTime()] = message
-
     this.log = log
   }
 
