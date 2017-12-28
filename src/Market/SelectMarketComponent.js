@@ -12,7 +12,6 @@ const SelectMarketComponent = observer(class SelectMarketComponent extends Compo
     return (
       <MenuItem
         className={Classes.ACTIVE}
-        label={item.title}
         key={item.key}
         onClick={handleClick}
         text={item.title}
@@ -44,7 +43,7 @@ const SelectMarketComponent = observer(class SelectMarketComponent extends Compo
         noResults={<MenuItem disabled text="No results."/>}
         onItemSelect={this.handleValueChange}
       >
-        <Button rightIconName="caret-down" text={item.title}/>
+        <Button rightIconName="caret-down" text={`Market: ${item.title}`}/>
       </MarketSelect>
     )
   }

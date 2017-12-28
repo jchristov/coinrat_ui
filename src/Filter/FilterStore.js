@@ -9,7 +9,8 @@ class FilterStore {
     extendObservable(this, {
       selectedPair: 'USD_BTC',
       selectedMarket: 'bittrex',
-      selectedInterval: {since: since, till: null}
+      selectedInterval: {since: since, till: null},
+      selectedOrderStorage: 'influx_db',
     })
 
   }
@@ -24,6 +25,10 @@ class FilterStore {
 
   changeSelectedInterval(interval) {
     this.selectedInterval = interval
+  }
+
+  changeSelectedOrderStorage(orderStorage) {
+    this.selectedOrderStorage = orderStorage
   }
 }
 

@@ -15,11 +15,13 @@ const OrdersVolumeChartComponent = observer(class OrdersVolumeChartComponent ext
     }
 
     if (data.length < 5) {
-      return <NonIdealState
-        visual="search"
-        title="No data (or not enough) for orders chat."
-        description={<span>Run strategy to do some orders.</span>}
-      />
+      return <div style={{marginTop: 25 + 'px'}}>
+        <NonIdealState
+          visual="search"
+          title="No data (or not enough) for orders chat."
+          description={<span>Run strategy to do some orders.</span>}
+        />
+      </div>
     }
 
     return <OrdersChart type="svg" data={data}/>

@@ -15,11 +15,13 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
     }
 
     if (data.length < 5) {
-      return <NonIdealState
-        visual="search"
-        title="No data (or not enough) for candlestick chat."
-        description={<span>Does backend synchronize this pair from the selected market?</span>}
-      />
+      return <div style={{marginTop: 25 + 'px'}}>
+        <NonIdealState
+          visual="search"
+          title="No data (or not enough) for candlestick chat."
+          description={<span>Does backend synchronize this pair from the selected market?</span>}
+        />
+      </div>
     }
 
     return <CandlesChart type="svg" data={data}/>

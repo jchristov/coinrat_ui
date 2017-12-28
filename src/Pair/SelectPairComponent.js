@@ -12,7 +12,6 @@ const SelectPairComponent = observer(class SelectPairComponent extends Component
     return (
       <MenuItem
         className={Classes.ACTIVE}
-        label={item.title}
         key={item.key}
         onClick={handleClick}
         text={item.title}
@@ -45,7 +44,7 @@ const SelectPairComponent = observer(class SelectPairComponent extends Component
         noResults={<MenuItem disabled text="No results."/>}
         onItemSelect={this.handleValueChange}
       >
-        <Button rightIconName="caret-down" text={item.title}/>
+        <Button rightIconName="caret-down" text={`Pair: ${item.title}`}/>
       </PairSelect>
     )
   }
