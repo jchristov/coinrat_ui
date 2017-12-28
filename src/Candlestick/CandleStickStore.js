@@ -39,6 +39,11 @@ class CandleStickStore {
     this.reloadData()
   }
 
+  changeSelectedInterval(interval) {
+    this.selectedInterval = interval
+    this.reloadData()
+  }
+
   reloadData() {
     console.log('Reloading data... ', this.selectedPair, this.selectedMarket, this.selectedInterval.since, this.selectedInterval.till)
     const interval = {

@@ -28,6 +28,16 @@
     tether "^1.4"
     tslib "^1.5.0"
 
+"@blueprintjs/datetime@^1.25.1":
+  version "1.25.1"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/datetime/-/datetime-1.25.1.tgz#277d7f4d03328669ba95196648bccd3c56b3596b"
+  dependencies:
+    "@blueprintjs/core" "^1.34.0"
+    classnames "^2.2"
+    moment "^2.14.1"
+    react-day-picker "^5.3.0"
+    tslib "^1.5.0"
+
 "@blueprintjs/labs@^0.14.2":
   version "0.14.2"
   resolved "https://registry.yarnpkg.com/@blueprintjs/labs/-/labs-0.14.2.tgz#977fb25e479d7521e8ff72bc70817e9e8e892338"
@@ -5404,6 +5414,12 @@ react-addons-css-transition-group@^15.6.2:
   resolved "https://registry.yarnpkg.com/react-addons-css-transition-group/-/react-addons-css-transition-group-15.6.2.tgz#9e4376bcf40b5217d14ec68553081cee4b08a6d6"
   dependencies:
     react-transition-group "^1.2.0"
+
+react-day-picker@^5.3.0:
+  version "5.5.3"
+  resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-5.5.3.tgz#d6a03bb0b15c6bb58629d749d8a7489cf6cfa52b"
+  dependencies:
+    prop-types "^15.5.10"
 
 react-dev-utils@^4.2.1:
   version "4.2.1"

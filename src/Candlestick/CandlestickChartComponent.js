@@ -5,6 +5,7 @@ import CandleStickStockScaleChart from "./CandleStickStockScaleChart"
 import SelectPairComponent from "../Pair/SelectPairComponent"
 import SelectMarketComponent from "../Market/SelectMarketComponent"
 import {NonIdealState} from "@blueprintjs/core/dist/components/non-ideal-state/nonIdealState"
+import SelectIntervalComponent from "../Interval/SelectIntervalComponent"
 
 const CandlestickChartComponent = observer(class CandlestickChartComponent extends Component {
 
@@ -33,6 +34,7 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
         <div>
           <SelectPairComponent store={this.props.chartStore}/>
           <SelectMarketComponent store={this.props.chartStore}/>
+          <SelectIntervalComponent store={this.props.chartStore}/>
         </div>
         {CandlestickChartComponent.renderChart(data)}
       </div>
