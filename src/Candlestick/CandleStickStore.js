@@ -8,7 +8,7 @@ class CandleStickStore {
     since.setHours(since.getHours() - 2)
 
     extendObservable(this, {
-      data: {},
+      data: null,
       selectedPair: 'USD_BTC',
       selectedMarket: 'bittrex',
       selectedInterval: {since: since, till: null}
@@ -25,11 +25,17 @@ class CandleStickStore {
       data[candle.date.toISOString()] = candle
       this.data = data
     })
+
+    this.reloadData()
   }
 
   changeSelectedPair(pair) {
     this.selectedPair = pair
+    this.reloadData()
+  }
 
+  changeSelectedMarket(market) {
+    this.selectedMarket = market
     this.reloadData()
   }
 

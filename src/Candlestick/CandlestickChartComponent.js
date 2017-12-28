@@ -3,22 +3,36 @@ import {observer} from "mobx-react"
 import {Spinner} from "@blueprintjs/core/dist/components/spinner/spinner"
 import CandleStickStockScaleChart from "./CandleStickStockScaleChart"
 import SelectPairComponent from "../Pair/SelectPairComponent"
+import SelectMarketComponent from "../Market/SelectMarketComponent"
+import {NonIdealState} from "@blueprintjs/core/dist/components/non-ideal-state/nonIdealState"
 
 const CandlestickChartComponent = observer(class CandlestickChartComponent extends Component {
 
-  constructor(props) {
-    super(props)
+  static renderChart(data) {
+    if (data === null) {
+      return <Spinner/>
+    }
 
-    this.props.chartStore.reloadData()
+    if (data.length === 0) {
+      return <NonIdealState
+        visual="search"
+        title="No data for candlestick chat."
+        description={<span>Does backend synchronize this pair from the selected market?</span>}
+      />
+    }
+
+    return <CandleStickStockScaleChart type="svg" data={data}/>
   }
 
   render() {
-    const data = Object.values(this.props.chartStore.data)
+    let data = this.props.chartStore.data
+    data = data !== null ? Object.values(this.props.chartStore.data) : null
 
     return (
       <div>
         <SelectPairComponent store={this.props.chartStore}/>
-        {data.length !== 0 ? <CandleStickStockScaleChart type="svg" data={data}/> : <Spinner/>}
+        <SelectMarketComponent store={this.props.chartStore}/>
+        {CandlestickChartComponent.renderChart(data)}
       </div>
     )
   }
