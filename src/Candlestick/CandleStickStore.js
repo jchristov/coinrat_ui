@@ -23,12 +23,7 @@ class CandleStickStore {
 
       const candle = CandleStickStore.parseOneCandleFromData(candleRaw)
 
-      if (
-        this.pair !== candleRaw.pair
-        || this.market !== candleRaw.market
-        || (this.interval.since !== null && this.interval.since.getTime() > candle.date.getTime())
-        || (this.interval.till !== null && this.interval.till.getTime() < candle.date.getTime())
-      ) {
+      if (!this.doesCandleBelongsIntoStore(candleRaw, candle)) {
         console.log('Ignoring (mismatch)', JSON.stringify(candleRaw))
         return
       }
@@ -36,6 +31,13 @@ class CandleStickStore {
       data[candle.date.toISOString()] = candle
       this.data = data
     })
+  }
+
+  doesCandleBelongsIntoStore(candleRaw, candle) {
+    return this.pair === candleRaw.pair
+      && this.market === candleRaw.market
+      && (this.interval.since === null || this.interval.since.getTime() < candle.date.getTime())
+      && (this.interval.till === null || this.interval.till.getTime() > candle.date.getTime())
   }
 
   reloadData(market, pair, interval) {

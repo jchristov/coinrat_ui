@@ -3,11 +3,13 @@ import {observer} from "mobx-react"
 import {Spinner} from "@blueprintjs/core/dist/components/spinner/spinner"
 import CandleStickStockScaleChart from "./CandleStickStockScaleChart"
 import {NonIdealState} from "@blueprintjs/core/dist/components/non-ideal-state/nonIdealState"
-import FilterComponent from "../Filter/FilterComponent"
 
 const CandlestickChartComponent = observer(class CandlestickChartComponent extends Component {
 
-  static renderChart(data) {
+  render() {
+    let data = this.props.store.data
+    data = data !== null ? Object.values(this.props.store.data) : null
+
     if (data === null) {
       return <NonIdealState title="Loading..." description={<Spinner/>}/>
     }
@@ -21,18 +23,6 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
     }
 
     return <CandleStickStockScaleChart type="svg" data={data}/>
-  }
-
-  render() {
-    let data = this.props.candleStickStore.data
-    data = data !== null ? Object.values(this.props.candleStickStore.data) : null
-
-    return (
-      <div>
-        <FilterComponent store={this.props.filterStore}/>
-        {CandlestickChartComponent.renderChart(data)}
-      </div>
-    )
   }
 
 })
