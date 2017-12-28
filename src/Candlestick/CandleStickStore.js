@@ -16,12 +16,23 @@ class CandleStickStore {
     socket.on(EVENT_NEW_CANDLES, (candleRaw) => {
       const data = this.data
 
-      if (data !== null && data.length > 0 && data[0].pair !== candleRaw.pair) {
-        console.log('Ignoring candle of pair', candleRaw.pair, ', pair mismatch')
+      if (data === null) {
+        console.log('Ignoring (not initialized store)', candleRaw)
         return
       }
 
       const candle = CandleStickStore.parseOneCandleFromData(candleRaw)
+
+      if (
+        this.pair !== candleRaw.pair
+        || this.market !== candleRaw.market
+        || (this.interval.since !== null && this.interval.since.getTime() > candle.date.getTime())
+        || (this.interval.till !== null && this.interval.till.getTime() < candle.date.getTime())
+      ) {
+        console.log('Ignoring (mismatch)', JSON.stringify(candleRaw))
+        return
+      }
+
       data[candle.date.toISOString()] = candle
       this.data = data
     })
@@ -39,6 +50,10 @@ class CandleStickStore {
       }
     }, (status, candles) => {
       this.data = CandleStickStore.parseCandlesDataIntoStateObject(candles)
+
+      this.pair = pair
+      this.market = market
+      this.interval = interval
       console.log('Recieved ', Object.values(this.data).length, 'candels!')
     })
   }
