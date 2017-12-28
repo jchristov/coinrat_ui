@@ -10,7 +10,7 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
 
   static renderChart(data) {
     if (data === null) {
-      return <Spinner/>
+      return <NonIdealState title="Loading..." description={<Spinner/>}/>
     }
 
     if (data.length === 0) {
@@ -30,8 +30,10 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
 
     return (
       <div>
-        <SelectPairComponent store={this.props.chartStore}/>
-        <SelectMarketComponent store={this.props.chartStore}/>
+        <div>
+          <SelectPairComponent store={this.props.chartStore}/>
+          <SelectMarketComponent store={this.props.chartStore}/>
+        </div>
         {CandlestickChartComponent.renderChart(data)}
       </div>
     )
