@@ -4,7 +4,7 @@ import candleStickStore from "./Candlestick/CandleStickStore"
 
 class DashboardComponent extends Component {
   render() {
-    return <CandlestickChartComponent store={candleStickStore}/>
+    return <CandlestickChartComponent chartStore={candleStickStore}/>
   }
 }
 
