@@ -1,60 +1,42 @@
 import {EVENT_GET_CANDLES, EVENT_NEW_CANDLES, socket} from "../Sockets/socket"
-import {extendObservable} from "mobx"
+import {autorun, extendObservable} from "mobx"
+import filterStore from "../Filter/FilterStore"
 
 class CandleStickStore {
-  constructor() {
+  constructor(filterStore) {
 
-    let since = new Date()
-    since.setHours(since.getHours() - 2)
+    autorun(() => {
+      this.reloadData(filterStore.selectedMarket, filterStore.selectedPair, filterStore.selectedInterval)
+    })
 
     extendObservable(this, {
       data: null,
-      selectedPair: 'USD_BTC',
-      selectedMarket: 'bittrex',
-      selectedInterval: {since: since, till: null}
     })
 
     socket.on(EVENT_NEW_CANDLES, (candleRaw) => {
-      if (candleRaw.pair !== this.selectedPair) {
+      const data = this.data
+
+      if (data !== null && data.length > 0 && data[0].pair !== candleRaw.pair) {
         console.log('Ignoring candle of pair', candleRaw.pair, ', pair mismatch')
         return
       }
 
-      const data = this.data
       const candle = CandleStickStore.parseOneCandleFromData(candleRaw)
       data[candle.date.toISOString()] = candle
       this.data = data
     })
-
-    this.reloadData()
   }
 
-  changeSelectedPair(pair) {
-    this.selectedPair = pair
-    this.reloadData()
-  }
-
-  changeSelectedMarket(market) {
-    this.selectedMarket = market
-    this.reloadData()
-  }
-
-  changeSelectedInterval(interval) {
-    this.selectedInterval = interval
-    this.reloadData()
-  }
-
-  reloadData() {
-    console.log('Reloading data... ', this.selectedPair, this.selectedMarket, this.selectedInterval.since, this.selectedInterval.till)
-    const interval = {
-      since: this.selectedInterval.since !== null ? this.selectedInterval.since.toISOString() : null,
-      till: this.selectedInterval.till !== null ? this.selectedInterval.till.toISOString() : null,
-    }
+  reloadData(market, pair, interval) {
+    console.log('Reloading data... ', pair, market, interval.since, interval.till)
 
     socket.emit(EVENT_GET_CANDLES, {
-      pair: this.selectedPair,
-      market_name: this.selectedMarket,
-      interval: interval
+      pair: pair,
+      market_name: market,
+      interval: {
+        since: interval.since !== null ? interval.since.toISOString() : null,
+        till: interval.till !== null ? interval.till.toISOString() : null,
+      }
     }, (status, candles) => {
       this.data = CandleStickStore.parseCandlesDataIntoStateObject(candles)
       console.log('Recieved ', Object.values(this.data).length, 'candels!')
@@ -83,6 +65,6 @@ class CandleStickStore {
   }
 }
 
-const candleStickStore = new CandleStickStore()
+const candleStickStore = new CandleStickStore(filterStore)
 
 export default candleStickStore

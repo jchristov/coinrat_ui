@@ -2,10 +2,8 @@ import React, {Component} from 'react'
 import {observer} from "mobx-react"
 import {Spinner} from "@blueprintjs/core/dist/components/spinner/spinner"
 import CandleStickStockScaleChart from "./CandleStickStockScaleChart"
-import SelectPairComponent from "../Pair/SelectPairComponent"
-import SelectMarketComponent from "../Market/SelectMarketComponent"
 import {NonIdealState} from "@blueprintjs/core/dist/components/non-ideal-state/nonIdealState"
-import SelectIntervalComponent from "../Interval/SelectIntervalComponent"
+import FilterComponent from "../Filter/FilterComponent"
 
 const CandlestickChartComponent = observer(class CandlestickChartComponent extends Component {
 
@@ -14,10 +12,10 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
       return <NonIdealState title="Loading..." description={<Spinner/>}/>
     }
 
-    if (data.length === 0) {
+    if (data.length < 5) {
       return <NonIdealState
         visual="search"
-        title="No data for candlestick chat."
+        title="No data (or not enough) for candlestick chat."
         description={<span>Does backend synchronize this pair from the selected market?</span>}
       />
     }
@@ -26,16 +24,12 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
   }
 
   render() {
-    let data = this.props.chartStore.data
-    data = data !== null ? Object.values(this.props.chartStore.data) : null
+    let data = this.props.candleStickStore.data
+    data = data !== null ? Object.values(this.props.candleStickStore.data) : null
 
     return (
       <div>
-        <div>
-          <SelectPairComponent store={this.props.chartStore}/>
-          <SelectMarketComponent store={this.props.chartStore}/>
-          <SelectIntervalComponent store={this.props.chartStore}/>
-        </div>
+        <FilterComponent store={this.props.filterStore}/>
         {CandlestickChartComponent.renderChart(data)}
       </div>
     )

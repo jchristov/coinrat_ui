@@ -4,8 +4,12 @@ const socket = require('socket.io-client')(url)
 
 const EVENT_PING_REQUEST = 'ping_request'
 const EVENT_PING_RESPONSE = 'ping_response'
+
 const EVENT_GET_CANDLES = 'get_candles'
 const EVENT_NEW_CANDLES = 'new_candles'
+
+const EVENT_GET_ORDERS = 'get_orders'
+const EVENT_NEW_ORDERS = 'new_orders'
 
 // setTimeout(function next() {
 //   socket.emit(EVENT_PING_REQUEST, {
@@ -21,5 +25,7 @@ export {
   EVENT_PING_REQUEST,
   EVENT_PING_RESPONSE,
   EVENT_GET_CANDLES,
-  EVENT_NEW_CANDLES
+  EVENT_NEW_CANDLES,
+  EVENT_GET_ORDERS,
+  EVENT_NEW_ORDERS,
 }
