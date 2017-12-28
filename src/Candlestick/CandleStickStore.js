@@ -4,6 +4,7 @@ import filterStore from "../Filter/FilterStore"
 
 class CandleStickStore {
   constructor(filterStore) {
+    this.filterStore = filterStore
 
     autorun(() => {
       this.reloadData(filterStore.selectedMarket, filterStore.selectedPair, filterStore.selectedInterval)
@@ -34,10 +35,10 @@ class CandleStickStore {
   }
 
   doesCandleBelongsIntoStore(candleRaw, candle) {
-    return this.pair === candleRaw.pair
-      && this.market === candleRaw.market
-      && (this.interval.since === null || this.interval.since.getTime() < candle.date.getTime())
-      && (this.interval.till === null || this.interval.till.getTime() > candle.date.getTime())
+    return this.filterStore.selectedPair === candleRaw.pair
+      && this.filterStore.selectedMarket === candleRaw.market
+      && (this.filterStore.selectedInterval.since === null || this.filterStore.selectedInterval.since.getTime() <= candle.date.getTime())
+      && (this.filterStore.selectedInterval.till === null || this.filterStore.selectedInterval.till.getTime() >= candle.date.getTime())
   }
 
   reloadData(market, pair, interval) {
