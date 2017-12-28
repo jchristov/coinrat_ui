@@ -17,14 +17,14 @@ class CandleStickStore {
       const data = this.data
 
       if (data === null) {
-        console.log('Ignoring (not initialized store)', candleRaw)
+        console.log('Ignoring CANDLE (not initialized store)', candleRaw)
         return
       }
 
       const candle = CandleStickStore.parseOneCandleFromData(candleRaw)
 
       if (!this.doesCandleBelongsIntoStore(candleRaw, candle)) {
-        console.log('Ignoring (mismatch)', JSON.stringify(candleRaw))
+        console.log('Ignoring CANDLE (mismatch)', JSON.stringify(candleRaw))
         return
       }
 
@@ -41,7 +41,7 @@ class CandleStickStore {
   }
 
   reloadData(market, pair, interval) {
-    console.log('Reloading data... ', pair, market, interval.since, interval.till)
+    console.log('Reloading CANDLES data... ', pair, market, interval.since, interval.till)
 
     socket.emit(EVENT_GET_CANDLES, {
       pair: pair,
@@ -56,7 +56,7 @@ class CandleStickStore {
       this.pair = pair
       this.market = market
       this.interval = interval
-      console.log('Recieved ', Object.values(this.data).length, 'candels!')
+      console.log('Received CANDLES', Object.values(this.data).length, 'candles!')
     })
   }
 

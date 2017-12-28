@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import {observer} from "mobx-react"
 import {Spinner} from "@blueprintjs/core/dist/components/spinner/spinner"
-import CandlesChart from "./CandlesChart"
+import OrdersChart from "./OrdersChart"
 import {NonIdealState} from "@blueprintjs/core/dist/components/non-ideal-state/nonIdealState"
 
-const CandlestickChartComponent = observer(class CandlestickChartComponent extends Component {
+const OrdersVolumeChartComponent = observer(class OrdersVolumeChartComponent extends Component {
 
   render() {
     let data = this.props.store.data
@@ -17,15 +17,15 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
     if (data.length < 5) {
       return <NonIdealState
         visual="search"
-        title="No data (or not enough) for candlestick chat."
-        description={<span>Does backend synchronize this pair from the selected market?</span>}
+        title="No data (or not enough) for orders chat."
+        description={<span>Run strategy to do some orders.</span>}
       />
     }
 
-    return <CandlesChart type="svg" data={data}/>
+    return <OrdersChart type="svg" data={data}/>
   }
 
 })
 
 
-export default CandlestickChartComponent
+export default OrdersVolumeChartComponent

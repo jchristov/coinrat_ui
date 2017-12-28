@@ -7,7 +7,7 @@ import {discontinuousTimeScaleProvider} from "react-stockcharts/lib/scale"
 import {fitWidth} from "react-stockcharts/lib/helper"
 import {last} from "react-stockcharts/lib/utils"
 
-class CandleStickStockScaleChart extends Component {
+class CandlesChart extends Component {
  render() {
   const {type, data: initialData, width, ratio} = this.props
   const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(d => d.date)
@@ -39,14 +39,14 @@ class CandleStickStockScaleChart extends Component {
  }
 }
 
-CandleStickStockScaleChart.propTypes = {
+CandlesChart.propTypes = {
  data: PropTypes.array.isRequired,
  width: PropTypes.number.isRequired,
  ratio: PropTypes.number.isRequired,
  type: PropTypes.oneOf(["svg", "hybrid"]).isRequired,
 }
 
-CandleStickStockScaleChart.defaultProps = {type: "svg"}
-CandleStickStockScaleChart = fitWidth(CandleStickStockScaleChart)
+CandlesChart.defaultProps = {type: "svg"}
+CandlesChart = fitWidth(CandlesChart)
 
-export default CandleStickStockScaleChart
+export default CandlesChart
