@@ -7,7 +7,12 @@ class OrdersStore {
     this.filterStore = filterStore
 
     autorun(() => {
-      this.reloadData(filterStore.selectedMarket, filterStore.selectedPair, filterStore.selectedInterval)
+      this.reloadData(
+        filterStore.selectedMarket,
+        filterStore.selectedPair,
+        filterStore.selectedInterval,
+        filterStore.selectedOrderStorage
+      )
     })
 
     extendObservable(this, {
@@ -41,7 +46,7 @@ class OrdersStore {
       && (this.filterStore.selectedInterval.till === null || this.filterStore.selectedInterval.till.getTime() >= order.date.getTime())
   }
 
-  reloadData(market, pair, interval) {
+  reloadData(market, pair, interval, orderStorage) {
     console.log('Reloading ORDER data... ', pair, market, interval.since, interval.till)
 
     socket.emit(EVENT_GET_ORDERS, {
@@ -50,7 +55,8 @@ class OrdersStore {
       interval: {
         since: interval.since !== null ? interval.since.toISOString() : null,
         till: interval.till !== null ? interval.till.toISOString() : null,
-      }
+      },
+      orders_storage: orderStorage
     }, (status, orders) => {
       this.data = OrdersStore.parseCandlesDataIntoStateObject(orders)
 

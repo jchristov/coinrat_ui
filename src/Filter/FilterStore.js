@@ -10,6 +10,7 @@ class FilterStore {
       selectedPair: 'USD_BTC',
       selectedMarket: 'bittrex',
       selectedInterval: {since: since, till: null},
+      selectedCandleStorage: 'influx_db',
       selectedOrderStorage: 'influx_db',
     })
 
@@ -29,6 +30,10 @@ class FilterStore {
 
   changeSelectedOrderStorage(orderStorage) {
     this.selectedOrderStorage = orderStorage
+  }
+
+  changeSelectedCandleStorage(candleStorage) {
+    this.selectedCandleStorage = candleStorage
   }
 }
 

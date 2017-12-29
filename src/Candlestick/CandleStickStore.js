@@ -7,7 +7,12 @@ class CandleStickStore {
     this.filterStore = filterStore
 
     autorun(() => {
-      this.reloadData(filterStore.selectedMarket, filterStore.selectedPair, filterStore.selectedInterval)
+      this.reloadData(
+        filterStore.selectedMarket,
+        filterStore.selectedPair,
+        filterStore.selectedInterval,
+        filterStore.selectedCandleStorage
+      )
     })
 
     extendObservable(this, {
@@ -41,7 +46,7 @@ class CandleStickStore {
       && (this.filterStore.selectedInterval.till === null || this.filterStore.selectedInterval.till.getTime() >= candle.date.getTime())
   }
 
-  reloadData(market, pair, interval) {
+  reloadData(market, pair, interval, candleStorage) {
     console.log('Reloading CANDLES data... ', pair, market, interval.since, interval.till)
 
     socket.emit(EVENT_GET_CANDLES, {
@@ -50,13 +55,15 @@ class CandleStickStore {
       interval: {
         since: interval.since !== null ? interval.since.toISOString() : null,
         till: interval.till !== null ? interval.till.toISOString() : null,
+      },
+      candles_storage: candleStorage
+    }, (status, data) => {
+      if (status === 'ERROR') {
+        console.log('Server returned ERROR: ', data['message'])
+        return
       }
-    }, (status, candles) => {
-      this.data = CandleStickStore.parseCandlesDataIntoStateObject(candles)
 
-      this.pair = pair
-      this.market = market
-      this.interval = interval
+      this.data = CandleStickStore.parseCandlesDataIntoStateObject(data)
       console.log('Received CANDLES', Object.values(this.data).length, 'candles!')
     })
   }
