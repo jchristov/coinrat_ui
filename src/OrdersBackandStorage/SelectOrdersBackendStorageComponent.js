@@ -4,7 +4,7 @@ import SelectComponent from "../SelectComponent"
 
 const SelectOrdersBackendStorageComponent = observer(class SelectPairComponent extends Component {
 
-  handleValueChange = (pair) => this.props.store.changeSelectedOrderStorage(pair.key)
+  handleValueChange = (orderStorage) => this.props.store.changeSelectedOrderStorage(orderStorage.key)
 
   render() {
     const orderBackendStorages = {

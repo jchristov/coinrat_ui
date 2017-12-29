@@ -4,7 +4,7 @@ import SelectComponent from "../SelectComponent"
 
 const SelectCandlesBackendStorageComponent = observer(class SelectPairComponent extends Component {
 
-  handleValueChange = (pair) => this.props.store.changeSelectedCandleStorage(pair.key)
+  handleValueChange = (candleStorage) => this.props.store.changeSelectedCandleStorage(candleStorage.key)
 
   render() {
     const candleBackendStorages = {

@@ -4,7 +4,7 @@ import SelectComponent from "../SelectComponent"
 
 const SelectMarketComponent = observer(class SelectMarketComponent extends Component {
 
-  handleValueChange = (pair) => this.props.store.changeSelectedMarket(pair.key)
+  handleValueChange = (market) => this.props.store.changeSelectedMarket(market.key)
 
   render() {
     const markets = {
@@ -14,7 +14,7 @@ const SelectMarketComponent = observer(class SelectMarketComponent extends Compo
 
     const item = markets[this.props.store.selectedMarket]
 
-    return <SelectComponent label="Pair" items={markets} selectedItem={item} onChange={this.handleValueChange}/>
+    return <SelectComponent label="Market" items={markets} selectedItem={item} onChange={this.handleValueChange}/>
   }
 })
 

@@ -12,6 +12,7 @@ class FilterStore {
       selectedInterval: {since: since, till: null},
       selectedCandleStorage: 'influx_db',
       selectedOrderStorage: 'influx_db',
+      selectedStrategy: 'double_crossover',
     })
 
   }
@@ -34,6 +35,10 @@ class FilterStore {
 
   changeSelectedCandleStorage(candleStorage) {
     this.selectedCandleStorage = candleStorage
+  }
+
+  changeSelectedStrategy(strategy) {
+    this.selectedStrategy = strategy
   }
 }
 

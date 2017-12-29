@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import {observer} from "mobx-react/index"
 import SelectComponent from "../SelectComponent"
 
-const SelectMarketComponent = observer(class SelectMarketComponent extends Component {
+const SelectPairComponent = observer(class SelectPairComponent extends Component {
 
   handleValueChange = (pair) => this.props.store.changeSelectedPair(pair.key)
 
@@ -15,8 +15,8 @@ const SelectMarketComponent = observer(class SelectMarketComponent extends Compo
 
     const item = pairs[this.props.store.selectedPair]
 
-    return <SelectComponent label="Market" items={pairs} selectedItem={item} onChange={this.handleValueChange}/>
+    return <SelectComponent label="Pair" items={pairs} selectedItem={item} onChange={this.handleValueChange}/>
   }
 })
 
-export default SelectMarketComponent
+export default SelectPairComponent
