@@ -1,4 +1,4 @@
-import {EVENT_GET_ORDERS, EVENT_NEW_ORDERS, socket} from "../Sockets/socket"
+import {SOCKET_EVENT_GET_ORDERS, SOCKET_EVENT_NEW_ORDERS, socket} from "../Sockets/socket"
 import {autorun, extendObservable} from "mobx"
 import filterStore from "../Filter/FilterStore"
 
@@ -19,7 +19,7 @@ class OrdersStore {
       data: null,
     })
 
-    socket.on(EVENT_NEW_ORDERS, (orderRaw) => {
+    socket.on(SOCKET_EVENT_NEW_ORDERS, (orderRaw) => {
       const data = this.data
 
       if (data === null) {
@@ -49,7 +49,7 @@ class OrdersStore {
   reloadData(market, pair, interval, orderStorage) {
     console.log('Reloading ORDER data... ', pair, market, interval.since, interval.till)
 
-    socket.emit(EVENT_GET_ORDERS, {
+    socket.emit(SOCKET_EVENT_GET_ORDERS, {
       pair: pair,
       market_name: market,
       interval: {

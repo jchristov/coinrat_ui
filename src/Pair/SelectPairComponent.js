@@ -1,7 +1,6 @@
 import React, {Component} from "react"
 import {observer} from "mobx-react/index"
 import SelectComponent from "../SelectComponent"
-import {Label} from "@blueprintjs/core/dist/components/forms/label"
 
 const SelectMarketComponent = observer(class SelectMarketComponent extends Component {
 

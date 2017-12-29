@@ -1,4 +1,7 @@
-import {EVENT_GET_CANDLES, EVENT_NEW_CANDLES, socket} from "../Sockets/socket"
+import {
+  SOCKET_EVENT_GET_CANDLES, SOCKET_EVENT_NEW_CANDLES, SOCKET_EVENT_SUBSCRIBE, SOCKET_EVENT_UNSUBSCRIBE, socket,
+  SUBSCRIBED_EVENT_NEW_CANDLE
+} from "../Sockets/socket"
 import {autorun, extendObservable} from "mobx"
 import filterStore from "../Filter/FilterStore"
 
@@ -19,7 +22,7 @@ class CandleStickStore {
       data: null,
     })
 
-    socket.on(EVENT_NEW_CANDLES, (candleRaw) => {
+    socket.on(SOCKET_EVENT_NEW_CANDLES, (candleRaw) => {
       const data = this.data
 
       if (data === null) {
@@ -49,7 +52,7 @@ class CandleStickStore {
   reloadData(market, pair, interval, candleStorage) {
     console.log('Reloading CANDLES data... ', pair, market, interval.since, interval.till)
 
-    socket.emit(EVENT_GET_CANDLES, {
+    socket.emit(SOCKET_EVENT_GET_CANDLES, {
       pair: pair,
       market_name: market,
       interval: {
@@ -65,6 +68,16 @@ class CandleStickStore {
 
       this.data = CandleStickStore.parseCandlesDataIntoStateObject(data)
       console.log('Received CANDLES', Object.values(this.data).length, 'candles!')
+
+      socket.emit(SOCKET_EVENT_UNSUBSCRIBE, {event: SUBSCRIBED_EVENT_NEW_CANDLE}, () => {
+        socket.emit(SOCKET_EVENT_SUBSCRIBE, {
+          event: SUBSCRIBED_EVENT_NEW_CANDLE,
+          candle_storage: this.filterStore.selectedCandleStorage,
+          market: this.filterStore.selectedMarket,
+          pair: this.filterStore.selectedPair,
+          interval: this.filterStore.selectedInterval,
+        })
+      })
     })
   }
 
