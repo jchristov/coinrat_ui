@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import {observer} from "mobx-react/index"
 import SelectComponent from "../SelectComponent"
 
-const SelectOrdersBackendStorageComponent = observer(class SelectPairComponent extends Component {
+const SelectOrderBackendStorageComponent = observer(class SelectPairComponent extends Component {
 
   handleValueChange = (orderStorage) => this.props.store.changeSelectedOrderStorage(orderStorage.key)
 
@@ -23,4 +23,4 @@ const SelectOrdersBackendStorageComponent = observer(class SelectPairComponent e
   }
 })
 
-export default SelectOrdersBackendStorageComponent
+export default SelectOrderBackendStorageComponent

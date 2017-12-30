@@ -1,19 +1,19 @@
 import React, {Component} from 'react'
-import CandlestickChartComponent from "./Candlestick/CandlestickChartComponent"
-import candleStickStore from "./Candlestick/CandleStickStore"
-import orderStickStore from "./Orders/OrdersStore"
+import orderStore from "./Orders/OrderStore"
 import OrdersVolumeChartComponent from "./Orders/OrdersVolumeChartComponent"
 import filterStore from "./TopLineToolbar/FilterStore"
-import FilterComponent from "./TopLineToolbar/TopLineToolbarComponent"
+import TopLineToolbarComponent from "./TopLineToolbar/TopLineToolbarComponent"
+import CandlestickChartComponent from "./Candle/CandlestickChartComponent"
+import candlesStore from "./Candle/CandleStore"
 
 class DashboardComponent extends Component {
   render() {
 
     return (
       <div>
-        <FilterComponent store={filterStore}/>
-        <CandlestickChartComponent store={candleStickStore}/>
-        <OrdersVolumeChartComponent store={orderStickStore}/>
+        <TopLineToolbarComponent filterStore={filterStore} orderStore={orderStore}/>
+        <CandlestickChartComponent store={candlesStore}/>
+        <OrdersVolumeChartComponent store={orderStore}/>
       </div>
     )
   }

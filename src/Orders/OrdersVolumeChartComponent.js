@@ -7,8 +7,8 @@ import {NonIdealState} from "@blueprintjs/core/dist/components/non-ideal-state/n
 const OrdersVolumeChartComponent = observer(class OrdersVolumeChartComponent extends Component {
 
   render() {
-    let data = this.props.store.data
-    data = data !== null ? Object.values(this.props.store.data) : null
+    let data = this.props.store.candles
+    data = data !== null ? Object.values(this.props.store.candles) : null
 
     if (data === null) {
       return <NonIdealState title="Loading..." description={<Spinner/>}/>
