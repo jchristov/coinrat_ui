@@ -3,6 +3,7 @@ import {observer} from "mobx-react"
 import {Spinner} from "@blueprintjs/core/dist/components/spinner/spinner"
 import CandlesChart from "./CandlesChart"
 import {NonIdealState} from "@blueprintjs/core/dist/components/non-ideal-state/nonIdealState"
+import filterStore from "../TopLineToolbar/FilterStore"
 
 const CandlestickChartComponent = observer(class CandlestickChartComponent extends Component {
 
@@ -24,7 +25,14 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
       </div>
     }
 
-    return <CandlesChart type="svg" data={data}/>
+    const since = filterStore.selectedInterval.since
+    let till = filterStore.selectedInterval.till
+
+    if (till === null) {
+      till = new Date()
+    }
+
+    return <CandlesChart type="svg" data={data} since={since} till={till}/>
   }
 
 })

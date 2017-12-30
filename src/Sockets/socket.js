@@ -18,6 +18,8 @@ const SOCKET_EVENT_UNSUBSCRIBE = 'unsubscribe'
 const SUBSCRIBED_EVENT_NEW_CANDLE = 'new_candle'
 const SUBSCRIBED_EVENT_NEW_ORDER = 'new_order'
 
+const EVENT_RUN_REPLY = 'run_reply'
+
 // setTimeout(function next() {
 //   socket.emit(SOCKET_EVENT_PING_REQUEST, {
 //     ping_id: uuidv4(),
@@ -44,4 +46,6 @@ export {
 
   SUBSCRIBED_EVENT_NEW_CANDLE,
   SUBSCRIBED_EVENT_NEW_ORDER,
+
+  EVENT_RUN_REPLY,
 }

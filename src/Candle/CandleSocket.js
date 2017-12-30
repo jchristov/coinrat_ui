@@ -29,7 +29,7 @@ export default class CandleSocket {
       },
       candles_storage: candleStorage
     }, (status, data) => {
-      if (status === 'ERROR') {
+      if (status !== 'OK') {
         console.log('Server returned ERROR: ', data['message'])
         return
       }

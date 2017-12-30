@@ -1,9 +1,6 @@
 import React, {Component} from "react"
 import {Select} from "@blueprintjs/labs"
-import {Button} from "@blueprintjs/core/dist/components/button/buttons"
-import {MenuItem} from "@blueprintjs/core/dist/components/menu/menuItem"
-import * as Classes from "@blueprintjs/core/dist/common/classes"
-import {Label} from "@blueprintjs/core/dist/components/forms/label"
+import {Button, MenuItem, Classes, Label} from "@blueprintjs/core"
 
 const ConcreateSelect = Select.ofType()
 

@@ -8,6 +8,7 @@ import RunStrategyButtonComponent from "../Strategy/RunStrategyButtonComponent"
 import CleanOrderStorageButtonComponent from "../Orders/CleanOrderStorageButtonComponent"
 import SelectOrdersBackendStorageComponent from "../Orders/SelectOrdersBackendStorageComponent"
 import SelectCandlesBackendStorageComponent from "../Candle/SelectCandlesBackendStorageComponent"
+import strategyRunnerStore from "../Strategy/StrategyRunnerStore"
 
 const TopLineToolbarComponent = observer(class FilterComponent extends Component {
 
@@ -28,7 +29,7 @@ const TopLineToolbarComponent = observer(class FilterComponent extends Component
         </div>
         <div>
           <SelectStrategyComponent store={this.props.filterStore}/>
-          <RunStrategyButtonComponent/>
+          <RunStrategyButtonComponent store={strategyRunnerStore}/>
         </div>
       </div>
     )

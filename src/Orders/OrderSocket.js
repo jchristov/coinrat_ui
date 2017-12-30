@@ -30,7 +30,7 @@ export default class OrdersSocket {
       },
       orders_storage: orderStorage
     }, (status, data) => {
-      if (status === 'ERROR') {
+      if (status !== 'OK') {
         console.log('Server returned ERROR: ', data['message'])
         return
       }
@@ -73,7 +73,7 @@ export default class OrdersSocket {
 
   static parseOneOrderFromData(order) {
     return {
-      date: new Date(Date.parse(order.time)),
+      date: new Date(Date.parse(order.created_at)),
       volume: 1,
     }
   }

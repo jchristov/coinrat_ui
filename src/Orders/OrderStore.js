@@ -10,7 +10,7 @@ class OrderStore {
     autorun(() => {
       this.reloadData()
     })
-    extendObservable(this, {candles: null})
+    extendObservable(this, {orders: null})
     this.ordersSocket.registerNewOrderEvent((order) => {
       if (this.orders !== null) {
         const orders = this.orders

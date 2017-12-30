@@ -3,47 +3,45 @@ import PropTypes from "prop-types"
 import {ChartCanvas, Chart} from "react-stockcharts"
 import {CandlestickSeries} from "react-stockcharts/lib/series"
 import {XAxis, YAxis} from "react-stockcharts/lib/axes"
-import {discontinuousTimeScaleProvider} from "react-stockcharts/lib/scale"
 import {fitWidth} from "react-stockcharts/lib/helper"
-import {last} from "react-stockcharts/lib/utils"
+import {scaleTime} from "d3-scale"
 
 class CandlesChart extends Component {
- render() {
-  const {type, data: initialData, width, ratio} = this.props
-  const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(d => d.date)
-  const {data, xScale, xAccessor, displayXAccessor} = xScaleProvider(initialData)
-  const xExtents = [xAccessor(last(data)), xAccessor(data[0])]
+  render() {
+    const {type, width, data, ratio, since, till} = this.props
+    const xAccessor = d => d.date
+    const xExtents = [since, till]
 
-  return (
-    <ChartCanvas
-      height={400}
-      ratio={ratio}
-      width={width}
-      margin={{left: 50, right: 50, top: 10, bottom: 30}}
-      type={type}
-      seriesName="MSFT"
-      data={data}
-      xScale={xScale}
-      xAccessor={xAccessor}
-      displayXAccessor={displayXAccessor}
-      xExtents={xExtents}>
-
-     <Chart id={1} yExtents={d => [d.high, d.low]}>
-      <XAxis axisAt="bottom" orient="bottom" ticks={6}/>
-      <YAxis axisAt="left" orient="left" ticks={5}/>
-      <CandlestickSeries/>
-     </Chart>
-    </ChartCanvas>
-  )
-
- }
+    return (
+      <ChartCanvas
+        height={400}
+        ratio={ratio}
+        width={width}
+        margin={{left: 50, right: 50, top: 10, bottom: 30}}
+        type={type}
+        seriesName="MSFT"
+        data={data}
+        xAccessor={xAccessor}
+        xScale={scaleTime()}
+        xExtents={xExtents}
+      >
+        <Chart id={1} yExtents={d => [d.high, d.low]}>
+          <XAxis axisAt="bottom" orient="bottom" ticks={6}/>
+          <YAxis axisAt="left" orient="left" ticks={5}/>
+          <CandlestickSeries/>
+        </Chart>
+      </ChartCanvas>
+    )
+  }
 }
 
 CandlesChart.propTypes = {
- data: PropTypes.array.isRequired,
- width: PropTypes.number.isRequired,
- ratio: PropTypes.number.isRequired,
- type: PropTypes.oneOf(["svg", "hybrid"]).isRequired,
+  data: PropTypes.array.isRequired,
+  width: PropTypes.number.isRequired,
+  ratio: PropTypes.number.isRequired,
+  type: PropTypes.oneOf(["svg", "hybrid"]).isRequired,
+  since: PropTypes.instanceOf(Date).isRequired,
+  till: PropTypes.instanceOf(Date).isRequired,
 }
 
 CandlesChart.defaultProps = {type: "svg"}

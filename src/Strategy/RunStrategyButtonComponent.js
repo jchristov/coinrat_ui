@@ -8,6 +8,7 @@ class RunStrategyButtonComponent extends Component {
       style={{marginTop: 1 + 'px', marginLeft: 7 + 'px'}}
       className="pt-intent-primary"
       iconName="pt-icon-play"
+      onClick={this.props.store.runStrategy}
     >
       Run strategy
     </Button>
