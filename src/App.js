@@ -5,7 +5,7 @@ import {BrowserRouter, Route} from "react-router-dom"
 import HeaderComponent from "./HeaderComponent"
 import DashboardComponent from "./DashboardComponent"
 import SocketEventLogComponent from "./Sockets/SocketEventLog/SocketEventLogComponent"
-import socketEventLogStore from "./Sockets/SocketEventLog/SocketEventLogStore"
+import {socketEventLogStoreInstance} from "./Sockets/SocketEventLog/SocketEventLogStore"
 
 class App extends Component {
   render() {
@@ -20,7 +20,7 @@ class App extends Component {
                   return <DashboardComponent/>
                 }}/>
                 <Route path="/socket-event-log" render={() => {
-                  return <SocketEventLogComponent store={socketEventLogStore}/>
+                  return <SocketEventLogComponent store={socketEventLogStoreInstance}/>
                 }}/>
               </div>
             </div>

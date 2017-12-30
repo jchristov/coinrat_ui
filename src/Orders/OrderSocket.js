@@ -19,7 +19,7 @@ export default class OrdersSocket {
     this.socket = socket
   }
 
-  registerNewOrderEvent(onNewOrder: (any) => void) {
+  registerNewOrderEvent(onNewOrder: (order: Order) => void) {
     this.socket.on(SOCKET_EVENT_NEW_ORDERS, (orderRaw) => {
       const order = OrdersSocket.parseOneOrderFromData(orderRaw)
       onNewOrder(order)
@@ -73,14 +73,12 @@ export default class OrdersSocket {
     const orders: Array<Order> = {}
     for (let i = 0; i < ordersRaw.length; i++) {
       const order = OrdersSocket.parseOneOrderFromData(ordersRaw[i])
-      orders[order.date.toISOString()] = order
+      orders[order.createdAt.toISOString()] = order
     }
     return orders
   }
 
   static parseOneOrderFromData(order: RawOrder): Order {
-    return new Order(
-      new Date(Date.parse(order.created_at))
-    )
+    return new Order(new Date(Date.parse(order.created_at)))
   }
 }

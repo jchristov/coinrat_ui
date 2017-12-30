@@ -1,11 +1,19 @@
 // @flow
 import React, {Component} from "react"
 import {observer} from "mobx-react/index"
-import SelectComponent from "../SelectComponent"
+import {SelectComponent, SelectElement} from "../SelectComponent"
+import {FilterStore} from "../TopLineToolbar/FilterStore"
+
+type Props = {
+  store: FilterStore,
+}
 
 const SelectCandlesBackendStorageComponent = observer(class SelectPairComponent extends Component {
+  props: Props
 
-  handleValueChange = (candleStorage) => this.props.store.changeSelectedCandleStorage(candleStorage.key)
+  handleValueChange = (candleStorage: SelectElement) => {
+    this.props.store.changeSelectedCandleStorage(candleStorage.key)
+  }
 
   render() {
     const candleBackendStorages = {

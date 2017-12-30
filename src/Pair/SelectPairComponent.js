@@ -1,8 +1,9 @@
 // @flow
 import React, {Component} from "react"
 import {observer} from "mobx-react/index"
-import SelectComponent from "../SelectComponent"
 import {FilterStore} from "../TopLineToolbar/FilterStore"
+import type {SelectElement} from "../SelectComponent"
+import {SelectComponent} from "../SelectComponent"
 
 type Props = {
   store: FilterStore,
@@ -11,7 +12,7 @@ type Props = {
 const SelectPairComponent = observer(class SelectPairComponent extends Component {
   props: Props
 
-  handleValueChange = (pair) => {
+  handleValueChange = (pair: SelectElement) => {
     this.props.store.changeSelectedPair(pair.key)
   }
 

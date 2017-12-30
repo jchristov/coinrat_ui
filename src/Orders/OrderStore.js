@@ -3,8 +3,11 @@ import {socket} from "../Sockets/socket"
 import {autorun, extendObservable} from "mobx"
 import {FilterStore, filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import OrdersSocket from "./OrderSocket"
+import Order from "./Order"
 
 class OrderStore {
+  orders: ?Array<Order> = null
+
   constructor(ordersSocket: OrdersSocket, filterStore: FilterStore) {
     this.ordersSocket = ordersSocket
     this.filterStore = filterStore
@@ -12,10 +15,10 @@ class OrderStore {
       this.reloadData()
     })
     extendObservable(this, {orders: null})
-    this.ordersSocket.registerNewOrderEvent((order) => {
+    this.ordersSocket.registerNewOrderEvent((order: Order) => {
       if (this.orders !== null) {
         const orders = this.orders
-        orders[order.date.toISOString()] = order
+        orders[order.createdAt.toISOString()] = order
         this.orders = orders
       }
     })

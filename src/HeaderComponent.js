@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import {Link} from "react-router-dom"
 import {Position, Tooltip} from "@blueprintjs/core"
 import {statusIndicatorStoreInstance} from "./Sockets/StatusIndicator/StatusIndicatorStore"
+import StatusIndicatorComponent from "./Sockets/StatusIndicator/StatusIndicatorComponent"
 
 class HeaderComponent extends Component {
   render() {
@@ -10,7 +11,7 @@ class HeaderComponent extends Component {
       <nav className="pt-navbar pt-dark">
 
         <div className="pt-navbar-group pt-align-left">
-          <StatusIndicator store={statusIndicatorStoreInstance}/>
+          <StatusIndicatorComponent store={statusIndicatorStoreInstance}/>
 
           <span className="pt-navbar-divider"/>
 

@@ -1,12 +1,15 @@
 // @flow
 import {socket} from "../Sockets/socket"
 import {autorun, extendObservable} from "mobx"
-import filterStore from "../TopLineToolbar/FilterStore"
 import CandleSocket from "./CandleSocket"
 import Interval from "../Interval/Interval"
+import {FilterStore, filterStoreInstance} from "../TopLineToolbar/FilterStore"
+import Candle from "./Candle"
 
 class CandleStore {
-  constructor(candlesSocket, filterStore) {
+  candles: ?Array<Candle> = null
+
+  constructor(candlesSocket: CandleSocket, filterStore: FilterStore) {
     this.candlesSocket = candlesSocket
     autorun(() => {
       this.reloadData(
@@ -17,7 +20,7 @@ class CandleStore {
       )
     })
     extendObservable(this, {candles: null})
-    this.candlesSocket.registerNewCandleEvent((candle) => {
+    this.candlesSocket.registerNewCandleEvent((candle: Candle) => {
       if (this.candles !== null) {
         const candles = this.candles
         candles[candle.date.toISOString()] = candle
@@ -33,7 +36,7 @@ class CandleStore {
   }
 }
 
-const candleStoreInstance = new CandleStore(new CandleSocket(socket), filterStore)
+const candleStoreInstance = new CandleStore(new CandleSocket(socket), filterStoreInstance)
 
 export {
   candleStoreInstance,

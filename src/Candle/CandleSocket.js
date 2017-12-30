@@ -16,7 +16,7 @@ type RawCandle = {
   close: number,
 }
 
-export default class CandleSocket {
+class CandleSocket {
 
   constructor(socket: Socket) {
     this.socket = socket
@@ -29,13 +29,11 @@ export default class CandleSocket {
     })
   }
 
-  reloadCandles(
-    market: string,
-    pair: string,
-    interval: Interval,
-    candleStorage: string,
-    onNewCandles: (candles: Array<Candle>) => void
-  ) {
+  reloadCandles(market: string,
+                pair: string,
+                interval: Interval,
+                candleStorage: string,
+                onNewCandles: (candles: Array<Candle>) => void) {
     console.log('Reloading CANDLES candles... ', pair, market, interval.since, interval.till)
 
     socket.emit(SOCKET_EVENT_GET_CANDLES, {
@@ -89,3 +87,5 @@ export default class CandleSocket {
     )
   }
 }
+
+export default CandleSocket

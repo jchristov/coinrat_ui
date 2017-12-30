@@ -5,8 +5,8 @@ import {BarSeries} from "react-stockcharts/lib/series"
 import {XAxis, YAxis} from "react-stockcharts/lib/axes"
 import {fitWidth} from "react-stockcharts/lib/helper"
 import {scaleTime} from "d3-scale"
-import Order from "./Order"
 import Interval from "../Interval/Interval"
+import Order from "./Order"
 
 type Props = {
   data: Array<Order>,
@@ -39,7 +39,7 @@ class OrdersChart extends Component {
         <Chart id={1} yExtents={() => [0, 1]}>
           <XAxis axisAt="bottom" orient="bottom" ticks={6}/>
           <YAxis axisAt="left" orient="left" ticks={1}/>
-          <BarSeries yAccessor={d => d.volume}/>
+          <BarSeries yAccessor={() => 1}/>
         </Chart>
       </ChartCanvas>
     )
