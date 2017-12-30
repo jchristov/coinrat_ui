@@ -1,7 +1,9 @@
+// @flow
 import {socket} from "../Sockets/socket"
 import {autorun, extendObservable} from "mobx"
 import filterStore from "../TopLineToolbar/FilterStore"
 import CandleSocket from "./CandleSocket"
+import Interval from "../Interval/Interval"
 
 class CandleStore {
   constructor(candlesSocket, filterStore) {
@@ -24,13 +26,16 @@ class CandleStore {
     })
   }
 
-  reloadData(market, pair, interval, candleStorage) {
+  reloadData(market: string, pair: string, interval: Interval, candleStorage: string) {
     this.candlesSocket.reloadCandles(market, pair, interval, candleStorage, (candles) => {
       this.candles = candles
     })
   }
 }
 
-const candleStore = new CandleStore(new CandleSocket(socket), filterStore)
+const candleStoreInstance = new CandleStore(new CandleSocket(socket), filterStore)
 
-export default candleStore
+export {
+  candleStoreInstance,
+  CandleStore,
+}

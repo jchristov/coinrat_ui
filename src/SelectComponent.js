@@ -1,11 +1,17 @@
+// @flow
 import React, {Component} from "react"
 import {Select} from "@blueprintjs/labs"
 import {Button, MenuItem, Classes, Label} from "@blueprintjs/core"
 
 const ConcreateSelect = Select.ofType()
 
+type SelectElement = {
+  title: string,
+  key: string,
+}
+
 class SelectComponent extends Component {
-  renderPair({handleClick, isActive, item}) {
+  renderPair({handleClick, isActive, item}: { handleClick: (any) => any, isActive: boolean, item: SelectElement }) {
     return (
       <MenuItem
         className={Classes.ACTIVE}
@@ -16,8 +22,8 @@ class SelectComponent extends Component {
     )
   }
 
-  filterPair(query, pair, index) {
-    return `${index + 1}. ${pair.title.toLowerCase()} ${pair.year}`.indexOf(query.toLowerCase()) >= 0
+  filterPair(query: string, element: SelectElement, index: number) {
+    return `${index + 1}. ${element.title.toLowerCase()} ${element.year}`.indexOf(query.toLowerCase()) >= 0
   }
 
   render() {
@@ -42,4 +48,7 @@ class SelectComponent extends Component {
   }
 }
 
-export default SelectComponent
+export {
+  SelectComponent,
+  SelectElement,
+}

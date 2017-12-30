@@ -1,5 +1,12 @@
+// @flow
 import {extendObservable} from "mobx"
-import {SOCKET_EVENT_PING_REQUEST, SOCKET_EVENT_PING_RESPONSE, SOCKET_EVENT_GET_CANDLES, SOCKET_EVENT_NEW_CANDLES, socket} from "../socket"
+import {
+  SOCKET_EVENT_PING_REQUEST,
+  SOCKET_EVENT_PING_RESPONSE,
+  SOCKET_EVENT_GET_CANDLES,
+  SOCKET_EVENT_NEW_CANDLES,
+  socket
+} from "../socket"
 
 class SocketEventLogStore {
   constructor() {
@@ -34,9 +41,11 @@ class SocketEventLogStore {
     log[new Date().getTime()] = message
     this.log = log
   }
-
 }
 
-const socketEventLogStore = new SocketEventLogStore()
+const socketEventLogStoreInstance = new SocketEventLogStore()
 
-export default socketEventLogStore
+export {
+  socketEventLogStoreInstance,
+  SocketEventLogStore
+}

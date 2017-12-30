@@ -1,3 +1,4 @@
+// @flow
 import {socket} from "../socket"
 import {extendObservable} from "mobx"
 
@@ -17,6 +18,9 @@ class StatusIndicatorStore {
 
 }
 
-const statusIndicatorStore = new StatusIndicatorStore()
+const statusIndicatorStoreInstance = new StatusIndicatorStore()
 
-export default statusIndicatorStore
+export {
+  statusIndicatorStoreInstance,
+  StatusIndicatorStore
+}

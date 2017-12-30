@@ -1,21 +1,29 @@
+// @flow
 import React, {Component} from 'react'
 import {observer} from "mobx-react"
 import {Spinner} from "@blueprintjs/core/dist/components/spinner/spinner"
 import OrdersChart from "./OrdersChart"
 import {NonIdealState} from "@blueprintjs/core/dist/components/non-ideal-state/nonIdealState"
-import filterStore from "../TopLineToolbar/FilterStore"
+import {OrderStore} from "./OrderStore"
+import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
+import Interval from "../Interval/Interval"
+
+type Props = {
+  store: OrderStore,
+}
 
 const OrdersVolumeChartComponent = observer(class OrdersVolumeChartComponent extends Component {
+  props: Props
 
   render() {
-    let data = this.props.store.orders
-    data = data !== null ? Object.values(this.props.store.orders) : null
+    let orders = this.props.store.orders
+    orders = orders !== null ? Object.values(this.props.store.orders) : null
 
-    if (data === null) {
+    if (orders === null) {
       return <NonIdealState title="Loading..." description={<Spinner/>}/>
     }
 
-    if (data.length < 5) {
+    if (orders.length < 5) {
       return <div style={{marginTop: 25 + 'px'}}>
         <NonIdealState
           visual="search"
@@ -25,14 +33,12 @@ const OrdersVolumeChartComponent = observer(class OrdersVolumeChartComponent ext
       </div>
     }
 
-    const since = filterStore.selectedInterval.since
-    let till = filterStore.selectedInterval.till
-
-    if (till === null) {
-      till = new Date()
+    let interval = filterStoreInstance.selectedInterval
+    if (interval.till === null) {
+      interval = new Interval(interval.since, new Date())
     }
 
-    return <OrdersChart type="svg" data={data} since={since} till={till}/>
+    return <OrdersChart type="svg" data={orders} interval={interval}/>
   }
 
 })

@@ -1,3 +1,4 @@
+// @flow
 import React, {Component} from 'react'
 import {observer} from "mobx-react"
 import SelectPairComponent from "../Pair/SelectPairComponent"
@@ -8,9 +9,17 @@ import RunStrategyButtonComponent from "../Strategy/RunStrategyButtonComponent"
 import CleanOrderStorageButtonComponent from "../Orders/CleanOrderStorageButtonComponent"
 import SelectOrdersBackendStorageComponent from "../Orders/SelectOrdersBackendStorageComponent"
 import SelectCandlesBackendStorageComponent from "../Candle/SelectCandlesBackendStorageComponent"
-import strategyRunnerStore from "../Strategy/StrategyRunnerStore"
+import {strategyRunnerStoreInstance} from "../Strategy/StrategyRunnerStore"
+import {FilterStore} from "./FilterStore"
+import {OrderStore} from "../Orders/OrderStore"
+
+type Props = {
+  filterStore: FilterStore,
+  orderStore: OrderStore,
+}
 
 const TopLineToolbarComponent = observer(class FilterComponent extends Component {
+  props: Props
 
   render() {
     return (
@@ -29,7 +38,7 @@ const TopLineToolbarComponent = observer(class FilterComponent extends Component
         </div>
         <div>
           <SelectStrategyComponent store={this.props.filterStore}/>
-          <RunStrategyButtonComponent store={strategyRunnerStore}/>
+          <RunStrategyButtonComponent store={strategyRunnerStoreInstance}/>
         </div>
       </div>
     )

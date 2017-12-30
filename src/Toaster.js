@@ -1,3 +1,4 @@
+// @flow
 import {Position, Toaster} from "@blueprintjs/core/dist/esm/index"
 
 const appMainToaster = Toaster.create({

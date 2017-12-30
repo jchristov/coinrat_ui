@@ -1,7 +1,14 @@
+// @flow
 import React, {Component} from "react"
 import {Button} from "@blueprintjs/core/dist/components/button/buttons"
+import {OrderStore} from "./OrderStore"
+
+type Props = {
+  store: OrderStore,
+}
 
 class CleanOrderStorageButtonComponent extends Component {
+  props: Props
 
   render() {
     return <Button

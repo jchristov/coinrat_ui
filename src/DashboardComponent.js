@@ -1,19 +1,19 @@
+// @flow
 import React, {Component} from 'react'
-import orderStore from "./Orders/OrderStore"
 import OrdersVolumeChartComponent from "./Orders/OrdersVolumeChartComponent"
-import filterStore from "./TopLineToolbar/FilterStore"
 import TopLineToolbarComponent from "./TopLineToolbar/TopLineToolbarComponent"
 import CandlestickChartComponent from "./Candle/CandlestickChartComponent"
 import candlesStore from "./Candle/CandleStore"
+import {filterStoreInstance} from "./TopLineToolbar/FilterStore"
+import {orderStoreInstance} from "./Orders/OrderStore"
 
 class DashboardComponent extends Component {
   render() {
-
     return (
       <div>
-        <TopLineToolbarComponent filterStore={filterStore} orderStore={orderStore}/>
+        <TopLineToolbarComponent filterStore={filterStoreInstance} orderStore={orderStoreInstance}/>
         <CandlestickChartComponent store={candlesStore}/>
-        <OrdersVolumeChartComponent store={orderStore}/>
+        <OrdersVolumeChartComponent store={orderStoreInstance}/>
       </div>
     )
   }

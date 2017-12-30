@@ -1,16 +1,27 @@
+// @flow
 import React, {Component} from 'react'
-import PropTypes from "prop-types"
 import {ChartCanvas, Chart} from "react-stockcharts"
 import {BarSeries} from "react-stockcharts/lib/series"
 import {XAxis, YAxis} from "react-stockcharts/lib/axes"
 import {fitWidth} from "react-stockcharts/lib/helper"
 import {scaleTime} from "d3-scale"
+import Order from "./Order"
+import Interval from "../Interval/Interval"
+
+type Props = {
+  data: Array<Order>,
+  width: number,
+  ratio: number,
+  type: 'svg' | 'hybrid',
+  interval: Interval,
+}
 
 class OrdersChart extends Component {
+  props: Props
+
   render() {
-    const {type, data, width, ratio, since, till} = this.props
-    const xAccessor = d => d.date
-    const xExtents = [since, till]
+    const {type, data, width, ratio, interval} = this.props
+    const xAccessor = (order: Order) => order.createdAt
 
     return (
       <ChartCanvas
@@ -23,9 +34,9 @@ class OrdersChart extends Component {
         data={data}
         xAccessor={xAccessor}
         xScale={scaleTime()}
-        xExtents={xExtents}
+        xExtents={[interval.since, interval.till]}
       >
-        <Chart id={1} yExtents={d => [0, d.volume]}>
+        <Chart id={1} yExtents={() => [0, 1]}>
           <XAxis axisAt="bottom" orient="bottom" ticks={6}/>
           <YAxis axisAt="left" orient="left" ticks={1}/>
           <BarSeries yAccessor={d => d.volume}/>
@@ -35,16 +46,6 @@ class OrdersChart extends Component {
   }
 }
 
-OrdersChart.propTypes = {
-  data: PropTypes.array.isRequired,
-  width: PropTypes.number.isRequired,
-  ratio: PropTypes.number.isRequired,
-  type: PropTypes.oneOf(["svg", "hybrid"]).isRequired,
-  since: PropTypes.instanceOf(Date).isRequired,
-  till: PropTypes.instanceOf(Date).isRequired,
-}
-
-OrdersChart.defaultProps = {type: "svg"}
 OrdersChart = fitWidth(OrdersChart)
 
 export default OrdersChart

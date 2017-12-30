@@ -1,9 +1,11 @@
+// @flow
 import {EVENT_RUN_REPLY, socket} from "../Sockets/socket"
-import filterStore from "../TopLineToolbar/FilterStore"
+import {filterStoreInstance, FilterStore} from "../TopLineToolbar/FilterStore"
 import appMainToaster from "../Toaster"
+import {Socket} from "socket.io-client"
 
 class StrategyRunnerStore {
-  constructor(socket, filterStore) {
+  constructor(socket: Socket, filterStore: FilterStore) {
     this.socket = socket
     this.filterStore = filterStore
   }
@@ -33,6 +35,6 @@ class StrategyRunnerStore {
   }
 }
 
-const strategyRunnerStore = new StrategyRunnerStore(socket, filterStore)
+const strategyRunnerStoreInstance = new StrategyRunnerStore(socket, filterStoreInstance)
 
-export default strategyRunnerStore
+export {strategyRunnerStoreInstance, StrategyRunnerStore}

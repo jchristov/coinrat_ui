@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
@@ -8,7 +9,7 @@ import '@blueprintjs/datetime/dist/blueprint-datetime.css'
 
 require('dotenv').config()
 
-localStorage.debug = '';
+localStorage.debug = ''
 
 ReactDOM.render(<App/>, document.getElementById('root'))
 registerServiceWorker()

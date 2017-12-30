@@ -1,10 +1,19 @@
+// @flow
 import React, {Component} from "react"
 import {observer} from "mobx-react/index"
 import SelectComponent from "../SelectComponent"
+import {FilterStore} from "../TopLineToolbar/FilterStore"
+
+type Props = {
+  store: FilterStore,
+}
 
 const SelectPairComponent = observer(class SelectPairComponent extends Component {
+  props: Props
 
-  handleValueChange = (pair) => this.props.store.changeSelectedPair(pair.key)
+  handleValueChange = (pair) => {
+    this.props.store.changeSelectedPair(pair.key)
+  }
 
   render() {
     const pairs = {
@@ -12,9 +21,7 @@ const SelectPairComponent = observer(class SelectPairComponent extends Component
       'USD_LTC': {key: 'USD_LTC', title: 'USD-LTC'},
       'USD_ETH': {key: 'USD_ETH', title: 'USD-ETH'},
     }
-
     const item = pairs[this.props.store.selectedPair]
-
     return <SelectComponent label="Pair" items={pairs} selectedItem={item} onChange={this.handleValueChange}/>
   }
 })

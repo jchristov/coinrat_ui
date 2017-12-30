@@ -1,7 +1,14 @@
+// @flow
 import React, {Component} from "react"
-import {Button} from "@blueprintjs/core/dist/components/button/buttons"
+import {StrategyRunnerStore} from "./StrategyRunnerStore"
+import {Button} from "@blueprintjs/core"
+
+type Props = {
+  store: StrategyRunnerStore
+}
 
 class RunStrategyButtonComponent extends Component {
+  props: Props
 
   render() {
     return <Button

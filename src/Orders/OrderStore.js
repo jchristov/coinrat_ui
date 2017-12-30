@@ -1,10 +1,11 @@
+// @flow
 import {socket} from "../Sockets/socket"
 import {autorun, extendObservable} from "mobx"
-import filterStore from "../TopLineToolbar/FilterStore"
+import {FilterStore, filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import OrdersSocket from "./OrderSocket"
 
 class OrderStore {
-  constructor(ordersSocket, filterStore) {
+  constructor(ordersSocket: OrdersSocket, filterStore: FilterStore) {
     this.ordersSocket = ordersSocket
     this.filterStore = filterStore
     autorun(() => {
@@ -35,14 +36,17 @@ class OrderStore {
   clear() {
     this.orders = {}
     this.ordersSocket.clearAllOrders(
-      filterStore.selectedMarket,
-      filterStore.selectedPair,
-      filterStore.selectedInterval,
-      filterStore.selectedOrderStorage
+      this.filterStore.selectedMarket,
+      this.filterStore.selectedPair,
+      this.filterStore.selectedInterval,
+      this.filterStore.selectedOrderStorage
     )
   }
 }
 
-const orderStore = new OrderStore(new OrdersSocket(socket), filterStore)
+const orderStoreInstance = new OrderStore(new OrdersSocket(socket), filterStoreInstance)
 
-export default orderStore
+export {
+  orderStoreInstance,
+  OrderStore,
+}

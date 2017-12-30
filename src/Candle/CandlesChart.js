@@ -1,16 +1,26 @@
+// @flow
 import React, {Component} from 'react'
-import PropTypes from "prop-types"
 import {ChartCanvas, Chart} from "react-stockcharts"
 import {CandlestickSeries} from "react-stockcharts/lib/series"
 import {XAxis, YAxis} from "react-stockcharts/lib/axes"
 import {fitWidth} from "react-stockcharts/lib/helper"
 import {scaleTime} from "d3-scale"
+import Order from "../Orders/Order"
+import Interval from "../Interval/Interval"
+import Candle from "./Candle"
+
+type Props = {
+  data: Array<Order>,
+  width: number,
+  ratio: number,
+  type: 'svg' | 'hybrid',
+  interval: Interval,
+}
 
 class CandlesChart extends Component {
   render() {
-    const {type, width, data, ratio, since, till} = this.props
-    const xAccessor = d => d.date
-    const xExtents = [since, till]
+    const {type, width, data, ratio, interval} = this.props
+    const xAccessor = (candle: Candle) => candle.date
 
     return (
       <ChartCanvas
@@ -23,7 +33,7 @@ class CandlesChart extends Component {
         data={data}
         xAccessor={xAccessor}
         xScale={scaleTime()}
-        xExtents={xExtents}
+        xExtents={[interval.since, interval.till]}
       >
         <Chart id={1} yExtents={d => [d.high, d.low]}>
           <XAxis axisAt="bottom" orient="bottom" ticks={6}/>
@@ -35,16 +45,6 @@ class CandlesChart extends Component {
   }
 }
 
-CandlesChart.propTypes = {
-  data: PropTypes.array.isRequired,
-  width: PropTypes.number.isRequired,
-  ratio: PropTypes.number.isRequired,
-  type: PropTypes.oneOf(["svg", "hybrid"]).isRequired,
-  since: PropTypes.instanceOf(Date).isRequired,
-  till: PropTypes.instanceOf(Date).isRequired,
-}
-
-CandlesChart.defaultProps = {type: "svg"}
 CandlesChart = fitWidth(CandlesChart)
 
 export default CandlesChart

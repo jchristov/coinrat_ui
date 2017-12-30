@@ -1,21 +1,28 @@
+// @flow
 import React, {Component} from 'react'
 import {observer} from "mobx-react"
 import {Spinner} from "@blueprintjs/core/dist/components/spinner/spinner"
 import CandlesChart from "./CandlesChart"
 import {NonIdealState} from "@blueprintjs/core/dist/components/non-ideal-state/nonIdealState"
-import filterStore from "../TopLineToolbar/FilterStore"
+import {CandleStore} from "./CandleStore"
+import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
+import Interval from "../Interval/Interval"
+
+type Props = {
+  store: CandleStore,
+}
 
 const CandlestickChartComponent = observer(class CandlestickChartComponent extends Component {
 
   render() {
-    let data = this.props.store.candles
-    data = data !== null ? Object.values(this.props.store.candles) : null
+    let candles = this.props.store.candles
+    candles = candles !== null ? Object.values(this.props.store.candles) : null
 
-    if (data === null) {
+    if (candles === null) {
       return <NonIdealState title="Loading..." description={<Spinner/>}/>
     }
 
-    if (data.length < 5) {
+    if (candles.length < 5) {
       return <div style={{marginTop: 25 + 'px'}}>
         <NonIdealState
           visual="search"
@@ -25,14 +32,12 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
       </div>
     }
 
-    const since = filterStore.selectedInterval.since
-    let till = filterStore.selectedInterval.till
-
-    if (till === null) {
-      till = new Date()
+    let interval = filterStoreInstance.selectedInterval
+    if (interval.till === null) {
+      interval = new Interval(interval.since, new Date())
     }
 
-    return <CandlesChart type="svg" data={data} since={since} till={till}/>
+    return <CandlesChart type="svg" data={candles} interval={interval}/>
   }
 
 })

@@ -7,6 +7,7 @@
     "@blueprintjs/datetime": "^1.25.1",
     "@blueprintjs/labs": "^0.14.2",
     "dotenv": "^4.0.0",
+    "flow-bin": "^0.62.0",
     "mobx": "^3.4.1",
     "mobx-react": "^4.3.5",
     "react": "^16.2.0",
@@ -22,6 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "flow": "flow"
   }
 }
