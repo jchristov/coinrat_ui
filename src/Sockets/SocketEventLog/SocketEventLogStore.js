@@ -1,11 +1,11 @@
 // @flow
 import {extendObservable} from "mobx"
 import {
+  socket,
   SOCKET_EVENT_PING_REQUEST,
   SOCKET_EVENT_PING_RESPONSE,
-  SOCKET_EVENT_GET_CANDLES,
   SOCKET_EVENT_NEW_CANDLES,
-  socket
+  SOCKET_EVENT_NEW_ORDERS,
 } from "../socket"
 
 class SocketEventLogStore {
@@ -24,11 +24,11 @@ class SocketEventLogStore {
       const delay = data['request_timestamp'] - data['response_timestamp']
       this.logMessage(SOCKET_EVENT_PING_RESPONSE + ' - ' + data['ping_id'] + ' (delay: ' + (Math.floor(delay * 1000) / 1000) + 's)')
     })
-    socket.on(SOCKET_EVENT_GET_CANDLES, (data) => {
-      this.logMessage(SOCKET_EVENT_GET_CANDLES + ' - Got ' + data.length + ' candles.')
-    })
     socket.on(SOCKET_EVENT_NEW_CANDLES, (data) => {
       this.logMessage(SOCKET_EVENT_NEW_CANDLES + ' - ' + JSON.stringify(data))
+    })
+    socket.on(SOCKET_EVENT_NEW_ORDERS, (data) => {
+      this.logMessage(SOCKET_EVENT_NEW_ORDERS + ' - ' + JSON.stringify(data))
     })
     socket.on('disconnect', () => {
       this.logMessage('Disconnect')

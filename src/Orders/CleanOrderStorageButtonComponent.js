@@ -15,7 +15,7 @@ class CleanOrderStorageButtonComponent extends Component {
       style={{marginTop: 1 + 'px', marginLeft: 7 + 'px'}}
       className="pt-intent-danger"
       iconName="pt-icon-eraser"
-      onClick={this.props.store.clear()}
+      onClick={this.props.store.clear}
     >
       Clean order storage
     </Button>

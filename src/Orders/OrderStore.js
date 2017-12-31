@@ -2,20 +2,20 @@
 import {socket} from "../Sockets/socket"
 import {autorun, extendObservable} from "mobx"
 import {FilterStore, filterStoreInstance} from "../TopLineToolbar/FilterStore"
-import OrdersSocket from "./OrderSocket"
+import OrderSocket from "./OrderSocket"
 import Order from "./Order"
 
 class OrderStore {
   orders: ?Array<Order> = null
 
-  constructor(ordersSocket: OrdersSocket, filterStore: FilterStore) {
-    this.ordersSocket = ordersSocket
+  constructor(orderSocket: OrderSocket, filterStore: FilterStore) {
+    this.orderSocket = orderSocket
     this.filterStore = filterStore
     autorun(() => {
       this.reloadData()
     })
     extendObservable(this, {orders: null})
-    this.ordersSocket.registerNewOrderEvent((order: Order) => {
+    this.orderSocket.registerNewOrderEvent((order: Order) => {
       if (this.orders !== null) {
         const orders = this.orders
         orders[order.createdAt.toISOString()] = order
@@ -24,8 +24,8 @@ class OrderStore {
     })
   }
 
-  reloadData() {
-    this.ordersSocket.reloadOrders(
+  reloadData = () => {
+    this.orderSocket.reloadOrders(
       this.filterStore.selectedMarket,
       this.filterStore.selectedPair,
       this.filterStore.selectedInterval,
@@ -36,18 +36,18 @@ class OrderStore {
     )
   }
 
-  clear() {
-    this.orders = {}
-    this.ordersSocket.clearAllOrders(
+  clear = () => {
+    this.orderSocket.clearAllOrders(
       this.filterStore.selectedMarket,
       this.filterStore.selectedPair,
       this.filterStore.selectedInterval,
       this.filterStore.selectedOrderStorage
     )
+    this.orders = {} // Todo call this.reloadData() here but with some co-rutine/generator to make it synchronous
   }
 }
 
-const orderStoreInstance = new OrderStore(new OrdersSocket(socket), filterStoreInstance)
+const orderStoreInstance = new OrderStore(new OrderSocket(socket), filterStoreInstance)
 
 export {
   orderStoreInstance,

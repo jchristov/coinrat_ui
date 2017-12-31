@@ -38,12 +38,12 @@ class CandleSocket {
 
     socket.emit(SOCKET_EVENT_GET_CANDLES, {
       pair: pair,
-      market_name: market,
+      market: market,
       interval: {
         since: interval.since !== null ? interval.since.toISOString() : null,
         till: interval.till !== null ? interval.till.toISOString() : null,
       },
-      candles_storage: candleStorage
+      candle_storage: candleStorage
     }, (status, data) => {
       if (status !== 'OK') {
         console.log('Server returned ERROR: ', data['message'])

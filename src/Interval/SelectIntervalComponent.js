@@ -5,6 +5,7 @@ import {DateRangeInput} from "@blueprintjs/datetime"
 import {Label} from "@blueprintjs/core/dist/components/forms/label"
 import Interval from "./Interval"
 import {FilterStore} from "../TopLineToolbar/FilterStore"
+import appMainToaster from "../Toaster"
 
 type Props = {
   store: FilterStore,
@@ -14,14 +15,18 @@ const SelectIntervalComponent = observer(class SelectIntervalComponent extends C
   props: Props
 
   handleChange = (data: Array<?Date>) => {
-    const since = data[0]
-    const till = data[1]
+    let since = data[0]
+    let till = data[1]
+    since = Object.prototype.toString.call(since) === '[object Date]' && !isNaN(since.getTime()) ? since : null
+    till = Object.prototype.toString.call(till) === '[object Date]' && !isNaN(till.getTime()) ? till : null
 
-    this.props.store.changeSelectedInterval(new Interval(
-      Object.prototype.toString.call(since) === '[object Date]' && !isNaN(since.getTime()) ? since : null,
-      Object.prototype.toString.call(till) === '[object Date]' && !isNaN(till.getTime()) ? till : null,
-      )
-    )
+    if (since !== null && till !== null && since > till) {
+      alert('!')
+      appMainToaster.show({message: "Since must be < than till.", className: 'pt-intent-danger'})
+      return
+    }
+
+    this.props.store.changeSelectedInterval(new Interval(since, till))
   }
 
   render() {
