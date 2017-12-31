@@ -1,13 +1,13 @@
 // @flow
 import React, {Component} from 'react'
 import {ChartCanvas, Chart} from "react-stockcharts"
-import {BarSeries} from "react-stockcharts/lib/series"
+import {GroupedBarSeries} from "react-stockcharts/lib/series"
 import {XAxis, YAxis} from "react-stockcharts/lib/axes"
 import {fitWidth} from "react-stockcharts/lib/helper"
 import {scaleTime} from "d3-scale"
 import Interval from "../Interval/Interval"
 import {Order} from "./Order"
-import {ORDERS_COLORS} from "./ChartColors"
+import {ORDERS_DIRECTION_COLORS, ORDERS_STATUS_COLORS} from "./ChartColors"
 
 type Props = {
   data: Array<Order>,
@@ -20,7 +20,14 @@ type Props = {
 class OrdersChart extends Component<Props> {
   props: Props
 
-  getColorForOrder = (order: Order) => ORDERS_COLORS[order.direction]
+  getColorForOrder = (order: Order, i) => {
+    if (i === 0) {
+      return ORDERS_DIRECTION_COLORS[order.direction]
+    }
+    if (i === 1) {
+      return ORDERS_STATUS_COLORS[order.status]
+    }
+  }
 
   render() {
     const {type, data, width, ratio, interval} = this.props
@@ -45,7 +52,12 @@ class OrdersChart extends Component<Props> {
         <Chart id={1} yExtents={() => [0, 1]}>
           <XAxis axisAt="bottom" orient="bottom" ticks={6}/>
           <YAxis axisAt="left" orient="left" ticks={1}/>
-          <BarSeries yAccessor={() => 1} width={4} fill={this.getColorForOrder}/>
+          <GroupedBarSeries
+            yAccessor={[() => 1, () => 2]}
+            fill={this.getColorForOrder}
+            width={8}
+            spaceBetweenBar={2}
+          />
         </Chart>
       </ChartCanvas>
     )

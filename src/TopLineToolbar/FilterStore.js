@@ -6,7 +6,7 @@ class FilterStore {
   constructor() {
 
     let since = new Date()
-    since.setHours(since.getHours() - 2)
+    since.setHours(since.getHours() - 12)
 
     extendObservable(this, {
       selectedPair: 'USD_BTC',

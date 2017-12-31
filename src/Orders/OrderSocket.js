@@ -1,12 +1,15 @@
 // @flow
 import {
-  SOCKET_EVENT_GET_ORDERS, SOCKET_EVENT_NEW_ORDERS,
+  AppSocket,
+  SOCKET_EVENT_GET_ORDERS,
+  SOCKET_EVENT_NEW_ORDERS,
   SOCKET_EVENT_CLEAR_ORDERS,
-  SUBSCRIBED_EVENT_NEW_ORDER, AppSocket
+  SUBSCRIBED_EVENT_NEW_ORDER,
 } from "../Sockets/socket"
 import Interval from "../Interval/Interval"
 import {Order, OrderDirectionType} from "./Order"
 import appMainToaster from "../Toaster"
+import type {OrderStatusType} from "./Order"
 
 type RawOrder = {
   order_id: string,
@@ -18,7 +21,7 @@ type RawOrder = {
   quantity: string,
   rate: string,
   id_on_market: string,
-  status: 'open' | 'closed' | 'canceled',
+  status: OrderStatusType,
   canceled_at: string,
 }
 
@@ -79,7 +82,8 @@ export default class OrdersSocket {
   static parseOneOrderFromData(order: RawOrder): Order {
     return new Order(
       new Date(Date.parse(order.created_at)),
-      order.direction
+      order.direction,
+      order.status,
     )
   }
 }
