@@ -17,7 +17,7 @@ type Props = {
 const OrdersVolumeChartComponent = observer(class OrdersVolumeChartComponent extends Component<Props> {
   props: Props
 
-  render() {
+  renderChart = () => {
     let orders = this.props.store.orders
     orders = orders !== null ? Object.values(this.props.store.orders) : null
 
@@ -40,11 +40,15 @@ const OrdersVolumeChartComponent = observer(class OrdersVolumeChartComponent ext
       interval = new Interval(interval.since, new Date())
     }
 
+    return <OrdersChart type="svg" data={orders} interval={interval}/>
+  }
+
+  render() {
     return <div>
       <h3>Orders</h3>
       <Flex align='center top'>
         <Box auto>
-          <OrdersChart type="svg" data={orders} interval={interval}/>
+          {this.renderChart()}
         </Box>
         <Box w={256}>
           <ul className=".pt-list-unstyled">
@@ -53,7 +57,6 @@ const OrdersVolumeChartComponent = observer(class OrdersVolumeChartComponent ext
           </ul>
         </Box>
       </Flex>
-
     </div>
   }
 

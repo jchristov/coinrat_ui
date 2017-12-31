@@ -6,6 +6,7 @@ import {
 } from "../Sockets/socket"
 import Interval from "../Interval/Interval"
 import {Order, OrderDirectionType} from "./Order"
+import appMainToaster from "../Toaster"
 
 type RawOrder = {
   order_id: string,
@@ -61,6 +62,8 @@ export default class OrdersSocket {
       market: market,
       pair: pair,
       interval: interval,
+    }, () => {
+      appMainToaster.show({message: "Order storage in given range cleared.", className: 'pt-intent-success'})
     })
   }
 

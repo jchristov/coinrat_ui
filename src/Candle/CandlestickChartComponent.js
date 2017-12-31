@@ -15,7 +15,7 @@ type Props = {
 const CandlestickChartComponent = observer(class CandlestickChartComponent extends Component<Props> {
   props: Props
 
-  render() {
+  renderChart = () => {
     let candles = this.props.store.candles
     candles = candles !== null ? Object.values(this.props.store.candles) : null
 
@@ -37,11 +37,14 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
     if (interval.till === null) {
       interval = new Interval(interval.since, new Date())
     }
+    return <CandlesChart type="svg" data={candles} interval={interval}/>
+  }
 
+  render() {
     return (
       <Flex align='center top'>
         <Box auto>
-          <CandlesChart type="svg" data={candles} interval={interval}/>
+          {this.renderChart()}
         </Box>
         <Box w={256}>
 
@@ -49,7 +52,6 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
       </Flex>
     )
   }
-
 })
 
 
