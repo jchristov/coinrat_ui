@@ -25,6 +25,9 @@ class CandlesChart extends Component<Props> {
 
     return (
       <ChartCanvas
+        mouseMoveEvent={false}
+        zoomEvent={false}
+        panEvent={false}
         height={400}
         ratio={ratio}
         width={width}

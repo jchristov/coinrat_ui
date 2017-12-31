@@ -1,26 +1,22 @@
 // @flow
-import {socket} from "../socket"
 import {extendObservable} from "mobx"
+import {AppSocket, socket} from "../socket"
 
 class StatusIndicatorStore {
-  constructor() {
+  constructor(socket: AppSocket) {
     extendObservable(this, {
       isOnline: false
     })
 
-    socket.on('connect', () => {
-      this.isOnline = true
-    })
-    socket.on('disconnect', () => {
-      this.isOnline = false
-    })
+    socket.onConnect(() => this.isOnline = true)
+    socket.onDisconnect(() => this.isOnline = false)
   }
 
 }
 
-const statusIndicatorStoreInstance = new StatusIndicatorStore()
+const statusIndicatorStoreInstance = new StatusIndicatorStore(socket)
 
 export {
   statusIndicatorStoreInstance,
-  StatusIndicatorStore
+  StatusIndicatorStore,
 }

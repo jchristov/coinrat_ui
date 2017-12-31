@@ -6,6 +6,7 @@ import CandlesChart from "./CandlesChart"
 import {CandleStore} from "./CandleStore"
 import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import Interval from "../Interval/Interval"
+import {Flex, Box} from 'reflexbox'
 
 type Props = {
   store: CandleStore,
@@ -37,7 +38,16 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
       interval = new Interval(interval.since, new Date())
     }
 
-    return <CandlesChart type="svg" data={candles} interval={interval}/>
+    return (
+      <Flex align='center top'>
+        <Box auto>
+          <CandlesChart type="svg" data={candles} interval={interval}/>
+        </Box>
+        <Box w={256}>
+
+        </Box>
+      </Flex>
+    )
   }
 
 })

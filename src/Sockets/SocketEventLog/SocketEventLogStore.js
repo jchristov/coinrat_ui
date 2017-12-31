@@ -14,23 +14,23 @@ class SocketEventLogStore {
       log: {},
     })
 
-    socket.on('connect', () => {
+    socket.socketio.on('connect', () => {
       this.logMessage('Connect')
     })
-    socket.on(SOCKET_EVENT_PING_REQUEST, (data) => {
+    socket.socketio.on(SOCKET_EVENT_PING_REQUEST, (data) => {
       this.logMessage(SOCKET_EVENT_PING_REQUEST + ' - ' + data['ping_id'])
     })
-    socket.on(SOCKET_EVENT_PING_RESPONSE, (data) => {
+    socket.socketio.on(SOCKET_EVENT_PING_RESPONSE, (data) => {
       const delay = data['request_timestamp'] - data['response_timestamp']
       this.logMessage(SOCKET_EVENT_PING_RESPONSE + ' - ' + data['ping_id'] + ' (delay: ' + (Math.floor(delay * 1000) / 1000) + 's)')
     })
-    socket.on(SOCKET_EVENT_NEW_CANDLES, (data) => {
+    socket.socketio.on(SOCKET_EVENT_NEW_CANDLES, (data) => {
       this.logMessage(SOCKET_EVENT_NEW_CANDLES + ' - ' + JSON.stringify(data))
     })
-    socket.on(SOCKET_EVENT_NEW_ORDERS, (data) => {
+    socket.socketio.on(SOCKET_EVENT_NEW_ORDERS, (data) => {
       this.logMessage(SOCKET_EVENT_NEW_ORDERS + ' - ' + JSON.stringify(data))
     })
-    socket.on('disconnect', () => {
+    socket.socketio.on('disconnect', () => {
       this.logMessage('Disconnect')
     })
   }

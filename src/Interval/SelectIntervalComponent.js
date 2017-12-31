@@ -2,7 +2,7 @@
 import React, {Component} from "react"
 import {observer} from "mobx-react/index"
 import {DateRangeInput} from "@blueprintjs/datetime"
-import {Label} from "@blueprintjs/core/dist/components/forms/label"
+import {Label} from "@blueprintjs/core"
 import Interval from "./Interval"
 import {FilterStore} from "../TopLineToolbar/FilterStore"
 import appMainToaster from "../Toaster"
@@ -21,7 +21,6 @@ const SelectIntervalComponent = observer(class SelectIntervalComponent extends C
     till = Object.prototype.toString.call(till) === '[object Date]' && !isNaN(till.getTime()) ? till : null
 
     if (since !== null && till !== null && since > till) {
-      alert('!')
       appMainToaster.show({message: "Since must be < than till.", className: 'pt-intent-danger'})
       return
     }

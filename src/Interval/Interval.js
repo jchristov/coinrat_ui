@@ -11,6 +11,13 @@ class Interval {
   this.since = since
   this.till = till
  }
+
+ toIso = () => {
+  return {
+   since: this.since !== null ? this.since.toISOString() : null,
+   till: this.till !== null ? this.till.toISOString() : null,
+  }
+ }
 }
 
 export default Interval

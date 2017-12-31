@@ -6,7 +6,8 @@ import {XAxis, YAxis} from "react-stockcharts/lib/axes"
 import {fitWidth} from "react-stockcharts/lib/helper"
 import {scaleTime} from "d3-scale"
 import Interval from "../Interval/Interval"
-import Order from "./Order"
+import {Order} from "./Order"
+import {ORDERS_COLORS} from "./ChartColors"
 
 type Props = {
   data: Array<Order>,
@@ -19,13 +20,18 @@ type Props = {
 class OrdersChart extends Component<Props> {
   props: Props
 
+  getColorForOrder = (order: Order) => ORDERS_COLORS[order.direction]
+
   render() {
     const {type, data, width, ratio, interval} = this.props
     const xAccessor = (order: Order) => order.createdAt
 
     return (
       <ChartCanvas
-        height={400}
+        mouseMoveEvent={false}
+        zoomEvent={false}
+        panEvent={false}
+        height={100}
         ratio={ratio}
         width={width}
         margin={{left: 50, right: 50, top: 10, bottom: 30}}
@@ -39,7 +45,7 @@ class OrdersChart extends Component<Props> {
         <Chart id={1} yExtents={() => [0, 1]}>
           <XAxis axisAt="bottom" orient="bottom" ticks={6}/>
           <YAxis axisAt="left" orient="left" ticks={1}/>
-          <BarSeries yAccessor={() => 1}/>
+          <BarSeries yAccessor={() => 1} width={4} fill={this.getColorForOrder}/>
         </Chart>
       </ChartCanvas>
     )

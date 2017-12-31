@@ -1,5 +1,7 @@
+import Interval from "../Interval/Interval"
+
 const url = process.env.REACT_APP_BACKEND_SOCKET_URL
-const socket = require('socket.io-client')(url)
+const socketio = require('socket.io-client')(url)
 // const uuidv4 = require('uuid/v4')
 
 const SOCKET_EVENT_PING_REQUEST = 'ping_request'
@@ -29,8 +31,52 @@ const EVENT_RUN_REPLY = 'run_reply'
 //   setTimeout(next, 5000)
 // }, 5000)
 
+class AppSocket {
+  constructor(socketio) {
+    this.socketio = socketio
+  }
+
+  subscribeForUpdates = (event: string, market: string, pair: string, interval: Interval, storage: string) => {
+    this.socketio.emit(SOCKET_EVENT_UNSUBSCRIBE, {event: event}, () => {
+      this.socketio.emit(SOCKET_EVENT_SUBSCRIBE, {
+        event: event,
+        storage: storage,
+        market: market,
+        pair: pair,
+        interval: interval,
+      })
+    })
+  }
+
+  emit = (event: string, data: Object, onSuccess: (status: string, data: Object) => void) => {
+    this.socketio.emit(event, data, (status: string, data: Object) => {
+      if (status !== 'OK') {
+        console.log('Server returned ERROR: ', data)
+        return
+      }
+      onSuccess(status, data)
+    })
+  }
+
+  onConnect(callback: () => void) {
+    this.socketio.on('connect', () => {
+      callback()
+    })
+  }
+
+  onDisconnect(callback: () => void) {
+    this.socketio.on('disconnect', () => {
+      callback()
+    })
+  }
+}
+
+const socket = new AppSocket(socketio)
+
 export {
   socket,
+  AppSocket,
+
   SOCKET_EVENT_PING_REQUEST,
   SOCKET_EVENT_PING_RESPONSE,
 

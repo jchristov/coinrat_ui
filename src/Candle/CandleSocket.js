@@ -1,11 +1,11 @@
 // @flow
 import {
-  socket,
-  SOCKET_EVENT_GET_CANDLES, SOCKET_EVENT_NEW_CANDLES, SOCKET_EVENT_SUBSCRIBE, SOCKET_EVENT_UNSUBSCRIBE,
-  SUBSCRIBED_EVENT_NEW_CANDLE
+  AppSocket,
+  SOCKET_EVENT_GET_CANDLES,
+  SOCKET_EVENT_NEW_CANDLES,
+  SUBSCRIBED_EVENT_NEW_CANDLE,
 } from "../Sockets/socket"
 import Candle from "./Candle"
-import {Socket} from "socket.io-client"
 import Interval from "../Interval/Interval"
 
 type RawCandle = {
@@ -18,12 +18,12 @@ type RawCandle = {
 
 class CandleSocket {
 
-  constructor(socket: Socket) {
+  constructor(socket: AppSocket) {
     this.socket = socket
   }
 
   registerNewCandleEvent(onNewCandle: (candle: Candle) => void) {
-    this.socket.on(SOCKET_EVENT_NEW_CANDLES, (candleRaw: RawCandle) => {
+    this.socket.socketio.on(SOCKET_EVENT_NEW_CANDLES, (candleRaw: RawCandle) => {
       const candle = CandleSocket.parseOneCandleFromData(candleRaw)
       if (candle !== null) {
         onNewCandle(candle)
@@ -31,40 +31,23 @@ class CandleSocket {
     })
   }
 
-  reloadCandles(market: string,
-                pair: string,
-                interval: Interval,
-                candleStorage: string,
-                onNewCandles: (candles: { [key: string]: Candle }) => void) {
-    console.log('Reloading CANDLES candles... ', pair, market, interval.since, interval.till)
-
-    socket.emit(SOCKET_EVENT_GET_CANDLES, {
+  reloadCandles(
+    market: string,
+    pair: string,
+    interval: Interval,
+    candleStorage: string,
+    onNewCandles: (candles: { [key: string]: Candle }) => void
+  ) {
+    this.socket.emit(SOCKET_EVENT_GET_CANDLES, {
       pair: pair,
       market: market,
-      interval: {
-        since: interval.since !== null ? interval.since.toISOString() : null,
-        till: interval.till !== null ? interval.till.toISOString() : null,
-      },
+      interval: interval.toIso(),
       candle_storage: candleStorage
     }, (status, data) => {
-      if (status !== 'OK') {
-        console.log('Server returned ERROR: ', data['message'])
-        return
-      }
-
       const candles = CandleSocket.parseCandlesDataIntoStateObject(data)
       onNewCandles(candles)
       console.log('Received CANDLES', Object.values(candles).length, 'candles!')
-
-      socket.emit(SOCKET_EVENT_UNSUBSCRIBE, {event: SUBSCRIBED_EVENT_NEW_CANDLE}, () => {
-        socket.emit(SOCKET_EVENT_SUBSCRIBE, {
-          event: SUBSCRIBED_EVENT_NEW_CANDLE,
-          candle_storage: candleStorage,
-          market: market,
-          pair: pair,
-          interval: interval,
-        })
-      })
+      this.socket.subscribeForUpdates(SUBSCRIBED_EVENT_NEW_CANDLE, market, pair, interval, candleStorage)
     })
   }
 
