@@ -23,15 +23,34 @@ class CandlesChart extends Component<Props> {
     const {type, width, data, ratio, interval} = this.props
     const xAccessor = (candle: Candle) => candle.date
 
+    const height = 400
+
+    const margin = {left: 50, right: 50, top: 10, bottom: 30}
+    const gridHeight = height - margin.top - margin.bottom
+    const gridWidth = width - margin.left - margin.right
+
+    const yGrid = {
+      innerTickSize: -1 * gridWidth,
+      tickStrokeDasharray: 'Solid',
+      tickStrokeOpacity: 0.2,
+      tickStrokeWidth: 1
+    }
+    const xGrid = {
+      innerTickSize: -1 * gridHeight,
+      tickStrokeDasharray: 'Solid',
+      tickStrokeOpacity: 0.2,
+      tickStrokeWidth: 1
+    }
+
     return (
       <ChartCanvas
         mouseMoveEvent={false}
         zoomEvent={false}
         panEvent={false}
-        height={400}
+        height={height}
         ratio={ratio}
         width={width}
-        margin={{left: 50, right: 50, top: 10, bottom: 30}}
+        margin={margin}
         type={type}
         seriesName="MSFT"
         data={data}
@@ -40,8 +59,8 @@ class CandlesChart extends Component<Props> {
         xExtents={[interval.since, interval.till]}
       >
         <Chart id={1} yExtents={(candle: Candle) => [candle.high, candle.low]}>
-          <XAxis axisAt="bottom" orient="bottom" ticks={6}/>
-          <YAxis axisAt="left" orient="left" ticks={5}/>
+          <XAxis {...xGrid} axisAt="bottom" orient="bottom" ticks={6}/>
+          <YAxis {...yGrid} axisAt="left" orient="left" ticks={5}/>
           <CandlestickSeries/>
         </Chart>
       </ChartCanvas>
