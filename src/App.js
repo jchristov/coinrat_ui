@@ -7,7 +7,7 @@ import DashboardComponent from "./DashboardComponent"
 import SocketEventLogComponent from "./Sockets/SocketEventLog/SocketEventLogComponent"
 import {socketEventLogStoreInstance} from "./Sockets/SocketEventLog/SocketEventLogStore"
 
-class App extends Component {
+class App extends Component<{}> {
   render() {
     return (
       <div>

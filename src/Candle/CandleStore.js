@@ -2,22 +2,17 @@
 import {socket} from "../Sockets/socket"
 import {autorun, extendObservable} from "mobx"
 import CandleSocket from "./CandleSocket"
-import Interval from "../Interval/Interval"
 import {FilterStore, filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import Candle from "./Candle"
 
 class CandleStore {
-  candles: ?Array<Candle> = null
+  candles: ?{ [key: string]: Candle } = null
 
   constructor(candlesSocket: CandleSocket, filterStore: FilterStore) {
+    this.filterStore = filterStore
     this.candlesSocket = candlesSocket
     autorun(() => {
-      this.reloadData(
-        filterStore.selectedMarket,
-        filterStore.selectedPair,
-        filterStore.selectedInterval,
-        filterStore.selectedCandleStorage
-      )
+      this.reloadData()
     })
     extendObservable(this, {candles: null})
     this.candlesSocket.registerNewCandleEvent((candle: Candle) => {
@@ -29,10 +24,16 @@ class CandleStore {
     })
   }
 
-  reloadData(market: string, pair: string, interval: Interval, candleStorage: string) {
-    this.candlesSocket.reloadCandles(market, pair, interval, candleStorage, (candles) => {
-      this.candles = candles
-    })
+  reloadData() {
+    this.candles = {}
+    this.candlesSocket.reloadCandles(
+      this.filterStore.selectedMarket,
+      this.filterStore.selectedPair,
+      this.filterStore.selectedInterval,
+      this.filterStore.selectedCandleStorage,
+      (candles) => {
+        this.candles = candles
+      })
   }
 }
 

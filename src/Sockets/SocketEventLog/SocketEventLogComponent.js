@@ -7,7 +7,7 @@ type Props = {
   store: SocketEventLogStore,
 }
 
-const SocketEventLogComponent = observer(class SocketEventLogComponent extends Component {
+const SocketEventLogComponent = observer(class SocketEventLogComponent extends Component<Props> {
   props: Props
 
   render() {

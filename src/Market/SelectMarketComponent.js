@@ -8,7 +8,7 @@ type Props = {
   store: FilterStore,
 }
 
-const SelectMarketComponent = observer(class SelectMarketComponent extends Component {
+const SelectMarketComponent = observer(class SelectMarketComponent extends Component<Props> {
   props: Props
 
   handleValueChange = (market: SelectElement) => {

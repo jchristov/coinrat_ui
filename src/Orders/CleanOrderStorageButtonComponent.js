@@ -7,7 +7,7 @@ type Props = {
   store: OrderStore,
 }
 
-class CleanOrderStorageButtonComponent extends Component {
+class CleanOrderStorageButtonComponent extends Component<Props> {
   props: Props
 
   render() {

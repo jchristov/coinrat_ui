@@ -10,7 +10,14 @@ type SelectElement = {
   key: string,
 }
 
-class SelectComponent extends Component {
+type Props = {
+  items: { [key: string]: SelectElement },
+  selectedItem: SelectElement,
+  label: string,
+  onChange: (element: SelectElement) => void,
+}
+
+class SelectComponent extends Component<Props> {
   renderPair({handleClick, isActive, item}: { handleClick: (any) => any, isActive: boolean, item: SelectElement }) {
     return (
       <MenuItem
@@ -23,7 +30,7 @@ class SelectComponent extends Component {
   }
 
   filterPair(query: string, element: SelectElement, index: number) {
-    return `${index + 1}. ${element.title.toLowerCase()} ${element.year}`.indexOf(query.toLowerCase()) >= 0
+    return `${index + 1}. ${element.title.toLowerCase()}`.indexOf(query.toLowerCase()) >= 0
   }
 
   render() {

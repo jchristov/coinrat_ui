@@ -1,5 +1,8 @@
 // @flow
 class Interval {
+ since = null
+ till = null
+
  constructor(since: ?Date = null, till: ?Date = null) {
   if (since !== null && till !== null && since > till) {
    throw Error('Since must be < than till')

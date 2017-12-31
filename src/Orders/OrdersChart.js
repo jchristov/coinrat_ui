@@ -16,7 +16,7 @@ type Props = {
   interval: Interval,
 }
 
-class OrdersChart extends Component {
+class OrdersChart extends Component<Props> {
   props: Props
 
   render() {

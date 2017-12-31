@@ -7,7 +7,7 @@ import {filterStoreInstance} from "./TopLineToolbar/FilterStore"
 import {orderStoreInstance} from "./Orders/OrderStore"
 import {candleStoreInstance} from "./Candle/CandleStore"
 
-class DashboardComponent extends Component {
+class DashboardComponent extends Component<{}> {
   render() {
     return (
       <div>

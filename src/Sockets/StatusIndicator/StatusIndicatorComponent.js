@@ -8,7 +8,7 @@ type Props = {
   store: StatusIndicatorStore,
 }
 
-const StatusIndicatorComponent = observer(class StatusIndicatorComponent extends Component {
+const StatusIndicatorComponent = observer(class StatusIndicatorComponent extends Component<Props> {
   props: Props
 
   render() {

@@ -5,7 +5,7 @@ import {Position, Tooltip} from "@blueprintjs/core"
 import {statusIndicatorStoreInstance} from "./Sockets/StatusIndicator/StatusIndicatorStore"
 import StatusIndicatorComponent from "./Sockets/StatusIndicator/StatusIndicatorComponent"
 
-class HeaderComponent extends Component {
+class HeaderComponent extends Component<{}> {
   render() {
     return (
       <nav className="pt-navbar pt-dark">

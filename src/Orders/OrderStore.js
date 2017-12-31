@@ -6,7 +6,7 @@ import OrderSocket from "./OrderSocket"
 import Order from "./Order"
 
 class OrderStore {
-  orders: ?Array<Order> = null
+  orders: ?{ [key: string]: Order } = null
 
   constructor(orderSocket: OrderSocket, filterStore: FilterStore) {
     this.orderSocket = orderSocket
@@ -25,6 +25,7 @@ class OrderStore {
   }
 
   reloadData = () => {
+    this.orders = {}
     this.orderSocket.reloadOrders(
       this.filterStore.selectedMarket,
       this.filterStore.selectedPair,

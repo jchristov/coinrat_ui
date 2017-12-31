@@ -8,7 +8,7 @@ type Props = {
   store: FilterStore,
 }
 
-const SelectOrderBackendStorageComponent = observer(class SelectOrderBackendStorageComponent extends Component {
+const SelectOrderBackendStorageComponent = observer(class SelectOrderBackendStorageComponent extends Component<Props> {
   props: Props
 
   handleValueChange = (orderStorage: SelectElement) => {

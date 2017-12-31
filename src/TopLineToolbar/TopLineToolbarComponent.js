@@ -18,7 +18,7 @@ type Props = {
   orderStore: OrderStore,
 }
 
-const TopLineToolbarComponent = observer(class FilterComponent extends Component {
+const TopLineToolbarComponent = observer(class FilterComponent extends Component<Props> {
   props: Props
 
   render() {

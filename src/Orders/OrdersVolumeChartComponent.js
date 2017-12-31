@@ -12,7 +12,7 @@ type Props = {
   store: OrderStore,
 }
 
-const OrdersVolumeChartComponent = observer(class OrdersVolumeChartComponent extends Component {
+const OrdersVolumeChartComponent = observer(class OrdersVolumeChartComponent extends Component<Props> {
   props: Props
 
   render() {

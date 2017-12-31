@@ -7,7 +7,7 @@ type Props = {
   store: StrategyRunnerStore
 }
 
-class RunStrategyButtonComponent extends Component {
+class RunStrategyButtonComponent extends Component<Props> {
   props: Props
 
   render() {

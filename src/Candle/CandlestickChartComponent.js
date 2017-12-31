@@ -1,9 +1,8 @@
 // @flow
 import React, {Component} from 'react'
 import {observer} from "mobx-react"
-import {Spinner} from "@blueprintjs/core/dist/components/spinner/spinner"
+import {NonIdealState, Spinner} from "@blueprintjs/core/dist"
 import CandlesChart from "./CandlesChart"
-import {NonIdealState} from "@blueprintjs/core/dist/components/non-ideal-state/nonIdealState"
 import {CandleStore} from "./CandleStore"
 import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import Interval from "../Interval/Interval"
@@ -12,7 +11,8 @@ type Props = {
   store: CandleStore,
 }
 
-const CandlestickChartComponent = observer(class CandlestickChartComponent extends Component {
+const CandlestickChartComponent = observer(class CandlestickChartComponent extends Component<Props> {
+  props: Props
 
   render() {
     let candles = this.props.store.candles

@@ -25,7 +25,9 @@ class CandleSocket {
   registerNewCandleEvent(onNewCandle: (candle: Candle) => void) {
     this.socket.on(SOCKET_EVENT_NEW_CANDLES, (candleRaw: RawCandle) => {
       const candle = CandleSocket.parseOneCandleFromData(candleRaw)
-      onNewCandle(candle)
+      if (candle !== null) {
+        onNewCandle(candle)
+      }
     })
   }
 
@@ -33,7 +35,7 @@ class CandleSocket {
                 pair: string,
                 interval: Interval,
                 candleStorage: string,
-                onNewCandles: (candles: Array<Candle>) => void) {
+                onNewCandles: (candles: { [key: string]: Candle }) => void) {
     console.log('Reloading CANDLES candles... ', pair, market, interval.since, interval.till)
 
     socket.emit(SOCKET_EVENT_GET_CANDLES, {
@@ -66,25 +68,26 @@ class CandleSocket {
     })
   }
 
-  static parseCandlesDataIntoStateObject(candlesRaw) {
+  static parseCandlesDataIntoStateObject(candlesRaw: Array<RawCandle>): { [key: string]: Candle } {
     const data = {}
     for (let i = 0; i < candlesRaw.length; i++) {
       const candleRaw = candlesRaw[i]
       const candle = CandleSocket.parseOneCandleFromData(candleRaw)
-      data[candle.date.toISOString()] = candle
+      if (candle !== null) {
+        data[candle.date.toISOString()] = candle
+      }
     }
     return data
   }
 
-  static parseOneCandleFromData(candle: RawCandle): Candle {
-    return new Candle(
-      new Date(Date.parse(candle.time)),
-      +candle.open,
-      +candle.high,
-      +candle.low,
-      +candle.close,
-      0,
-    )
+  static parseOneCandleFromData(rawCandle: RawCandle): Candle {
+    const date = new Date(Date.parse(rawCandle.time))
+    if (isNaN(date.getTime())) {
+      console.log('ERROR: Invalid candle data: ', rawCandle)
+      return null
+    }
+
+    return new Candle(date, +rawCandle.open, +rawCandle.high, +rawCandle.low, +rawCandle.close, 0)
   }
 }
 

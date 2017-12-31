@@ -9,7 +9,7 @@ type Props = {
   store: FilterStore,
 }
 
-const SelectPairComponent = observer(class SelectPairComponent extends Component {
+const SelectPairComponent = observer(class SelectPairComponent extends Component<Props> {
   props: Props
 
   handleValueChange = (pair: SelectElement) => {

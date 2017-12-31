@@ -11,7 +11,7 @@ type Props = {
   store: FilterStore,
 }
 
-const SelectIntervalComponent = observer(class SelectIntervalComponent extends Component {
+const SelectIntervalComponent = observer(class SelectIntervalComponent extends Component<Props> {
   props: Props
 
   handleChange = (data: Array<?Date>) => {

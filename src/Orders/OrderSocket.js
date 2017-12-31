@@ -26,7 +26,11 @@ export default class OrdersSocket {
     })
   }
 
-  reloadOrders(market: string, pair: string, interval: Interval, orderStorage: string, onNewOrders: (any) => void) {
+  reloadOrders(market: string,
+               pair: string,
+               interval: Interval,
+               orderStorage: string,
+               onNewOrders: ({ [key: string]: Order }) => void) {
     console.log('Reloading ORDER orders... ', pair, market, interval.since, interval.till)
 
     socket.emit(SOCKET_EVENT_GET_ORDERS, {
@@ -69,8 +73,8 @@ export default class OrdersSocket {
     })
   }
 
-  static parseOrdersDataIntoStateObject(ordersRaw: Array<RawOrder>): Array<Order> {
-    const orders: Array<Order> = {}
+  static parseOrdersDataIntoStateObject(ordersRaw: Array<RawOrder>): { [key: string]: Order } {
+    const orders: { [key: string]: Order } = {}
     for (let i = 0; i < ordersRaw.length; i++) {
       const order = OrdersSocket.parseOneOrderFromData(ordersRaw[i])
       orders[order.createdAt.toISOString()] = order
