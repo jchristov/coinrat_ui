@@ -7,6 +7,11 @@ import {fitWidth} from "react-stockcharts/lib/helper"
 import {scaleTime} from "d3-scale"
 import Interval from "../Interval/Interval"
 import Candle from "./Candle"
+import {timeFormat} from "d3-time-format"
+import {format} from "d3-format"
+import MouseCoordinateY from "react-stockcharts/es/lib/coordinates/MouseCoordinateY"
+import MouseCoordinateX from "react-stockcharts/es/lib/coordinates/MouseCoordinateX"
+import CrossHairCursor from "react-stockcharts/es/lib/coordinates/CrossHairCursor"
 
 type Props = {
   data: Array<Candle>,
@@ -21,10 +26,7 @@ class CandlesChart extends Component<Props> {
 
   render() {
     const {type, width, data, ratio, interval} = this.props
-    const xAccessor = (candle: Candle) => candle.date
-
     const height = 400
-
     const margin = {left: 50, right: 50, top: 10, bottom: 30}
     const gridHeight = height - margin.top - margin.bottom
     const gridWidth = width - margin.left - margin.right
@@ -42,27 +44,41 @@ class CandlesChart extends Component<Props> {
       tickStrokeWidth: 1
     }
 
+    const canvasProps = {
+      // mouseMoveEvent: false,
+      zoomEvent: false,
+      panEvent: false,
+      height: height,
+      ratio: ratio,
+      width: width,
+      margin: margin,
+      type: type,
+      seriesName: 'MSFT',
+      xAccessor: (candle: Candle) => candle.date,
+      xScale: scaleTime(),
+      xExtents: [interval.since, interval.till],
+    }
+
     return (
-      <ChartCanvas
-        mouseMoveEvent={false}
-        zoomEvent={false}
-        panEvent={false}
-        height={height}
-        ratio={ratio}
-        width={width}
-        margin={margin}
-        type={type}
-        seriesName="MSFT"
-        data={data}
-        xAccessor={xAccessor}
-        xScale={scaleTime()}
-        xExtents={[interval.since, interval.till]}
-      >
+      <ChartCanvas {...canvasProps} data={data}>
         <Chart id={1} yExtents={(candle: Candle) => [candle.high, candle.low]}>
+          <MouseCoordinateX
+            at="bottom"
+            orient="top"
+            displayFormat={timeFormat("%Y-%m-%d %X")}
+            rectWidth={160}
+          />
+          <MouseCoordinateY
+            at="left"
+            orient="right"
+            displayFormat={format(".8")}
+            rectWidth={100}
+          />
           <XAxis {...xGrid} axisAt="bottom" orient="bottom" ticks={6}/>
           <YAxis {...yGrid} axisAt="left" orient="left" ticks={5}/>
           <CandlestickSeries/>
         </Chart>
+        <CrossHairCursor/>
       </ChartCanvas>
     )
   }

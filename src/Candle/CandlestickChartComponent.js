@@ -16,27 +16,19 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
   props: Props
 
   renderChart = () => {
-    let candles = this.props.store.candles
-    candles = candles !== null ? Object.values(this.props.store.candles) : null
+    const interval = filterStoreInstance.selectedInterval.withClosedFromRight(new Date())
+    const candles = Object.values(this.props.store.candles)
 
-    if (candles === null) {
-      return <NonIdealState title="Loading..." description={<Spinner/>}/>
-    }
-
-    if (candles.length < 5) {
+    if (candles.length < 1) {
       return <div style={{marginTop: 25 + 'px'}}>
         <NonIdealState
           visual="search"
-          title="No data (or not enough) for candlestick chat."
+          title="No candles."
           description={<span>Does backend synchronize this pair from the selected market?</span>}
         />
       </div>
     }
 
-    let interval = filterStoreInstance.selectedInterval
-    if (interval.till === null) {
-      interval = new Interval(interval.since, new Date())
-    }
     return <CandlesChart type="svg" data={candles} interval={interval}/>
   }
 

@@ -22,14 +22,22 @@ class Order {
 }
 
 class OrderDirectionAggregate {
+  dateBucket: Date
   direction: OrderDirectionType
-  count: number = 0
+  countOpen: number = 0
+  countClosed: number = 0
+  countCanceled: number = 0
 
-  constructor(direction: OrderDirectionType) {
+  constructor(dateBucket: Date, direction: OrderDirectionType) {
+    this.dateBucket = dateBucket
     this.direction = direction
   }
 
-  increment = () => this.count++
+  increment = (status: OrderStatusType) => {
+    if (status === STATUS_OPEN) this.countOpen++
+    if (status === STATUS_CLOSED) this.countClosed++
+    if (status === STATUS_CANCELED) this.countCanceled++
+  }
 }
 
 export {

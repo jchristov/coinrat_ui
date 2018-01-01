@@ -1,60 +1,71 @@
 // @flow
 import {socket} from "../Sockets/socket"
-import {autorun, extendObservable} from "mobx"
+import {autorun, ObservableMap} from "mobx"
 import {FilterStore, filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import OrderSocket from "./OrderSocket"
 import {DIRECTION_BUY, DIRECTION_SELL, Order, OrderDirectionAggregate} from "./Order"
 
 class OrderStore {
-  buyOrders: ?{ [key: string]: OrderDirectionAggregate } = null
-  sellOrders: ?{ [key: string]: OrderDirectionAggregate } = null
+  buyOrders: ObservableMap
+  sellOrders: ObservableMap
 
   constructor(orderSocket: OrderSocket, filterStore: FilterStore) {
     this.orderSocket = orderSocket
     this.filterStore = filterStore
-    autorun(() => {
-      this.reloadData()
-    })
-    extendObservable(this, {
-      buyOrders: null,
-      sellOrders: null,
-    })
-    this.orderSocket.registerNewOrderEvent(this.addOrder)
+    this.buyOrders = new ObservableMap()
+    this.sellOrders = new ObservableMap()
+    this.orderSocket.registerNewOrderEvent(this.processOrders)
+    autorun(() => this.reloadData())
   }
 
   reloadData = () => {
-    this.buyOrders = {}
-    this.sellOrders = {}
+    this.buyOrders.clear()
+    this.sellOrders.clear()
 
     this.orderSocket.reloadOrders(
       this.filterStore.selectedMarket,
       this.filterStore.selectedPair,
       this.filterStore.selectedInterval,
       this.filterStore.selectedOrderStorage,
-      this.addOrder
+      this.processOrders
     )
   }
 
-  addOrder = (order: Order) => {
-    if (order.direction === DIRECTION_BUY) {
-      this.buyOrders = this.addOrderIntoAggregate(this.buyOrders, order)
-    } else if (order.direction === DIRECTION_SELL) {
-      this.sellOrders = this.addOrderIntoAggregate(this.sellOrders, order)
+  processOrders = (orders: Array<Order>) => {
+    const buyOrders = this.buyOrders.toJS()
+    const sellOrders = this.sellOrders.toJS()
+
+    for (let i = 0; i < orders.length; i++) {
+      const order = orders[i]
+      let date = order.createdAt
+      date.setSeconds(0)
+      let key = this.calculateAggregateHash(date)
+
+      if (order.direction === DIRECTION_BUY) {
+        if (buyOrders[key] === undefined) {
+          buyOrders[key] = new OrderDirectionAggregate(date, order.direction)
+        }
+        buyOrders[key].increment(order.status)
+
+      } else if (order.direction === DIRECTION_SELL) {
+        if (sellOrders[key] === undefined) {
+          sellOrders[key] = new OrderDirectionAggregate(date, order.direction)
+        }
+        sellOrders[key].increment(order.status)
+      }
     }
+
+    this.buyOrders.merge(buyOrders)
+    this.sellOrders.merge(sellOrders)
   }
 
-  addOrderIntoAggregate = (aggregateMap: { [key: string]: OrderDirectionAggregate }, order: Order) => {
-    const key = this.calculateAggregateHash(order)
-    if (aggregateMap[key] === undefined) {
-      aggregateMap[key] = new OrderDirectionAggregate(order.direction)
+  calculateAggregateHash = (date: Date): string => {
+    function str_pad(n) {
+      return String('00' + n).slice(-2)
     }
-    aggregateMap[key].increment()
-    return aggregateMap
-  }
 
-  calculateAggregateHash = (order: Order): string => {
-    const date = order.createdAt
-    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
+    return `${date.getFullYear()}-${str_pad(date.getMonth() + 1)}-${str_pad(date.getDate())} `
+      + `${str_pad(date.getHours())}:${str_pad(date.getMinutes())}:${str_pad(date.getSeconds())}`
   }
 
   clear = () => {
@@ -66,8 +77,8 @@ class OrderStore {
     )
 
     // Todo call this.reloadData() here but with some co-rutine/generator to make it synchronous
-    this.buyOrders = {}
-    this.sellOrders = {}
+    this.buyOrders.clear()
+    this.sellOrders.clear()
   }
 }
 

@@ -31,9 +31,9 @@ export default class OrdersSocket {
     this.socket = socket
   }
 
-  registerNewOrderEvent(onNewOrder: (order: Order) => void) {
+  registerNewOrderEvent(processOrders: (order: Array<Order>) => void) {
     this.socket.socketio.on(SOCKET_EVENT_NEW_ORDERS, (orderRaw) => {
-      onNewOrder(OrdersSocket.parseOneOrderFromData(orderRaw))
+      processOrders([OrdersSocket.parseOneOrderFromData(orderRaw)])
     })
   }
 
@@ -42,7 +42,7 @@ export default class OrdersSocket {
     pair: string,
     interval: Interval,
     orderStorage: string,
-    processOrder: (order: Order) => void
+    processOrders: (order: Array<Order>) => void
   ) {
     this.socket.emit(SOCKET_EVENT_GET_ORDERS, {
       pair: pair,
@@ -51,9 +51,7 @@ export default class OrdersSocket {
       order_storage: orderStorage,
     }, (status: string, rawOrders: Array<RawOrder>) => {
       console.log('Received ORDER', Object.values(rawOrders).length, 'orders!')
-      for (let i = 0; i < rawOrders.length; i++) {
-        processOrder(OrdersSocket.parseOneOrderFromData(rawOrders[i]))
-      }
+      processOrders(OrdersSocket.parseOrdersDataIntoStateObject(rawOrders))
       this.socket.subscribeForUpdates(SUBSCRIBED_EVENT_NEW_ORDER, market, pair, interval, orderStorage)
     })
   }
@@ -68,6 +66,10 @@ export default class OrdersSocket {
     }, () => {
       appMainToaster.show({message: "Order storage in given range cleared.", className: 'pt-intent-success'})
     })
+  }
+
+  static parseOrdersDataIntoStateObject(ordersRaw: Array<RawOrder>): Array<Order> {
+    return ordersRaw.map((rawOrder: RawOrder) => OrdersSocket.parseOneOrderFromData(rawOrder))
   }
 
   static parseOneOrderFromData(order: RawOrder): Order {

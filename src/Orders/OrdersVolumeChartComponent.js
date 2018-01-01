@@ -5,10 +5,9 @@ import OrdersChart from "./OrdersChart"
 import {NonIdealState, Spinner} from "@blueprintjs/core/"
 import {OrderStore} from "./OrderStore"
 import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
-import Interval from "../Interval/Interval"
 import {Flex, Box} from 'reflexbox'
-import {DIRECTION_BUY, DIRECTION_SELL, STATUS_CANCELED, STATUS_CLOSED, STATUS_OPEN} from "./Order"
-import {ORDERS_DIRECTION_COLORS, ORDERS_STATUS_COLORS} from "./ChartColors"
+import {STATUS_CANCELED, STATUS_CLOSED, STATUS_OPEN} from "./Order"
+import {ORDERS_STATUS_COLORS} from "./ChartColors"
 
 type Props = {
   store: OrderStore,
@@ -18,50 +17,31 @@ const OrdersVolumeChartComponent = observer(class OrdersVolumeChartComponent ext
   props: Props
 
   renderChart = () => {
-    let buyOrders = this.props.store.buyOrders
-    buyOrders = buyOrders !== null ? Object.values(this.props.store.buyOrders) : null
+    const interval = filterStoreInstance.selectedInterval.withClosedFromRight(new Date())
+    const buyOrders = Object.values(this.props.store.buyOrders.toJS())
+    const sellOrders = Object.values(this.props.store.sellOrders.toJS())
 
-    let sellOrders = this.props.store.sellOrders
-    sellOrders = sellOrders !== null ? Object.values(this.props.store.sellOrders) : null
-
-    if (buyOrders === null && sellOrders == null) {
-      return <NonIdealState title="Loading..." description={<Spinner/>}/>
-    }
-
-    if (buyOrders.length < 1 && buyOrders < 1) {
+    if (buyOrders.length < 1 && sellOrders.length < 1) {
       return <div style={{marginTop: 25 + 'px'}}>
         <NonIdealState
           visual="search"
-          title="No data for orders chart."
+          title="No orders."
           description={<span>Run strategy to do some orders.</span>}
         />
       </div>
     }
-
-    let interval = filterStoreInstance.selectedInterval
-    if (interval.till === null) {
-      interval = new Interval(interval.since, new Date())
-    }
-
     return <OrdersChart type="svg" buyOrders={buyOrders} sellOrders={sellOrders} interval={interval}/>
   }
 
   render() {
-    const directions = ORDERS_DIRECTION_COLORS
     const statuses = ORDERS_STATUS_COLORS
 
     return <div>
-      <h3>Orders</h3>
       <Flex align='center top'>
         <Box auto>
           {this.renderChart()}
         </Box>
         <Box w={256}>
-          <ul className="pt-list-unstyled">
-            <li><span style={{color: directions[DIRECTION_BUY]}} className="pt-icon-full-circle"/> Buy order</li>
-            <li><span style={{color: directions[DIRECTION_SELL]}} className="pt-icon-full-circle"/> Sell order</li>
-          </ul>
-          <br/>
           <ul className="pt-list-unstyled">
             <li><span style={{color: statuses[STATUS_OPEN]}} className="pt-icon-full-circle"/> Open order</li>
             <li><span style={{color: statuses[STATUS_CLOSED]}} className="pt-icon-full-circle"/> Closed order</li>

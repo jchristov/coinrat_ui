@@ -11,9 +11,6 @@ class CandleStore {
   constructor(candlesSocket: CandleSocket, filterStore: FilterStore) {
     this.filterStore = filterStore
     this.candlesSocket = candlesSocket
-    autorun(() => {
-      this.reloadData()
-    })
     extendObservable(this, {candles: null})
     this.candlesSocket.registerNewCandleEvent((candle: Candle) => {
       if (this.candles !== null) {
@@ -22,6 +19,7 @@ class CandleStore {
         this.candles = candles
       }
     })
+    autorun(() => this.reloadData())
   }
 
   reloadData() {
@@ -31,7 +29,7 @@ class CandleStore {
       this.filterStore.selectedPair,
       this.filterStore.selectedInterval,
       this.filterStore.selectedCandleStorage,
-      (candles) => {
+      (candles: { [key: string]: Candle }) => {
         this.candles = candles
       })
   }
