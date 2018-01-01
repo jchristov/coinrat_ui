@@ -5,8 +5,8 @@ import {
   SOCKET_EVENT_NEW_CANDLES,
   SUBSCRIBED_EVENT_NEW_CANDLE,
 } from "../Sockets/socket"
-import Candle from "./Candle"
 import Interval from "../Interval/Interval"
+import {Candle} from "./Candle"
 
 type RawCandle = {
   time: string,
@@ -36,31 +36,22 @@ class CandleSocket {
     pair: string,
     interval: Interval,
     candleStorage: string,
-    onNewCandles: (candles: { [key: string]: Candle }) => void
+    processCandles: (candles: { [key: string]: Candle }) => void
   ) {
     this.socket.emit(SOCKET_EVENT_GET_CANDLES, {
       pair: pair,
       market: market,
       interval: interval.toIso(),
       candle_storage: candleStorage
-    }, (status, data) => {
-      const candles = CandleSocket.parseCandlesDataIntoStateObject(data)
-      onNewCandles(candles)
-      console.log('Received CANDLES', Object.values(candles).length, 'candles!')
+    }, (status: String, rawCandles: RawCandle) => {
+      console.log('Received CANDLES', Object.values(rawCandles).length, 'candles!')
+      processCandles(CandleSocket.parseCandlesDataIntoStateObject(rawCandles))
       this.socket.subscribeForUpdates(SUBSCRIBED_EVENT_NEW_CANDLE, market, pair, interval, candleStorage)
     })
   }
 
-  static parseCandlesDataIntoStateObject(candlesRaw: Array<RawCandle>): { [key: string]: Candle } {
-    const data = {}
-    for (let i = 0; i < candlesRaw.length; i++) {
-      const candleRaw = candlesRaw[i]
-      const candle = CandleSocket.parseOneCandleFromData(candleRaw)
-      if (candle !== null) {
-        data[candle.date.toISOString()] = candle
-      }
-    }
-    return data
+  static parseCandlesDataIntoStateObject(candlesRaw: Array<RawCandle>): Array<Candle> {
+    return candlesRaw.map((rawCandle: RawCandle) => CandleSocket.parseOneCandleFromData(rawCandle))
   }
 
   static parseOneCandleFromData(rawCandle: RawCandle): Candle {

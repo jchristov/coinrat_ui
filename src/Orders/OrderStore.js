@@ -4,10 +4,11 @@ import {autorun, ObservableMap} from "mobx"
 import {FilterStore, filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import OrderSocket from "./OrderSocket"
 import {DIRECTION_BUY, DIRECTION_SELL, Order, OrderDirectionAggregate} from "./Order"
+import {aggregateDateSecond, calculateAggregateHash} from "../DateAggregate/aggregateHash"
 
 class OrderStore {
-  buyOrders: ObservableMap
-  sellOrders: ObservableMap
+  buyOrders: ObservableMap<OrderDirectionAggregate>
+  sellOrders: ObservableMap<OrderDirectionAggregate>
 
   constructor(orderSocket: OrderSocket, filterStore: FilterStore) {
     this.orderSocket = orderSocket
@@ -18,7 +19,7 @@ class OrderStore {
     autorun(() => this.reloadData())
   }
 
-  reloadData = () => {
+  reloadData = (): void => {
     this.buyOrders.clear()
     this.sellOrders.clear()
 
@@ -31,15 +32,14 @@ class OrderStore {
     )
   }
 
-  processOrders = (orders: Array<Order>) => {
-    const buyOrders = this.buyOrders.toJS()
-    const sellOrders = this.sellOrders.toJS()
+  processOrders = (orders: Array<Order>): void => {
+    const buyOrders: { [key: string]: OrderDirectionAggregate } = this.buyOrders.toJS()
+    const sellOrders: { [key: string]: OrderDirectionAggregate } = this.sellOrders.toJS()
 
     for (let i = 0; i < orders.length; i++) {
       const order = orders[i]
-      let date = order.createdAt
-      date.setSeconds(0)
-      let key = this.calculateAggregateHash(date)
+      const date = aggregateDateSecond(order.createdAt)
+      const key = calculateAggregateHash(date)
 
       if (order.direction === DIRECTION_BUY) {
         if (buyOrders[key] === undefined) {
@@ -59,16 +59,7 @@ class OrderStore {
     this.sellOrders.merge(sellOrders)
   }
 
-  calculateAggregateHash = (date: Date): string => {
-    function str_pad(n) {
-      return String('00' + n).slice(-2)
-    }
-
-    return `${date.getFullYear()}-${str_pad(date.getMonth() + 1)}-${str_pad(date.getDate())} `
-      + `${str_pad(date.getHours())}:${str_pad(date.getMinutes())}:${str_pad(date.getSeconds())}`
-  }
-
-  clear = () => {
+  clear = (): void => {
     this.orderSocket.clearAllOrders(
       this.filterStore.selectedMarket,
       this.filterStore.selectedPair,

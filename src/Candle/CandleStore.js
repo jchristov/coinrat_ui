@@ -1,37 +1,48 @@
 // @flow
 import {socket} from "../Sockets/socket"
-import {autorun, extendObservable} from "mobx"
+import {autorun, ObservableMap} from "mobx"
 import CandleSocket from "./CandleSocket"
 import {FilterStore, filterStoreInstance} from "../TopLineToolbar/FilterStore"
-import Candle from "./Candle"
+import {Candle, CandleAggregate} from "./Candle"
+import {aggregateDateSecond, calculateAggregateHash} from "../DateAggregate/aggregateHash"
 
 class CandleStore {
-  candles: ?{ [key: string]: Candle } = null
+  candles: ObservableMap<CandleAggregate>
 
   constructor(candlesSocket: CandleSocket, filterStore: FilterStore) {
     this.filterStore = filterStore
     this.candlesSocket = candlesSocket
-    extendObservable(this, {candles: null})
-    this.candlesSocket.registerNewCandleEvent((candle: Candle) => {
-      if (this.candles !== null) {
-        const candles = this.candles
-        candles[candle.date.toISOString()] = candle
-        this.candles = candles
-      }
-    })
+    this.candles = new ObservableMap()
+    this.candlesSocket.registerNewCandleEvent(this.processCandles)
     autorun(() => this.reloadData())
   }
 
-  reloadData() {
-    this.candles = {}
+  processCandles = (candles: Array<Candle>): void => {
+    const candlesAggregates: { [key: string]: CandleAggregate } = this.candles.toJS()
+
+    for (let i = 0; i < candles.length; i++) {
+      const candle = candles[i]
+      const date = aggregateDateSecond(candle.date)
+      const key = calculateAggregateHash(date)
+
+      if (candlesAggregates[key] === undefined) {
+        candlesAggregates[key] = new CandleAggregate(date)
+      }
+      candlesAggregates[key].addCandle(candle)
+    }
+
+    this.candles.merge(candlesAggregates)
+  }
+
+  reloadData(): void {
+    this.candles.clear()
     this.candlesSocket.reloadCandles(
       this.filterStore.selectedMarket,
       this.filterStore.selectedPair,
       this.filterStore.selectedInterval,
       this.filterStore.selectedCandleStorage,
-      (candles: { [key: string]: Candle }) => {
-        this.candles = candles
-      })
+      this.processCandles
+    )
   }
 }
 
