@@ -1,16 +1,17 @@
 // @flow
 import React, {Component} from 'react'
 import {ChartCanvas, Chart} from "react-stockcharts"
-import {GroupedBarSeries} from "react-stockcharts/lib/series"
+import {BarSeries} from "react-stockcharts/lib/series"
 import {XAxis, YAxis} from "react-stockcharts/lib/axes"
 import {fitWidth} from "react-stockcharts/lib/helper"
 import {scaleTime} from "d3-scale"
 import Interval from "../Interval/Interval"
-import {Order} from "./Order"
+import {Order, OrderDirectionAggregate} from "./Order"
 import {ORDERS_DIRECTION_COLORS, ORDERS_STATUS_COLORS} from "./ChartColors"
 
 type Props = {
-  data: Array<Order>,
+  buyOrders: Array<OrderDirectionAggregate>,
+  sellOrders: Array<OrderDirectionAggregate>,
   width: number,
   ratio: number,
   type: 'svg' | 'hybrid',
@@ -20,7 +21,7 @@ type Props = {
 class OrdersChart extends Component<Props> {
   props: Props
 
-  getColorForOrder = (order: Order, i) => {
+  getColorForOrder = (order: OrderDirectionAggregate, i) => {
     if (i === 0) {
       return ORDERS_DIRECTION_COLORS[order.direction]
     }
@@ -49,14 +50,13 @@ class OrdersChart extends Component<Props> {
         xScale={scaleTime()}
         xExtents={[interval.since, interval.till]}
       >
-        <Chart id={1} yExtents={() => [0, 1]}>
+        <Chart id={1}>
           <XAxis axisAt="bottom" orient="bottom" ticks={6}/>
           <YAxis axisAt="left" orient="left" ticks={1}/>
-          <GroupedBarSeries
-            yAccessor={[() => 1, () => 2]}
+          <BarSeries
+            yAccessor={(orderAggregate: OrderDirectionAggregate) => orderAggregate.count}
             fill={this.getColorForOrder}
-            width={8}
-            spaceBetweenBar={2}
+            width={4}
           />
         </Chart>
       </ChartCanvas>

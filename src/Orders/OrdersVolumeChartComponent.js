@@ -18,14 +18,17 @@ const OrdersVolumeChartComponent = observer(class OrdersVolumeChartComponent ext
   props: Props
 
   renderChart = () => {
-    let orders = this.props.store.orders
-    orders = orders !== null ? Object.values(this.props.store.orders) : null
+    let buyOrders = this.props.store.buyOrders
+    buyOrders = buyOrders !== null ? Object.values(this.props.store.buyOrders) : null
 
-    if (orders === null) {
+    let sellOrders = this.props.store.sellOrders
+    sellOrders = sellOrders !== null ? Object.values(this.props.store.sellOrders) : null
+
+    if (buyOrders === null && sellOrders == null) {
       return <NonIdealState title="Loading..." description={<Spinner/>}/>
     }
 
-    if (orders.length < 1) {
+    if (buyOrders.length < 1 && buyOrders < 1) {
       return <div style={{marginTop: 25 + 'px'}}>
         <NonIdealState
           visual="search"
@@ -40,7 +43,7 @@ const OrdersVolumeChartComponent = observer(class OrdersVolumeChartComponent ext
       interval = new Interval(interval.since, new Date())
     }
 
-    return <OrdersChart type="svg" data={orders} interval={interval}/>
+    return <OrdersChart type="svg" buyOrders={buyOrders} sellOrders={sellOrders} interval={interval}/>
   }
 
   render() {
@@ -58,7 +61,7 @@ const OrdersVolumeChartComponent = observer(class OrdersVolumeChartComponent ext
             <li><span style={{color: directions[DIRECTION_BUY]}} className="pt-icon-full-circle"/> Buy order</li>
             <li><span style={{color: directions[DIRECTION_SELL]}} className="pt-icon-full-circle"/> Sell order</li>
           </ul>
-          <br />
+          <br/>
           <ul className="pt-list-unstyled">
             <li><span style={{color: statuses[STATUS_OPEN]}} className="pt-icon-full-circle"/> Open order</li>
             <li><span style={{color: statuses[STATUS_CLOSED]}} className="pt-icon-full-circle"/> Closed order</li>

@@ -33,8 +33,7 @@ export default class OrdersSocket {
 
   registerNewOrderEvent(onNewOrder: (order: Order) => void) {
     this.socket.socketio.on(SOCKET_EVENT_NEW_ORDERS, (orderRaw) => {
-      const order = OrdersSocket.parseOneOrderFromData(orderRaw)
-      onNewOrder(order)
+      onNewOrder(OrdersSocket.parseOneOrderFromData(orderRaw))
     })
   }
 
@@ -43,17 +42,18 @@ export default class OrdersSocket {
     pair: string,
     interval: Interval,
     orderStorage: string,
-    onNewOrders: ({ [key: string]: Order }) => void
+    processOrder: (order: Order) => void
   ) {
     this.socket.emit(SOCKET_EVENT_GET_ORDERS, {
       pair: pair,
       market: market,
       interval: interval.toIso(),
       order_storage: orderStorage,
-    }, (status, data) => {
-      const orders = OrdersSocket.parseOrdersDataIntoStateObject(data)
-      onNewOrders(orders)
-      console.log('Received ORDER', Object.values(orders).length, 'orders!')
+    }, (status: string, rawOrders: Array<RawOrder>) => {
+      console.log('Received ORDER', Object.values(rawOrders).length, 'orders!')
+      for (let i = 0; i < rawOrders.length; i++) {
+        processOrder(OrdersSocket.parseOneOrderFromData(rawOrders[i]))
+      }
       this.socket.subscribeForUpdates(SUBSCRIBED_EVENT_NEW_ORDER, market, pair, interval, orderStorage)
     })
   }
@@ -68,15 +68,6 @@ export default class OrdersSocket {
     }, () => {
       appMainToaster.show({message: "Order storage in given range cleared.", className: 'pt-intent-success'})
     })
-  }
-
-  static parseOrdersDataIntoStateObject(ordersRaw: Array<RawOrder>): { [key: string]: Order } {
-    const orders: { [key: string]: Order } = {}
-    for (let i = 0; i < ordersRaw.length; i++) {
-      const order = OrdersSocket.parseOneOrderFromData(ordersRaw[i])
-      orders[order.createdAt.toISOString()] = order
-    }
-    return orders
   }
 
   static parseOneOrderFromData(order: RawOrder): Order {
