@@ -1,25 +1,20 @@
 // @flow
-import React, {Component} from "react"
-import {StrategyRunnerStore} from "./StrategyRunnerStore"
+import React from "react"
 import {Button} from "@blueprintjs/core"
 
 type Props = {
-  store: StrategyRunnerStore
+  onClick: () => void,
 }
 
-class RunStrategyButtonComponent extends Component<Props> {
-  props: Props
-
-  render() {
-    return <Button
-      style={{marginTop: 1 + 'px', marginLeft: 7 + 'px'}}
-      className="pt-intent-primary"
-      iconName="pt-icon-play"
-      onClick={this.props.store.runStrategy}
-    >
-      Run strategy
-    </Button>
-  }
+const RunStrategyButtonComponent = ({onClick}: Props) => {
+  return <Button
+    style={{marginTop: 1 + 'px', marginLeft: 7 + 'px'}}
+    className="pt-intent-primary"
+    iconName="pt-icon-play"
+    onClick={onClick}
+  >
+    Run strategy
+  </Button>
 }
 
 export default RunStrategyButtonComponent

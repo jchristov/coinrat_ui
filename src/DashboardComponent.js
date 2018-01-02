@@ -1,20 +1,18 @@
 // @flow
 import React, {Component} from 'react'
 import TopLineToolbarComponent from "./TopLineToolbar/TopLineToolbarComponent"
-import {filterStoreInstance} from "./TopLineToolbar/FilterStore"
-import {orderStoreInstance} from "./Orders/OrderStore"
-import {candleStoreInstance} from "./Candle/CandleStore"
 import CandlestickChartComponent from "./MainChart/CandlestickChartComponent"
+import {observer} from "mobx-react"
 
 class DashboardComponent extends Component<{}> {
   render() {
     return (
       <div>
-        <TopLineToolbarComponent filterStore={filterStoreInstance} orderStore={orderStoreInstance}/>
-        <CandlestickChartComponent candleStore={candleStoreInstance} orderStore={orderStoreInstance}/>
+        <TopLineToolbarComponent/>
+        <CandlestickChartComponent/>
       </div>
     )
   }
 }
 
-export default DashboardComponent
+export default observer(DashboardComponent)

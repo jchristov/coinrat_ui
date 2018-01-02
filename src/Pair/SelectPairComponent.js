@@ -1,30 +1,22 @@
 // @flow
-import React, {Component} from "react"
-import {observer} from "mobx-react/index"
-import {FilterStore} from "../TopLineToolbar/FilterStore"
-import type {SelectElement} from "../SelectComponent"
+import React from "react"
 import {SelectComponent} from "../SelectComponent"
+import type {DefaultSelectDataType, SelectElement} from "../SelectComponent"
 
 type Props = {
-  store: FilterStore,
+  availablePairs: DefaultSelectDataType,
+  onSelect: (pair: string) => void,
+  defaultSelectedPair: string,
 }
 
-const SelectPairComponent = observer(class SelectPairComponent extends Component<Props> {
-  props: Props
-
-  handleValueChange = (pair: SelectElement) => {
-    this.props.store.changeSelectedPair(pair.key)
-  }
-
-  render() {
-    const pairs = {
-      'USD_BTC': {key: 'USD_BTC', title: 'USD-BTC'},
-      'USD_LTC': {key: 'USD_LTC', title: 'USD-LTC'},
-      'USD_ETH': {key: 'USD_ETH', title: 'USD-ETH'},
-    }
-    const item = pairs[this.props.store.selectedPair]
-    return <SelectComponent label="Pair" items={pairs} selectedItem={item} onChange={this.handleValueChange}/>
-  }
-})
+const SelectPairComponent = ({availablePairs, defaultSelectedPair, onSelect}: Props) => {
+  const item = availablePairs[defaultSelectedPair]
+  return <SelectComponent
+    label="Pair"
+    items={availablePairs}
+    selectedItem={item}
+    onChange={(pair: SelectElement) => onSelect(pair.key)}
+  />
+}
 
 export default SelectPairComponent

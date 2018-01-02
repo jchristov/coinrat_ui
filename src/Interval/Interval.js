@@ -26,6 +26,10 @@ class Interval {
     }
     return new Interval(this.since, this.till)
   }
+
+  isEmpty = () => {
+    return this.since.getTime() === this.till.getTime()
+  }
 }
 
 

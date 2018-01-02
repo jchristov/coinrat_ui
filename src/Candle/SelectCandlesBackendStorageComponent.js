@@ -1,33 +1,22 @@
 // @flow
-import React, {Component} from "react"
-import {observer} from "mobx-react/index"
-import {SelectComponent, SelectElement} from "../SelectComponent"
-import {FilterStore} from "../TopLineToolbar/FilterStore"
+import React from "react"
+import {SelectComponent} from "../SelectComponent"
+import type {DefaultSelectDataType, SelectElement} from "../SelectComponent"
 
 type Props = {
-  store: FilterStore,
+  availableStorages: DefaultSelectDataType,
+  onSelect: (candleStorage: string) => void,
+  defaultSelectedPair: string,
 }
 
-const SelectCandlesBackendStorageComponent = observer(class SelectPairComponent extends Component {
-  props: Props
-
-  handleValueChange = (candleStorage: SelectElement) => {
-    this.props.store.changeSelectedCandleStorage(candleStorage.key)
-  }
-
-  render() {
-    const candleBackendStorages = {
-      'influx_db': {key: 'influx_db', title: 'Influx DB'},
-      'memory': {key: 'memory', title: 'In memory'},
-    }
-    const item = candleBackendStorages[this.props.store.selectedCandleStorage]
-    return <SelectComponent
-      label="Candle storage"
-      items={candleBackendStorages}
-      selectedItem={item}
-      onChange={this.handleValueChange}
-    />
-  }
-})
+const SelectCandlesBackendStorageComponent = ({availableStorages, defaultSelectedCandleStorage, onSelect}: Props) => {
+  const item = availableStorages[defaultSelectedCandleStorage]
+  return <SelectComponent
+    label="Candle storage"
+    items={availableStorages}
+    selectedItem={item}
+    onChange={(candleStorage: SelectElement) => onSelect(candleStorage.key)}
+  />
+}
 
 export default SelectCandlesBackendStorageComponent

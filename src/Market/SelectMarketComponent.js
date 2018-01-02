@@ -1,30 +1,22 @@
 // @flow
-import React, {Component} from "react"
-import {observer} from "mobx-react/index"
-import {SelectComponent, SelectElement} from "../SelectComponent"
-import {FilterStore} from "../TopLineToolbar/FilterStore"
+import React from "react"
+import {SelectComponent} from "../SelectComponent"
+import type {DefaultSelectDataType, SelectElement} from "../SelectComponent"
 
 type Props = {
-  store: FilterStore,
+  availableMarkets: DefaultSelectDataType,
+  onSelect: (market: string) => void,
+  defaultSelectedMarket: string,
 }
 
-const SelectMarketComponent = observer(class SelectMarketComponent extends Component<Props> {
-  props: Props
-
-  handleValueChange = (market: SelectElement) => {
-    this.props.store.changeSelectedMarket(market.key)
-  }
-
-  render() {
-    const markets = {
-      'bittrex': {key: 'bittrex', title: 'Bittrex'},
-      'bitfinex': {key: 'bitfinex', title: 'Bitfinex'},
-    }
-
-    const item = markets[this.props.store.selectedMarket]
-
-    return <SelectComponent label="Market" items={markets} selectedItem={item} onChange={this.handleValueChange}/>
-  }
-})
+const SelectMarketComponent = ({availableMarkets, defaultSelectedMarket, onSelect}: Props) => {
+  const item = availableMarkets[defaultSelectedMarket]
+  return <SelectComponent
+    label="Market"
+    items={availableMarkets}
+    selectedItem={item}
+    onChange={(market: SelectElement) => onSelect(market.key)}
+  />
+}
 
 export default SelectMarketComponent

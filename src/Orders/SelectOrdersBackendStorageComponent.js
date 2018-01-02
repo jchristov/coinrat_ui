@@ -1,33 +1,22 @@
 // @flow
-import React, {Component} from "react"
-import {observer} from "mobx-react/index"
-import {SelectComponent, SelectElement} from "../SelectComponent"
-import {FilterStore} from "../TopLineToolbar/FilterStore"
+import React from "react"
+import {SelectComponent} from "../SelectComponent"
+import type {DefaultSelectDataType, SelectElement} from "../SelectComponent"
 
 type Props = {
-  store: FilterStore,
+  availableStorages: DefaultSelectDataType,
+  onSelect: (candleStorage: string) => void,
+  defaultSelectedOrderStorage: string,
 }
 
-const SelectOrderBackendStorageComponent = observer(class SelectOrderBackendStorageComponent extends Component<Props> {
-  props: Props
-
-  handleValueChange = (orderStorage: SelectElement) => {
-    this.props.store.changeSelectedOrderStorage(orderStorage.key)
-  }
-
-  render() {
-    const orderBackendStorages = {
-      'influx_db': {key: 'influx_db', title: 'Influx DB'},
-      'memory': {key: 'memory', title: 'In memory'},
-    }
-    const item = orderBackendStorages[this.props.store.selectedOrderStorage]
-    return <SelectComponent
-      label="Order storage"
-      items={orderBackendStorages}
-      selectedItem={item}
-      onChange={this.handleValueChange}
-    />
-  }
-})
+const SelectOrderBackendStorageComponent = ({availableStorages, defaultSelectedOrderStorage, onSelect}: Props) => {
+  const item = availableStorages[defaultSelectedOrderStorage]
+  return <SelectComponent
+    label="Order storage"
+    items={availableStorages}
+    selectedItem={item}
+    onChange={(orderStorage: SelectElement) => onSelect(orderStorage.key)}
+  />
+}
 
 export default SelectOrderBackendStorageComponent

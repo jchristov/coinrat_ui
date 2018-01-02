@@ -11,19 +11,19 @@ class StrategyRunnerStore {
   }
 
   runStrategy = () => {
-    if (this.filterStore.selectedInterval.since === null || this.filterStore.selectedInterval.till === null) {
+    if (this.filterStore.interval.since === null || this.filterStore.interval.till === null) {
       appMainToaster.show({message: "Interval must be complete.", className: 'pt-intent-danger'})
       return
     }
 
     this.socket.emit(EVENT_RUN_REPLY, {
-      market: this.filterStore.selectedMarket,
-      pair: this.filterStore.selectedPair,
-      start: this.filterStore.selectedInterval.since.toISOString(),
-      stop: this.filterStore.selectedInterval.till.toISOString(),
-      candles_storage: this.filterStore.selectedCandleStorage,
-      orders_storage: this.filterStore.selectedOrderStorage,
-      strategy_name: this.filterStore.selectedStrategy,
+      market: this.filterStore.market,
+      pair: this.filterStore.pair,
+      start: this.filterStore.interval.since.toISOString(),
+      stop: this.filterStore.interval.till.toISOString(),
+      candles_storage: this.filterStore.candleStorage,
+      orders_storage: this.filterStore.orderStorage,
+      strategy_name: this.filterStore.strategy,
     }, (status, data) => {
       if (status !== 'OK') {
         console.log('Server returned ERROR: ', data['message'])

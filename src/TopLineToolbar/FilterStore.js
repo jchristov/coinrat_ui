@@ -3,49 +3,49 @@ import {extendObservable, action} from "mobx"
 import Interval from "../Interval/Interval"
 
 class FilterStore {
-  selectedPair: string
-  selectedMarket: string
-  selectedInterval: Interval
-  selectedCandleStorage: string
-  selectedOrderStorage: string
-  selectedStrategy: string
+  pair: string
+  market: string
+  interval: Interval
+  candleStorage: string
+  orderStorage: string
+  strategy: string
 
   constructor() {
     let since = new Date()
     since.setHours(since.getHours() - 12)
 
     extendObservable(this, {
-      selectedPair: 'USD_BTC',
-      selectedMarket: 'bittrex',
-      selectedInterval: new Interval(since),
-      selectedCandleStorage: 'influx_db',
-      selectedOrderStorage: 'influx_db',
-      selectedStrategy: 'double_crossover',
+      pair: 'USD_BTC',
+      market: 'bittrex',
+      interval: new Interval(since),
+      candleStorage: 'influx_db',
+      orderStorage: 'influx_db',
+      strategy: 'double_crossover',
     })
   }
 
-  changeSelectedPair = action((pair: string) => {
-    this.selectedPair = pair
+  changePair = action((pair: string) => {
+    this.pair = pair
   })
 
-  changeSelectedMarket = action((market: string) => {
-    this.selectedMarket = market
+  changeMarket = action((market: string) => {
+    this.market = market
   })
 
-  changeSelectedInterval = action((interval: Interval) => {
-    this.selectedInterval = interval
+  changeInterval = action((interval: Interval) => {
+    this.interval = interval
   })
 
-  changeSelectedOrderStorage = action((orderStorage: string) => {
-    this.selectedOrderStorage = orderStorage
+  changeOrderStorage = action((orderStorage: string) => {
+    this.orderStorage = orderStorage
   })
 
-  changeSelectedCandleStorage = action((candleStorage: string) => {
-    this.selectedCandleStorage = candleStorage
+  changeCandleStorage = action((candleStorage: string) => {
+    this.candleStorage = candleStorage
   })
 
-  changeSelectedStrategy = action((strategy: string) => {
-    this.selectedStrategy = strategy
+  changeStrategy = action((strategy: string) => {
+    this.strategy = strategy
   })
 }
 

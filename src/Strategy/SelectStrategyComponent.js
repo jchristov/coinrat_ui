@@ -1,27 +1,22 @@
 // @flow
-import React, {Component} from "react"
-import {observer} from "mobx-react/index"
+import React from "react"
 import {SelectComponent, SelectElement} from "../SelectComponent"
-import {FilterStore} from "../TopLineToolbar/FilterStore"
+import type {DefaultSelectDataType} from "../SelectComponent"
 
 type Props = {
-  store: FilterStore,
+  availableStrategies: DefaultSelectDataType,
+  onSelect: (strategy: string) => void,
+  defaultSelectedStrategy: string,
 }
 
-const SelectStrategyComponent = observer(class SelectStrategyComponent extends Component<Props> {
-  props: Props
-
-  handleValueChange = (pair: SelectElement) => {
-    this.props.store.changeSelectedStrategy(pair.key)
-  }
-
-  render() {
-    const strategies = {
-      'double_crossover': {key: 'double_crossover', title: 'Double Crossover'}
-    }
-    const item = strategies[this.props.store.selectedStrategy]
-    return <SelectComponent label="Strategy" items={strategies} selectedItem={item} onChange={this.handleValueChange}/>
-  }
-})
+const SelectStrategyComponent = ({availableStrategies, defaultSelectedStrategy, onSelect}: Props) => {
+  const item = availableStrategies[defaultSelectedStrategy]
+  return <SelectComponent
+    label="Strategy"
+    items={availableStrategies}
+    selectedItem={item}
+    onChange={(strategy: SelectElement) => onSelect(strategy.key)}
+  />
+}
 
 export default SelectStrategyComponent

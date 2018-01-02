@@ -1,20 +1,19 @@
 // @flow
 import {socket} from "../Sockets/socket"
-import {autorun, action, ObservableMap} from "mobx"
+import {action, ObservableMap} from "mobx"
 import CandleSocket from "./CandleSocket"
-import {FilterStore, filterStoreInstance} from "../TopLineToolbar/FilterStore"
+import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import {Candle, CandleAggregate} from "./Candle"
 import {aggregateDateSecond, calculateAggregateHash} from "../DateAggregate/aggregateHash"
+import Interval from "../Interval/Interval"
 
 class CandleStore {
   candles: ObservableMap<CandleAggregate>
 
-  constructor(candlesSocket: CandleSocket, filterStore: FilterStore) {
-    this.filterStore = filterStore
+  constructor(candlesSocket: CandleSocket) {
     this.candlesSocket = candlesSocket
     this.candles = new ObservableMap()
     this.candlesSocket.registerNewCandleEvent(this.processCandles)
-    autorun(() => this.reloadData())
   }
 
   processCandles = action((candles: Array<Candle>): void => {
@@ -34,15 +33,9 @@ class CandleStore {
     this.candles.merge(candlesAggregates)
   })
 
-  reloadData = action((): void => {
+  reloadData = action((market: string, pair: string, interval: Interval, candleStorage: string): void => {
     this.candles.clear()
-    this.candlesSocket.reloadCandles(
-      this.filterStore.selectedMarket,
-      this.filterStore.selectedPair,
-      this.filterStore.selectedInterval,
-      this.filterStore.selectedCandleStorage,
-      this.processCandles
-    )
+    this.candlesSocket.reloadCandles(market, pair, interval, candleStorage, this.processCandles)
   })
 }
 

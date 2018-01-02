@@ -1,4 +1,5 @@
 import Interval from "../Interval/Interval"
+import appMainToaster from "../Toaster"
 
 const url = process.env.REACT_APP_BACKEND_SOCKET_URL
 const socketio = require('socket.io-client')(url)
@@ -34,6 +35,11 @@ const EVENT_RUN_REPLY = 'run_reply'
 class AppSocket {
   constructor(socketio) {
     this.socketio = socketio
+    this.onConnect(() => {
+      socketio.on('error', (data) => {
+        appMainToaster.show({message: JSON.stringify(data), className: 'pt-intent-danger'})
+      })
+    })
   }
 
   subscribeForUpdates = (event: string, market: string, pair: string, interval: Interval, storage: string) => {

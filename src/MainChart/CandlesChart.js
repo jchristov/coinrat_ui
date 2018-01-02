@@ -67,7 +67,10 @@ class CandlesChart extends Component<Props> {
       xExtents: [interval.since, interval.till],
     }
 
-    const yCandlesExtends = (chartAggregate: ChartAggregate) => [chartAggregate.candleAggregate.high, chartAggregate.candleAggregate.low]
+    const yCandlesExtends = (chartAggregate: ChartAggregate) => [
+      chartAggregate.candleAggregate.high,
+      chartAggregate.candleAggregate.low,
+    ]
 
     const yCandleAccessor = (chartAggregate: ChartAggregate) => {
       return {

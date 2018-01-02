@@ -1,17 +1,16 @@
 // @flow
 import React, {Component} from "react"
-import {observer} from "mobx-react/index"
 import {DateRangeInput} from "@blueprintjs/datetime"
 import {Label} from "@blueprintjs/core"
 import Interval from "./Interval"
-import {FilterStore} from "../TopLineToolbar/FilterStore"
 import appMainToaster from "../Toaster"
 
 type Props = {
-  store: FilterStore,
+  defaultSelectedInterval: Interval,
+  onChange: (interval: Interval) => void,
 }
 
-const SelectIntervalComponent = observer(class SelectIntervalComponent extends Component<Props> {
+class SelectIntervalComponent extends Component<Props> {
   props: Props
 
   handleChange = (data: Array<?Date>) => {
@@ -25,11 +24,11 @@ const SelectIntervalComponent = observer(class SelectIntervalComponent extends C
       return
     }
 
-    this.props.store.changeSelectedInterval(new Interval(since, till))
+    this.props.onChange(new Interval(since, till))
   }
 
   render() {
-    const interval = this.props.store.selectedInterval
+    const interval = this.props.defaultSelectedInterval
     return (
       <Label
         style={{verticalAlign: 'middle', lineHeight: 30 + 'px', display: 'inline', marginLeft: 7 + 'px'}}
@@ -46,6 +45,6 @@ const SelectIntervalComponent = observer(class SelectIntervalComponent extends C
       </Label>
     )
   }
-})
+}
 
 export default SelectIntervalComponent
