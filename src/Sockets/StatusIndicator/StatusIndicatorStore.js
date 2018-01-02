@@ -1,5 +1,5 @@
 // @flow
-import {extendObservable} from "mobx"
+import {action, extendObservable} from "mobx"
 import {AppSocket, socket} from "../socket"
 
 class StatusIndicatorStore {
@@ -8,8 +8,8 @@ class StatusIndicatorStore {
       isOnline: false
     })
 
-    socket.onConnect(() => this.isOnline = true)
-    socket.onDisconnect(() => this.isOnline = false)
+    socket.onConnect(action(() => this.isOnline = true))
+    socket.onDisconnect(action(() => this.isOnline = false))
   }
 
 }

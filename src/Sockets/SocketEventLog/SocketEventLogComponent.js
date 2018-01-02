@@ -1,17 +1,17 @@
 // @flow
 import React, {Component} from 'react'
-import {observer} from "mobx-react"
-import {SocketEventLogStore} from "./SocketEventLogStore"
+import {inject, observer} from "mobx-react"
+import {SocketEventLogStore, socketEventLogStoreInstance} from "./SocketEventLogStore"
 
 type Props = {
-  store: SocketEventLogStore,
+  socketEventLogStoreInstance: SocketEventLogStore,
 }
 
-const SocketEventLogComponent = observer(class SocketEventLogComponent extends Component<Props> {
+class SocketEventLogComponent extends Component<Props> {
   props: Props
 
   render() {
-    const log = this.props.store.log
+    const log = this.props.socketEventLogStoreInstance.log.toJS()
     const logIds = Object.keys(log)
 
     console.log('refresh')
@@ -24,6 +24,6 @@ const SocketEventLogComponent = observer(class SocketEventLogComponent extends C
       </ul>
     </div>
   }
-})
+}
 
-export default SocketEventLogComponent
+export default inject('socketEventLogStoreInstance')(observer(SocketEventLogComponent))

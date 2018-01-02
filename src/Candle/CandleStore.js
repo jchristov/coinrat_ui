@@ -1,6 +1,6 @@
 // @flow
 import {socket} from "../Sockets/socket"
-import {autorun, ObservableMap} from "mobx"
+import {autorun, action, ObservableMap} from "mobx"
 import CandleSocket from "./CandleSocket"
 import {FilterStore, filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import {Candle, CandleAggregate} from "./Candle"
@@ -17,7 +17,7 @@ class CandleStore {
     autorun(() => this.reloadData())
   }
 
-  processCandles = (candles: Array<Candle>): void => {
+  processCandles = action((candles: Array<Candle>): void => {
     const candlesAggregates: { [key: string]: CandleAggregate } = this.candles.toJS()
 
     for (let i = 0; i < candles.length; i++) {
@@ -32,9 +32,9 @@ class CandleStore {
     }
 
     this.candles.merge(candlesAggregates)
-  }
+  })
 
-  reloadData(): void {
+  reloadData = action((): void => {
     this.candles.clear()
     this.candlesSocket.reloadCandles(
       this.filterStore.selectedMarket,
@@ -43,7 +43,7 @@ class CandleStore {
       this.filterStore.selectedCandleStorage,
       this.processCandles
     )
-  }
+  })
 }
 
 const candleStoreInstance = new CandleStore(new CandleSocket(socket), filterStoreInstance)

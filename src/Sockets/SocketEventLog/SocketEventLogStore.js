@@ -1,5 +1,4 @@
 // @flow
-import {extendObservable} from "mobx"
 import {
   socket,
   SOCKET_EVENT_PING_REQUEST,
@@ -7,12 +6,13 @@ import {
   SOCKET_EVENT_NEW_CANDLES,
   SOCKET_EVENT_NEW_ORDERS,
 } from "../socket"
+import {action, ObservableMap} from "mobx"
 
 class SocketEventLogStore {
+  log: ObservableMap<string>
+
   constructor() {
-    extendObservable(this, {
-      log: {},
-    })
+    this.log = new ObservableMap()
 
     socket.socketio.on('connect', () => {
       this.logMessage('Connect')
@@ -35,17 +35,15 @@ class SocketEventLogStore {
     })
   }
 
-  logMessage(message) {
+  logMessage = action((message) => {
     console.log(message)
-    const log = this.log
-    log[new Date().getTime()] = message
-    this.log = log
-  }
+    this.log.set(new Date().getTime(), message)
+  })
 }
 
 const socketEventLogStoreInstance = new SocketEventLogStore()
 
 export {
   socketEventLogStoreInstance,
-  SocketEventLogStore
+  SocketEventLogStore,
 }

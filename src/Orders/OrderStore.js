@@ -1,6 +1,6 @@
 // @flow
 import {socket} from "../Sockets/socket"
-import {autorun, ObservableMap} from "mobx"
+import {autorun, action, ObservableMap} from "mobx"
 import {FilterStore, filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import OrderSocket from "./OrderSocket"
 import {DIRECTION_BUY, DIRECTION_SELL, Order, OrderDirectionAggregate} from "./Order"
@@ -19,7 +19,7 @@ class OrderStore {
     autorun(() => this.reloadData())
   }
 
-  reloadData = (): void => {
+  reloadData = action((): void => {
     this.buyOrders.clear()
     this.sellOrders.clear()
 
@@ -30,9 +30,9 @@ class OrderStore {
       this.filterStore.selectedOrderStorage,
       this.processOrders
     )
-  }
+  })
 
-  processOrders = (orders: Array<Order>): void => {
+  processOrders = action((orders: Array<Order>): void => {
     const buyOrders: { [key: string]: OrderDirectionAggregate } = this.buyOrders.toJS()
     const sellOrders: { [key: string]: OrderDirectionAggregate } = this.sellOrders.toJS()
 
@@ -57,9 +57,9 @@ class OrderStore {
 
     this.buyOrders.merge(buyOrders)
     this.sellOrders.merge(sellOrders)
-  }
+  })
 
-  clear = (): void => {
+  clear = action((): void => {
     this.orderSocket.clearAllOrders(
       this.filterStore.selectedMarket,
       this.filterStore.selectedPair,
@@ -70,7 +70,7 @@ class OrderStore {
     // Todo call this.reloadData() here but with some co-rutine/generator to make it synchronous
     this.buyOrders.clear()
     this.sellOrders.clear()
-  }
+  })
 }
 
 const orderStoreInstance = new OrderStore(new OrderSocket(socket), filterStoreInstance)

@@ -1,10 +1,16 @@
 // @flow
-import {extendObservable} from "mobx"
+import {extendObservable, action} from "mobx"
 import Interval from "../Interval/Interval"
 
 class FilterStore {
-  constructor() {
+  selectedPair: string
+  selectedMarket: string
+  selectedInterval: Interval
+  selectedCandleStorage: string
+  selectedOrderStorage: string
+  selectedStrategy: string
 
+  constructor() {
     let since = new Date()
     since.setHours(since.getHours() - 12)
 
@@ -16,34 +22,36 @@ class FilterStore {
       selectedOrderStorage: 'influx_db',
       selectedStrategy: 'double_crossover',
     })
-
   }
 
-  changeSelectedPair(pair: string) {
+  changeSelectedPair = action((pair: string) => {
     this.selectedPair = pair
-  }
+  })
 
-  changeSelectedMarket(market: string) {
+  changeSelectedMarket = action((market: string) => {
     this.selectedMarket = market
-  }
+  })
 
-  changeSelectedInterval(interval: Interval) {
+  changeSelectedInterval = action((interval: Interval) => {
     this.selectedInterval = interval
-  }
+  })
 
-  changeSelectedOrderStorage(orderStorage: string) {
+  changeSelectedOrderStorage = action((orderStorage: string) => {
     this.selectedOrderStorage = orderStorage
-  }
+  })
 
-  changeSelectedCandleStorage(candleStorage: string) {
+  changeSelectedCandleStorage = action((candleStorage: string) => {
     this.selectedCandleStorage = candleStorage
-  }
+  })
 
-  changeSelectedStrategy(strategy: string) {
+  changeSelectedStrategy = action((strategy: string) => {
     this.selectedStrategy = strategy
-  }
+  })
 }
 
 const filterStoreInstance = new FilterStore()
 
-export {filterStoreInstance, FilterStore}
+export {
+  filterStoreInstance,
+  FilterStore,
+}

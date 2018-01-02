@@ -6,29 +6,26 @@ import HeaderComponent from "./HeaderComponent"
 import DashboardComponent from "./DashboardComponent"
 import SocketEventLogComponent from "./Sockets/SocketEventLog/SocketEventLogComponent"
 import {socketEventLogStoreInstance} from "./Sockets/SocketEventLog/SocketEventLogStore"
+import {observer, Provider} from "mobx-react"
 
 class App extends Component<{}> {
   render() {
     return (
-      <div>
+      <Provider socketEventLogStoreInstance={socketEventLogStoreInstance}>
         <BrowserRouter>
           <div>
             <HeaderComponent/>
             <div className="main-content" style={{padding: "1em"}}>
               <div className="workspace">
-                <Route exact path="/" render={() => {
-                  return <DashboardComponent/>
-                }}/>
-                <Route path="/socket-event-log" render={() => {
-                  return <SocketEventLogComponent store={socketEventLogStoreInstance}/>
-                }}/>
+                <Route exact path="/" component={DashboardComponent}/>
+                <Route path="/socket-event-log" component={SocketEventLogComponent}/>
               </div>
             </div>
           </div>
         </BrowserRouter>
-      </div>
+      </Provider>
     )
   }
 }
 
-export default App
+export default observer(App)
