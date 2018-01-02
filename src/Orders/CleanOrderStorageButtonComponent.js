@@ -12,9 +12,7 @@ const CleanOrderStorageButtonComponent = ({onClick}: Props) => {
     className="pt-intent-danger"
     iconName="pt-icon-eraser"
     onClick={onClick}
-  >
-    Clean order storage
-  </Button>
+  />
 }
 
 export default CleanOrderStorageButtonComponent

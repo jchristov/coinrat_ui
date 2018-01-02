@@ -14,6 +14,7 @@ import {filterStoreInstance} from "./FilterStore"
 import {orderStoreInstance} from "../Orders/OrderStore"
 import {candleStoreInstance} from "../Candle/CandleStore"
 import Interval from "../Interval/Interval"
+import {Box, Flex} from "reflexbox"
 
 class TopLineToolbarComponent extends Component<{}> {
 
@@ -62,75 +63,112 @@ class TopLineToolbarComponent extends Component<{}> {
     )
   }
 
-  render() {
-    const markets = {
-      'bittrex': {key: 'bittrex', title: 'Bittrex'},
-      'bitfinex': {key: 'bitfinex', title: 'Bitfinex'},
-    }
-
+  renderPairs = () => {
     const pairs = {
       'USD_BTC': {key: 'USD_BTC', title: 'USD-BTC'},
       'USD_LTC': {key: 'USD_LTC', title: 'USD-LTC'},
       'USD_ETH': {key: 'USD_ETH', title: 'USD-ETH'},
     }
 
+    return <SelectPairComponent
+      availablePairs={pairs}
+      defaultSelectedPair={filterStoreInstance.pair}
+      onSelect={this.changePair}
+    />
+  }
+
+  renderMarkets = () => {
+    const markets = {
+      'bittrex': {key: 'bittrex', title: 'Bittrex'},
+      'bitfinex': {key: 'bitfinex', title: 'Bitfinex'},
+    }
+
+    return <SelectMarketComponent
+      availableMarkets={markets}
+      defaultSelectedMarket={filterStoreInstance.market}
+      onSelect={this.changeMarket}
+    />
+  }
+
+  renderInterval = () => {
+    return <SelectIntervalComponent
+      defaultSelectedInterval={filterStoreInstance.interval}
+      onChange={this.changeInterval}
+    />
+  }
+
+  renderCandleStorages = () => {
     const candleBackendStorages = {
       'influx_db': {key: 'influx_db', title: 'Influx DB'},
       'memory': {key: 'memory', title: 'In memory'},
     }
 
+    return <SelectCandlesBackendStorageComponent
+      availableStorages={candleBackendStorages}
+      defaultSelectedCandleStorage={filterStoreInstance.candleStorage}
+      onSelect={this.changeCandleStorage}
+    />
+  }
+
+  f
+  renderOrderStorages = () => {
     const orderBackendStorages = {
       'influx_db': {key: 'influx_db', title: 'Influx DB'},
       'memory': {key: 'memory', title: 'In memory'},
     }
 
+    return <SelectOrdersBackendStorageComponent
+      availableStorages={orderBackendStorages}
+      defaultSelectedOrderStorage={filterStoreInstance.orderStorage}
+      onSelect={this.changeOrderStorage}
+    />
+  }
+
+  renderStrategies = () => {
     const strategies = {
       'double_crossover': {key: 'double_crossover', title: 'Double Crossover'}
     }
 
-    return (
-      <div>
-        <div>
-          <SelectPairComponent
-            availablePairs={pairs}
-            defaultSelectedPair={filterStoreInstance.pair}
-            onSelect={this.changePair}
-          />
-          <SelectMarketComponent
-            availableMarkets={markets}
-            defaultSelectedMarket={filterStoreInstance.market}
-            onSelect={this.changeMarket}
-          />
-          <SelectIntervalComponent
-            defaultSelectedInterval={filterStoreInstance.interval}
-            onChange={this.changeInterval}
-          />
-        </div>
-        <div>
-          <SelectCandlesBackendStorageComponent
-            availableStorages={candleBackendStorages}
-            defaultSelectedCandleStorage={filterStoreInstance.candleStorage}
-            onSelect={this.changeCandleStorage}
-          />
-        </div>
-        <div>
-          <SelectOrdersBackendStorageComponent
-            availableStorages={orderBackendStorages}
-            defaultSelectedOrderStorage={filterStoreInstance.orderStorage}
-            onSelect={this.changeOrderStorage}
-          />
-          <CleanOrderStorageButtonComponent onClick={orderStoreInstance.clear}/>
-        </div>
-        <div>
-          <SelectStrategyComponent
-            availableStrategies={strategies}
-            defaultSelectedStrategy={filterStoreInstance.strategy}
-            onSelect={filterStoreInstance.changeStrategy}
-          />
-          <RunStrategyButtonComponent onClick={strategyRunnerStoreInstance.runStrategy}/>
-        </div>
-      </div>
-    )
+    return <SelectStrategyComponent
+      availableStrategies={strategies}
+      defaultSelectedStrategy={filterStoreInstance.strategy}
+      onSelect={filterStoreInstance.changeStrategy}
+    />
+  }
+
+  render() {
+    return <div>
+      <Flex alignItems="start">
+        <Box>
+          <Flex column>
+            <Box>{this.renderPairs()}</Box>
+            <Box>{this.renderMarkets()}</Box>
+          </Flex>
+        </Box>
+        <Box>
+          <Flex column>
+            <Box>{this.renderCandleStorages()}</Box>
+            <Box>
+              <Flex>
+                <Box>{this.renderOrderStorages()}</Box>
+                <Box><CleanOrderStorageButtonComponent onClick={orderStoreInstance.clear}/></Box>
+              </Flex>
+            </Box>
+          </Flex>
+        </Box>
+        <Box>
+          <Flex column>
+            <Box>{this.renderInterval()}</Box>
+            <Box>
+              <Flex>
+                <Box>{this.renderStrategies()}</Box>
+                <Box><RunStrategyButtonComponent onClick={strategyRunnerStoreInstance.runStrategy}/></Box>
+              </Flex>
+            </Box>
+          </Flex>
+        </Box>
+      </Flex>
+    </div>
   }
 }
 

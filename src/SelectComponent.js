@@ -2,6 +2,7 @@
 import React, {Component} from "react"
 import {Select} from "@blueprintjs/labs"
 import {Button, MenuItem, Classes, Label} from "@blueprintjs/core"
+import {Box, Flex} from "reflexbox"
 
 const ConcreateSelect = Select.ofType()
 
@@ -19,8 +20,15 @@ type Props = {
   onChange: (element: SelectElement) => void,
 }
 
+const lineStyles = {
+  verticalAlign: 'middle',
+  lineHeight: 30 + 'px',
+  display: 'inline',
+  marginLeft: 7 + 'px',
+}
+
 class SelectComponent extends Component<Props> {
-  renderPair({handleClick, isActive, item}: { handleClick: (any) => any, isActive: boolean, item: SelectElement }) {
+  renderPair = ({handleClick, isActive, item}: { handleClick: (any) => any, isActive: boolean, item: SelectElement }) => {
     return (
       <MenuItem
         className={Classes.ACTIVE}
@@ -31,29 +39,27 @@ class SelectComponent extends Component<Props> {
     )
   }
 
-  filterPair(query: string, element: SelectElement, index: number) {
+  filterPair = (query: string, element: SelectElement, index: number) => {
     return `${index + 1}. ${element.title.toLowerCase()}`.indexOf(query.toLowerCase()) >= 0
   }
 
   render() {
-    return (
-      <Label
-        style={{verticalAlign: 'middle', lineHeight: 30 + 'px', display: 'inline', marginLeft: 7 + 'px'}}
-        text={`${this.props.label}:`}
-      >
-        <div style={{marginLeft: 7 + 'px', display: 'inline'}}>
-          <ConcreateSelect
-            items={Object.values(this.props.items)}
-            itemPredicate={this.filterPair}
-            itemRenderer={this.renderPair}
-            noResults={<MenuItem disabled text="No results."/>}
-            onItemSelect={this.props.onChange}
-          >
-            <Button rightIconName="caret-down" text={this.props.selectedItem.title}/>
-          </ConcreateSelect>
-        </div>
-      </Label>
-    )
+    return <Flex alignItems="left">
+      <Box w={120} style={{textAlign: 'right', ...lineStyles}}>
+        <Label text={`${this.props.label}:`}/>
+      </Box>
+      <Box auto style={{textAlign: 'left', ...lineStyles}}>
+        <ConcreateSelect
+          items={Object.values(this.props.items)}
+          itemPredicate={this.filterPair}
+          itemRenderer={this.renderPair}
+          noResults={<MenuItem disabled text="No results."/>}
+          onItemSelect={this.props.onChange}
+        >
+          <Button rightIconName="caret-down" text={this.props.selectedItem.title}/>
+        </ConcreateSelect>
+      </Box>
+    </Flex>
   }
 }
 

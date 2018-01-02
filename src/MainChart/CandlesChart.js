@@ -27,8 +27,8 @@ type Props = {
 const BETWEEN_SPACE = 30
 const margin = {left: 50, right: 50, top: 10, bottom: 30}
 const candleChartHeight = 400
-const buyOrderChartHeight = 100
-const sellOrderChartHeight = 100
+const buyOrderChartHeight = 80
+const sellOrderChartHeight = 80
 const wholeChartHeight =
   margin.top
   + candleChartHeight

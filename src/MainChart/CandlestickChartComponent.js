@@ -40,7 +40,7 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
       <Flex align='center top'>
         <Box auto>{this.renderChart()}</Box>
         <Box w={256}>
-          <ul className="pt-list-unstyled">
+          <ul className="pt-list-unstyled" style={{paddingTop: 2 + 'em'}}>
             <li><span style={{color: statuses[STATUS_OPEN]}} className="pt-icon-full-circle"/> Open order</li>
             <li><span style={{color: statuses[STATUS_CLOSED]}} className="pt-icon-full-circle"/> Closed order</li>
             <li><span style={{color: statuses[STATUS_CANCELED]}} className="pt-icon-full-circle"/> Canceled order</li>

@@ -13,7 +13,7 @@ class App extends Component<{}> {
       <BrowserRouter>
         <div>
           <HeaderComponent/>
-          <div className="main-content" style={{padding: "1em"}}>
+          <div className="main-content" style={{padding: "0.4em 1em 1em 1em"}}>
             <div className="workspace">
               <Route exact path="/" component={DashboardComponent}/>
               <Route path="/socket-event-log" component={SocketEventLogComponent}/>

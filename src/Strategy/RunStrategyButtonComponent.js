@@ -12,9 +12,7 @@ const RunStrategyButtonComponent = ({onClick}: Props) => {
     className="pt-intent-primary"
     iconName="pt-icon-play"
     onClick={onClick}
-  >
-    Run strategy
-  </Button>
+  />
 }
 
 export default RunStrategyButtonComponent
