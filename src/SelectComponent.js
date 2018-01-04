@@ -44,7 +44,7 @@ class SelectComponent extends Component<Props> {
   }
 
   render() {
-    return <Flex alignItems="left">
+    return <Flex>
       <Box w={120} style={{textAlign: 'right', ...lineStyles}}>
         <Label text={`${this.props.label}:`}/>
       </Box>

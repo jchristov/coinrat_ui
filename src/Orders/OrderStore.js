@@ -5,6 +5,8 @@ import OrderSocket from "./OrderSocket"
 import {DIRECTION_BUY, DIRECTION_SELL, Order, OrderDirectionAggregate} from "./Order"
 import {aggregateDateSecond, calculateAggregateHash} from "../DateAggregate/aggregateHash"
 import Interval from "../Interval/Interval"
+import {FilterStore} from "../TopLineToolbar/FilterStore"
+import {candleStoreInstance} from "../Candle/CandleStore"
 
 class OrderStore {
   buyOrders: ObservableMap<OrderDirectionAggregate>
@@ -21,6 +23,15 @@ class OrderStore {
     this.buyOrders.clear()
     this.sellOrders.clear()
     this.orderSocket.reloadOrders(market, pair, interval, orderStorage, this.processOrders)
+  })
+
+  reloadByFilter = action((filterStore: FilterStore) => {
+    this.reloadData(
+      filterStore.market,
+      filterStore.pair,
+      filterStore.interval,
+      filterStore.orderStorage
+    )
   })
 
   processOrders = action((orders: Array<Order>): void => {

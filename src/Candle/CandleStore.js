@@ -2,7 +2,7 @@
 import {socket} from "../Sockets/socket"
 import {action, ObservableMap} from "mobx"
 import CandleSocket from "./CandleSocket"
-import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
+import {FilterStore, filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import {Candle, CandleAggregate} from "./Candle"
 import {aggregateDateSecond, calculateAggregateHash} from "../DateAggregate/aggregateHash"
 import Interval from "../Interval/Interval"
@@ -36,6 +36,15 @@ class CandleStore {
   reloadData = action((market: string, pair: string, interval: Interval, candleStorage: string): void => {
     this.candles.clear()
     this.candlesSocket.reloadCandles(market, pair, interval, candleStorage, this.processCandles)
+  })
+
+  reloadByFilter = action((filterStore: FilterStore) => {
+    this.reloadData(
+      filterStore.market,
+      filterStore.pair,
+      filterStore.interval,
+      filterStore.candleStorage
+    )
   })
 }
 
