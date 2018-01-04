@@ -16,6 +16,7 @@ const lineStyles = {
   lineHeight: 30 + 'px',
   display: 'inline',
   marginLeft: 7 + 'px',
+  minWidth: 120 + 'px',
 }
 
 class SelectIntervalComponent extends Component<Props> {
@@ -41,7 +42,7 @@ class SelectIntervalComponent extends Component<Props> {
       <Box w={120} style={{textAlign: 'right', ...lineStyles}}>
         <Label text='Interval:'/>
       </Box>
-      <Box auto style={{textAlign: 'left', ...lineStyles}}>
+      <Box style={{textAlign: 'left', ...lineStyles}}>
         <DateRangeInput
           format="YYYY-MM-DD HH:mm:ss"
           value={[interval.since, interval.till]}
