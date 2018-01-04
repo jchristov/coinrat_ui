@@ -56,7 +56,12 @@ class SelectComponent extends Component<Props> {
           noResults={<MenuItem disabled text="No results."/>}
           onItemSelect={this.props.onChange}
         >
-          <Button rightIconName="caret-down" text={this.props.selectedItem.title}/>
+          <Button>
+            <Flex wrap={false}>
+              <Box style={{whiteSpace: 'nowrap'}}>{this.props.selectedItem.title}</Box>
+              <Box><span className="pt-icon-standard pt-icon-caret-down"/></Box>
+            </Flex>
+          </Button>
         </ConcreateSelect>
       </Box>
     </Flex>
