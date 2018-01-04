@@ -6,7 +6,6 @@ import {DIRECTION_BUY, DIRECTION_SELL, Order, OrderDirectionAggregate} from "./O
 import {aggregateDateSecond, calculateAggregateHash} from "../DateAggregate/aggregateHash"
 import Interval from "../Interval/Interval"
 import {FilterStore} from "../TopLineToolbar/FilterStore"
-import {candleStoreInstance} from "../Candle/CandleStore"
 
 class OrderStore {
   buyOrders: ObservableMap<OrderDirectionAggregate>
