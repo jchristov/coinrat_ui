@@ -13,6 +13,7 @@ class CandleStore {
   constructor(candlesSocket: CandleSocket) {
     this.candlesSocket = candlesSocket
     this.candles = new ObservableMap()
+    this.candlesSocket.registerInitialDataLoad(this.reloadByFilter)
     this.candlesSocket.registerNewCandleEvent(this.processCandles)
   }
 

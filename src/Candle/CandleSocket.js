@@ -22,6 +22,10 @@ class CandleSocket {
     this.socket = socket
   }
 
+  registerInitialDataLoad = (callback: () => void) => {
+    // this.socket.onConnect(callback)
+  }
+
   registerNewCandleEvent(onNewCandle: (candle: Candle) => void) {
     this.socket.socketio.on(SOCKET_EVENT_NEW_CANDLES, (candleRaw: RawCandle) => {
       const candle = CandleSocket.parseOneCandleFromData(candleRaw)

@@ -3,13 +3,11 @@ import React, {Component} from 'react'
 import {observer} from "mobx-react"
 import {filterStoreInstance} from "./FilterStore"
 import SelectOrdersBackendStorageComponent from "../Orders/SelectOrdersBackendStorageComponent"
-import {orderStoreInstance} from "../Orders/OrderStore"
 
 class SelectOrderStorageContainer extends Component<{}> {
 
   changeOrderStorage = (orderStorage: string) => {
     filterStoreInstance.changeOrderStorage(orderStorage)
-    orderStoreInstance.reloadByFilter(filterStoreInstance)
   }
 
   render = () => {

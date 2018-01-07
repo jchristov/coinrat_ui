@@ -1,9 +1,15 @@
 import React from "react"
 import {orderStoreInstance} from "../Orders/OrderStore"
 import CleanOrderStorageButtonComponent from "../Orders/CleanOrderStorageButtonComponent"
+import {filterStoreInstance} from "./FilterStore"
 
 const CleanOrderStorageButtonContainer = () => {
- return <CleanOrderStorageButtonComponent onClick={orderStoreInstance.clear}/>
+
+  const clearOrderStore = () => {
+    orderStoreInstance.clear(filterStoreInstance)
+  }
+
+  return <CleanOrderStorageButtonComponent onClick={clearOrderStore}/>
 }
 
 export default CleanOrderStorageButtonContainer

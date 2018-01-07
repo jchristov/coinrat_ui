@@ -60,12 +60,12 @@ class OrderStore {
     this.sellOrders.merge(sellOrders)
   })
 
-  clear = action((): void => {
+  clear = action((filterStore: FilterStore): void => {
     this.orderSocket.clearAllOrders(
-      this.filterStore.market,
-      this.filterStore.pair,
-      this.filterStore.interval,
-      this.filterStore.orderStorage
+      filterStore.market,
+      filterStore.pair,
+      filterStore.interval,
+      filterStore.orderStorage
     )
 
     // Todo call this.reloadData() here but with some co-rutine/generator to make it synchronous

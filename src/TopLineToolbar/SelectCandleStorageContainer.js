@@ -3,13 +3,11 @@ import React, {Component} from 'react'
 import {observer} from "mobx-react"
 import {filterStoreInstance} from "./FilterStore"
 import SelectCandlesBackendStorageComponent from "../Candle/SelectCandlesBackendStorageComponent"
-import {candleStoreInstance} from "../Candle/CandleStore"
 
 class SelectCandleStorageContainer extends Component<{}> {
 
   changeCandleStorage = (candleStorage: string) => {
     filterStoreInstance.changeCandleStorage(candleStorage)
-    candleStoreInstance.reloadByFilter(filterStoreInstance)
   }
 
   render = () => {
