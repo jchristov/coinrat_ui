@@ -14,7 +14,7 @@ const SelectPairComponent = ({availablePairs, defaultSelectedPair, onSelect}: Pr
   return <SelectComponent
     label="Pair"
     items={availablePairs}
-    selectedItem={item}
+    selectedItem={item || null}
     onChange={(pair: SelectElement) => onSelect(pair.key)}
   />
 }

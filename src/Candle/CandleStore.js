@@ -1,7 +1,6 @@
 // @flow
-import {socket} from "../Sockets/socket"
 import {action, ObservableMap} from "mobx"
-import CandleSocket from "./CandleSocket"
+import {CandleSocket, candleSocketInstance} from "./CandleSocket"
 import {FilterStore, filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import {Candle, CandleAggregate} from "./Candle"
 import {aggregateDateSecond, calculateAggregateHash} from "../DateAggregate/aggregateHash"
@@ -13,8 +12,6 @@ class CandleStore {
   constructor(candlesSocket: CandleSocket) {
     this.candlesSocket = candlesSocket
     this.candles = new ObservableMap()
-    this.candlesSocket.registerInitialDataLoad(this.reloadByFilter)
-    this.candlesSocket.registerNewCandleEvent(this.processCandles)
   }
 
   processCandles = action((candles: Array<Candle>): void => {
@@ -49,7 +46,7 @@ class CandleStore {
   })
 }
 
-const candleStoreInstance = new CandleStore(new CandleSocket(socket), filterStoreInstance)
+const candleStoreInstance: CandleStore = new CandleStore(candleSocketInstance, filterStoreInstance)
 
 export {
   candleStoreInstance,

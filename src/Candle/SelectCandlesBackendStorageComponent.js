@@ -14,7 +14,7 @@ const SelectCandlesBackendStorageComponent = ({availableStorages, defaultSelecte
   return <SelectComponent
     label="Candle storage"
     items={availableStorages}
-    selectedItem={item}
+    selectedItem={item || null}
     onChange={(candleStorage: SelectElement) => onSelect(candleStorage.key)}
   />
 }

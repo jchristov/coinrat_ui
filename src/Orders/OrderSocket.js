@@ -1,15 +1,13 @@
 // @flow
-import {
-  AppSocket,
-  SOCKET_EVENT_GET_ORDERS,
-  SOCKET_EVENT_NEW_ORDERS,
-  SOCKET_EVENT_CLEAR_ORDERS,
-  SUBSCRIBED_EVENT_NEW_ORDER,
-} from "../Sockets/socket"
+import {AppSocket, socket} from "../Sockets/socket"
 import Interval from "../Interval/Interval"
 import {Order, OrderDirectionType} from "./Order"
 import appMainToaster from "../Toaster"
-import type {OrderStatusType} from "./Order"
+import {OrderStatusType} from "./Order"
+import {
+  SOCKET_EVENT_CLEAR_ORDERS, SOCKET_EVENT_GET_ORDERS, SOCKET_EVENT_NEW_ORDERS,
+  SUBSCRIBED_EVENT_NEW_ORDER
+} from "../Sockets/SocketEvents"
 
 type RawOrder = {
   order_id: string,
@@ -25,7 +23,7 @@ type RawOrder = {
   canceled_at: string,
 }
 
-export default class OrdersSocket {
+class OrdersSocket {
 
   constructor(socket: AppSocket) {
     this.socket = socket
@@ -79,4 +77,11 @@ export default class OrdersSocket {
       order.status,
     )
   }
+}
+
+const orderSocketInstance: OrdersSocket = new OrdersSocket(socket)
+
+export {
+  OrdersSocket,
+  orderSocketInstance
 }

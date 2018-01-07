@@ -1,12 +1,8 @@
 // @flow
-import {
-  AppSocket,
-  SOCKET_EVENT_GET_CANDLES,
-  SOCKET_EVENT_NEW_CANDLES,
-  SUBSCRIBED_EVENT_NEW_CANDLE,
-} from "../Sockets/socket"
+import {AppSocket, socket} from "../Sockets/socket"
 import Interval from "../Interval/Interval"
 import {Candle} from "./Candle"
+import {SOCKET_EVENT_GET_CANDLES, SUBSCRIBED_EVENT_NEW_CANDLE} from "../Sockets/SocketEvents"
 
 type RawCandle = {
   time: string,
@@ -22,19 +18,6 @@ class CandleSocket {
     this.socket = socket
   }
 
-  registerInitialDataLoad = (callback: () => void) => {
-    // this.socket.onConnect(callback)
-  }
-
-  registerNewCandleEvent(onNewCandle: (candle: Candle) => void) {
-    this.socket.socketio.on(SOCKET_EVENT_NEW_CANDLES, (candleRaw: RawCandle) => {
-      const candle = CandleSocket.parseOneCandleFromData(candleRaw)
-      if (candle !== null) {
-        onNewCandle(candle)
-      }
-    })
-  }
-
   reloadCandles(
     market: string,
     pair: string,
@@ -47,7 +30,7 @@ class CandleSocket {
       market: market,
       interval: interval.toIso(),
       candle_storage: candleStorage
-    }, (status: String, rawCandles: RawCandle) => {
+    }, (status: String, rawCandles: Array<RawCandle>) => {
       console.log('Received CANDLES', Object.values(rawCandles).length, 'candles!')
       processCandles(CandleSocket.parseCandlesDataIntoStateObject(rawCandles))
       this.socket.subscribeForUpdates(SUBSCRIBED_EVENT_NEW_CANDLE, market, pair, interval, candleStorage)
@@ -69,4 +52,9 @@ class CandleSocket {
   }
 }
 
-export default CandleSocket
+const candleSocketInstance: CandleSocket = new CandleSocket(socket)
+
+export {
+  CandleSocket,
+  candleSocketInstance,
+}

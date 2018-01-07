@@ -14,7 +14,7 @@ const SelectOrderBackendStorageComponent = ({availableStorages, defaultSelectedO
   return <SelectComponent
     label="Order storage"
     items={availableStorages}
-    selectedItem={item}
+    selectedItem={item || null}
     onChange={(orderStorage: SelectElement) => onSelect(orderStorage.key)}
   />
 }

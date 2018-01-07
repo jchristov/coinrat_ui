@@ -1,17 +1,16 @@
 // @flow
-import {socket} from "../Sockets/socket"
 import {action, ObservableMap} from "mobx"
-import OrderSocket from "./OrderSocket"
 import {DIRECTION_BUY, DIRECTION_SELL, Order, OrderDirectionAggregate} from "./Order"
 import {aggregateDateSecond, calculateAggregateHash} from "../DateAggregate/aggregateHash"
 import Interval from "../Interval/Interval"
 import {FilterStore} from "../TopLineToolbar/FilterStore"
+import {orderSocketInstance, OrdersSocket} from "./OrderSocket"
 
 class OrderStore {
   buyOrders: ObservableMap<OrderDirectionAggregate>
   sellOrders: ObservableMap<OrderDirectionAggregate>
 
-  constructor(orderSocket: OrderSocket) {
+  constructor(orderSocket: OrdersSocket) {
     this.orderSocket = orderSocket
     this.buyOrders = new ObservableMap()
     this.sellOrders = new ObservableMap()
@@ -74,7 +73,7 @@ class OrderStore {
   })
 }
 
-const orderStoreInstance = new OrderStore(new OrderSocket(socket))
+const orderStoreInstance: OrderStore = new OrderStore(orderSocketInstance)
 
 export {
   orderStoreInstance,

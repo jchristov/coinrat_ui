@@ -49,7 +49,7 @@ class FilterStore {
   })
 }
 
-const filterStoreInstance = new FilterStore()
+const filterStoreInstance: FilterStore = new FilterStore()
 
 export {
   filterStoreInstance,

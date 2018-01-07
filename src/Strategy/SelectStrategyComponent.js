@@ -14,7 +14,7 @@ const SelectStrategyComponent = ({availableStrategies, defaultSelectedStrategy, 
   return <SelectComponent
     label="Strategy"
     items={availableStrategies}
-    selectedItem={item}
+    selectedItem={item || null}
     onChange={(strategy: SelectElement) => onSelect(strategy.key)}
   />
 }

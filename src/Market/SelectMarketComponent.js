@@ -1,7 +1,7 @@
 // @flow
 import React from "react"
 import {SelectComponent} from "../SelectComponent"
-import type {DefaultSelectDataType, SelectElement} from "../SelectComponent"
+import {DefaultSelectDataType, SelectElement} from "../SelectComponent"
 
 type Props = {
   availableMarkets: DefaultSelectDataType,
@@ -14,7 +14,7 @@ const SelectMarketComponent = ({availableMarkets, defaultSelectedMarket, onSelec
   return <SelectComponent
     label="Market"
     items={availableMarkets}
-    selectedItem={item}
+    selectedItem={item || null}
     onChange={(market: SelectElement) => onSelect(market.key)}
   />
 }
