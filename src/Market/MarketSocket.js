@@ -19,11 +19,12 @@ class MarketSocket {
   loadMarkets = (processMarkets: (markets: Array<SelectElement>) => void): MarketHashMap => {
     this.socket.emit(SOCKET_EVENT_GET_MARKETS, {}, (status: String, rawMarkets: Array<RawMarket>) => {
       console.log('Received MARKETS', Object.values(rawMarkets).length, 'markets!')
-      processMarkets(MarketSocket.parseMarketDataIntoStateObject(rawMarkets))
+      const array = MarketSocket.parseMarketDataIntoStateObject(rawMarkets)
+      processMarkets(array.reduce((result: MarketHashMap, item: SelectElement) => ({...result, [item.key]: item}), {}))
     })
   }
 
-  static parseMarketDataIntoStateObject(rawMarkets: Array<RawMarket>): Array<market> {
+  static parseMarketDataIntoStateObject(rawMarkets: Array<RawMarket>): Array<SelectElement> {
     return rawMarkets.map((rawMarket: RawMarket) => MarketSocket.parseOneMarketFromData(rawMarket))
   }
 

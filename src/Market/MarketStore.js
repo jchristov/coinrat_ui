@@ -1,7 +1,6 @@
 import {MarketSocket, marketSocketInstance} from "./MarketSocket"
 import {action, extendObservable} from "mobx/lib/mobx"
 import {MarketHashMap} from "./MarketSocket"
-import {SelectElement} from "../SelectComponent"
 
 class MarketStore {
 
@@ -17,7 +16,7 @@ class MarketStore {
   this.marketSocket.loadMarkets(this.setMarkets)
  })
 
- setMarkets = action((markets: Array<SelectElement>): void => {
+ setMarkets = action((markets: MarketHashMap): void => {
   this.markets = markets
  })
 }

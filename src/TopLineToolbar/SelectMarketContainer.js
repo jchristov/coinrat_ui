@@ -16,6 +16,8 @@ class SelectMarketContainer extends Component<{}> {
   }
 
   render = () => {
+    console.log(marketStoreInstance.markets)
+
     return <SelectMarketComponent
       availableMarkets={marketStoreInstance.markets}
       defaultSelectedMarket={filterStoreInstance.market}
