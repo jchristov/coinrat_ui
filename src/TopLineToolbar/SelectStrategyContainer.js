@@ -1,19 +1,23 @@
 // @flow
-import React from 'react'
+import React, {Component} from 'react'
 import {observer} from "mobx-react"
 import {filterStoreInstance} from "./FilterStore"
 import SelectStrategyComponent from "../Strategy/SelectStrategyComponent"
+import {strategyStoreInstance} from "../Strategy/StrategyStore"
 
-const SelectStrategyContainer = () => {
-  const strategies = {
-    'double_crossover': {key: 'double_crossover', title: 'Double Crossover'}
+class SelectStrategyContainer extends Component<{}> {
+
+  componentDidMount() {
+    strategyStoreInstance.reloadData()
   }
 
-  return <SelectStrategyComponent
-    availableStrategies={strategies}
-    defaultSelectedStrategy={filterStoreInstance.strategy}
-    onSelect={filterStoreInstance.changeStrategy}
-  />
+  render = () => {
+    return <SelectStrategyComponent
+      availableStrategies={strategyStoreInstance.strategies}
+      defaultSelectedStrategy={filterStoreInstance.strategy}
+      onSelect={filterStoreInstance.changeStrategy}
+    />
+  }
 }
 
 export default observer(SelectStrategyContainer)
