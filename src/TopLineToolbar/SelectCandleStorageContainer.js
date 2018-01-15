@@ -2,22 +2,22 @@
 import React, {Component} from 'react'
 import {observer} from "mobx-react"
 import {filterStoreInstance} from "./FilterStore"
-import SelectCandlesBackendStorageComponent from "../Candle/SelectCandlesBackendStorageComponent"
+import SelectCandlesBackendStorageComponent from "../Candle/Storage/SelectCandlesBackendStorageComponent"
+import {candleStorageStoreInstance} from "../Candle/Storage/CandleStorageStore"
 
 class SelectCandleStorageContainer extends Component<{}> {
+
+  componentDidMount() {
+    candleStorageStoreInstance.reloadData()
+  }
 
   changeCandleStorage = (candleStorage: string) => {
     filterStoreInstance.changeCandleStorage(candleStorage)
   }
 
   render = () => {
-    const candleBackendStorages = {
-      'influx_db': {key: 'influx_db', title: 'Influx DB'},
-      'memory': {key: 'memory', title: 'In memory'},
-    }
-
     return <SelectCandlesBackendStorageComponent
-      availableStorages={candleBackendStorages}
+      availableStorages={candleStorageStoreInstance.candleStorages}
       defaultSelectedCandleStorage={filterStoreInstance.candleStorage}
       onSelect={this.changeCandleStorage}
     />
