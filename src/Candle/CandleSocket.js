@@ -31,7 +31,7 @@ class CandleSocket {
       interval: interval.toIso(),
       candle_storage: candleStorage
     }, (status: String, rawCandles: Array<RawCandle>) => {
-      console.log('Received CANDLES', Object.values(rawCandles).length, 'candles!')
+      console.log('Received CANDLES', Object.values(rawCandles).length)
       processCandles(CandleSocket.parseCandlesDataIntoStateObject(rawCandles))
       this.socket.subscribeForUpdates(SUBSCRIBED_EVENT_NEW_CANDLE, market, pair, interval, candleStorage)
     })

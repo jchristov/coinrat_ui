@@ -48,7 +48,7 @@ class OrdersSocket {
       interval: interval.toIso(),
       order_storage: orderStorage,
     }, (status: string, rawOrders: Array<RawOrder>) => {
-      console.log('Received ORDER', Object.values(rawOrders).length, 'orders!')
+      console.log('Received ORDER', Object.values(rawOrders).length)
       processOrders(OrdersSocket.parseOrdersDataIntoStateObject(rawOrders))
       this.socket.subscribeForUpdates(SUBSCRIBED_EVENT_NEW_ORDER, market, pair, interval, orderStorage)
     })
