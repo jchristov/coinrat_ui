@@ -2,6 +2,7 @@ import {AppSocket, socket} from "../Sockets/socket"
 import {SOCKET_EVENT_GET_MARKETS} from "../Sockets/SocketEvents"
 import {convertKeyToName} from "../Strings"
 import {Market} from "./Market"
+import {createConfigurationStructureFromRawData} from "../ConfigurationStructure/ConfigurationStructure"
 
 type ProcessMarketsCallbackType = (markets: Array<Market>) => void
 
@@ -24,7 +25,8 @@ class MarketSocket {
       console.log('Received:', method, Object.values(rawMarkets).length)
 
       const markets = rawMarkets.map((rawMarket: RawMarket): Market => {
-        return new Market(rawMarket.name, convertKeyToName(rawMarket.name), rawMarket.configuration_structure)
+        const configurationStructure = createConfigurationStructureFromRawData(rawMarket.configuration_structure)
+        return new Market(rawMarket.name, convertKeyToName(rawMarket.name), configurationStructure)
       })
 
       processMarkets(markets)

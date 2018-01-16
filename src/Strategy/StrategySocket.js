@@ -2,6 +2,7 @@ import {AppSocket, socket} from "../Sockets/socket"
 import {convertKeyToName} from "../Strings"
 import {SOCKET_EVENT_GET_STRATEGIES} from "../Sockets/SocketEvents"
 import {Strategy} from "./Strategy"
+import {createConfigurationStructureFromRawData} from "../ConfigurationStructure/ConfigurationStructure"
 
 type ProcessStrategiesCallbackType = (markets: Array<Strategy>) => void
 
@@ -24,7 +25,8 @@ class StrategySocket {
       console.log('Received:', method, Object.values(rawStrategies).length)
 
       const strategies = rawStrategies.map((rawStrategy: RawStrategy): Strategy => {
-        return new Strategy(rawStrategy.name, convertKeyToName(rawStrategy.name), rawStrategy.configuration_structure)
+        const configurationStructure = createConfigurationStructureFromRawData(rawStrategy.configuration_structure)
+        return new Strategy(rawStrategy.name, convertKeyToName(rawStrategy.name), configurationStructure)
       })
 
       processStrategies(strategies)
