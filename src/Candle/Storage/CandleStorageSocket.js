@@ -1,5 +1,5 @@
 import {AppSocket, socket} from "../../Sockets/socket"
-import {upperCaseFirst} from "../../Strings"
+import {convertKeyToName} from "../../Strings"
 import {SOCKET_EVENT_GET_CANDLE_STORAGES} from "../../Sockets/SocketEvents"
 import loadDataForSelectElementStore from "../../Sockets/SynchronousDataLoader"
 import {SelectElement} from "../../Select/SelectComponent"
@@ -22,7 +22,7 @@ class CandleStorageSocket {
       this.socket,
       SOCKET_EVENT_GET_CANDLE_STORAGES,
       (rawCandleStorage: RawCandleStorage): SelectElement => {
-        return {key: rawCandleStorage.name, title: upperCaseFirst(rawCandleStorage.name)}
+        return {key: rawCandleStorage.name, title: convertKeyToName(rawCandleStorage.name)}
       },
       processCandleStorages
     )

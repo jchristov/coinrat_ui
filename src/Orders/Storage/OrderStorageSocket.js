@@ -1,6 +1,6 @@
 import {AppSocket, socket} from "../../Sockets/socket"
 import {SOCKET_EVENT_GET_ORDER_STORAGES} from "../../Sockets/SocketEvents"
-import {upperCaseFirst} from "../../Strings"
+import {convertKeyToName} from "../../Strings"
 import loadDataForSelectElementStore from "../../Sockets/SynchronousDataLoader"
 import {SelectElement} from "../../Select/SelectComponent"
 
@@ -22,7 +22,7 @@ class OrderStorageSocket {
       this.socket,
       SOCKET_EVENT_GET_ORDER_STORAGES,
       (rawOrderStorage: RawOrderStorage): SelectElement => {
-        return {key: rawOrderStorage.name, title: upperCaseFirst(rawOrderStorage.name)}
+        return {key: rawOrderStorage.name, title: convertKeyToName(rawOrderStorage.name)}
       },
       processOrderStorages
     )

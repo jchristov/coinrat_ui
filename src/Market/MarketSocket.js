@@ -1,6 +1,6 @@
 import {AppSocket, socket} from "../Sockets/socket"
 import {SOCKET_EVENT_GET_MARKETS} from "../Sockets/SocketEvents"
-import {upperCaseFirst} from "../Strings"
+import {convertKeyToName} from "../Strings"
 import loadDataForSelectElementStore from "../Sockets/SynchronousDataLoader"
 import {SelectElement} from "../Select/SelectComponent"
 
@@ -22,7 +22,7 @@ class MarketSocket {
       this.socket,
       SOCKET_EVENT_GET_MARKETS,
       (rawMarket: RawMarket): SelectElement => {
-        return {key: rawMarket.name, title: upperCaseFirst(rawMarket.name)}
+        return {key: rawMarket.name, title: convertKeyToName(rawMarket.name)}
       },
       processMarkets
     )

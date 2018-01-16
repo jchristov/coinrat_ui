@@ -1,5 +1,5 @@
 import {AppSocket, socket} from "../Sockets/socket"
-import {upperCaseFirst} from "../Strings"
+import {convertKeyToName} from "../Strings"
 import loadDataForSelectElementStore from "../Sockets/SynchronousDataLoader"
 import {SOCKET_EVENT_GET_STRATEGIES} from "../Sockets/SocketEvents"
 import {SelectElement} from "../Select/SelectComponent"
@@ -22,7 +22,7 @@ class StrategySocket {
       this.socket,
       SOCKET_EVENT_GET_STRATEGIES,
       (rawStrategy: RawStrategy): SelectElement => {
-        return {key: rawStrategy.name, title: upperCaseFirst(rawStrategy.name)}
+        return {key: rawStrategy.name, title: convertKeyToName(rawStrategy.name)}
       },
       processStrategies
     )
