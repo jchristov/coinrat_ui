@@ -20,10 +20,10 @@ class MarketSocket {
   loadMarkets = (processMarkets: ProcessMarketsCallbackType): void => {
     const method = SOCKET_EVENT_GET_MARKETS
 
-    this.socket.emit(method, {}, (status: String, rawObjects: Array<RawMarket>) => {
-      console.log('Received:', method, Object.values(rawObjects).length)
+    this.socket.emit(method, {}, (status: String, rawMarkets: Array<RawMarket>) => {
+      console.log('Received:', method, Object.values(rawMarkets).length)
 
-      const markets = rawObjects.map((rawMarket: RawMarket): Market => {
+      const markets = rawMarkets.map((rawMarket: RawMarket): Market => {
         return new Market(rawMarket.name, convertKeyToName(rawMarket.name), rawMarket.configuration_structure)
       })
 
