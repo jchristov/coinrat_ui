@@ -1,4 +1,5 @@
 // @flow
+import * as classNames from "classnames"
 import React, {Component} from "react"
 import {Select} from "@blueprintjs/labs"
 import {Button, MenuItem, Classes, Label, Spinner} from "@blueprintjs/core"
@@ -28,10 +29,15 @@ const lineStyles = {
 }
 
 class SelectComponent extends Component<Props> {
-  renderPair = ({handleClick, isActive, item}: { handleClick: (any) => any, isActive: boolean, item: SelectElement }) => {
+  renderItem = ({handleClick, isActive, item}: { handleClick: (any) => any, isActive: boolean, item: SelectElement }) => {
+    const classes = classNames({
+      [Classes.ACTIVE]: isActive,
+      [Classes.INTENT_PRIMARY]: isActive,
+    })
+
     return (
       <MenuItem
-        className={Classes.ACTIVE}
+        className={classes}
         key={item.key}
         onClick={handleClick}
         text={item.title}
@@ -39,7 +45,7 @@ class SelectComponent extends Component<Props> {
     )
   }
 
-  filterPair = (query: string, element: SelectElement, index: number) => {
+  filterItem = (query: string, element: SelectElement, index: number) => {
     return `${index + 1}. ${element.title.toLowerCase()}`.indexOf(query.toLowerCase()) >= 0
   }
 
@@ -60,10 +66,11 @@ class SelectComponent extends Component<Props> {
   renderSelect() {
     return <ConcreateSelect
       items={Object.values(this.props.items)}
-      itemPredicate={this.filterPair}
-      itemRenderer={this.renderPair}
+      itemPredicate={this.filterItem}
+      itemRenderer={this.renderItem}
       noResults={<MenuItem disabled text="No results."/>}
       onItemSelect={this.props.onChange}
+      popoverProps={{popoverClassName: Classes.MINIMAL}}
     >
       {this.renderButton()}
     </ConcreateSelect>

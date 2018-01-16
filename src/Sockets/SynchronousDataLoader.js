@@ -1,5 +1,4 @@
-import {SelectElement} from "../SelectComponent"
-
+import {SelectElement} from "../Select/SelectComponent"
 
 const loadDataForSelectElementStore = (
   socket,

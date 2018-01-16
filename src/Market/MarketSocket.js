@@ -1,8 +1,8 @@
 import {AppSocket, socket} from "../Sockets/socket"
-import {SelectElement} from "../SelectComponent"
 import {SOCKET_EVENT_GET_MARKETS} from "../Sockets/SocketEvents"
 import {upperCaseFirst} from "../Strings"
 import loadDataForSelectElementStore from "../Sockets/SynchronousDataLoader"
+import {SelectElement} from "../Select/SelectComponent"
 
 type RawMarket = {
   name: string,

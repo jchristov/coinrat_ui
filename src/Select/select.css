@@ -1,0 +1,18 @@
+.pt-select-popover .pt-popover-content {
+    padding: 5px
+}
+
+.pt-select-popover .pt-input-group {
+    margin-bottom: 0
+}
+
+.pt-select-popover .pt-menu {
+    max-width: 400px;
+    max-height: 300px;
+    overflow: auto;
+    padding: 0
+}
+
+.pt-select-popover .pt-menu:not(:first-child) {
+    padding-top: 5px
+}

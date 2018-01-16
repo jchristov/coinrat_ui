@@ -1,7 +1,7 @@
 import {AppSocket, socket} from "../Sockets/socket"
-import {SelectElement} from "../SelectComponent"
 import {SOCKET_EVENT_GET_PAIRS} from "../Sockets/SocketEvents"
 import loadDataForSelectElementStore from "../Sockets/SynchronousDataLoader"
+import {SelectElement} from "../Select/SelectComponent"
 
 type RawPair = {
   key: string,

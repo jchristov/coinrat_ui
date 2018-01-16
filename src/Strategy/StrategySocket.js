@@ -1,8 +1,8 @@
 import {AppSocket, socket} from "../Sockets/socket"
-import {SelectElement} from "../SelectComponent"
 import {upperCaseFirst} from "../Strings"
 import loadDataForSelectElementStore from "../Sockets/SynchronousDataLoader"
 import {SOCKET_EVENT_GET_STRATEGIES} from "../Sockets/SocketEvents"
+import {SelectElement} from "../Select/SelectComponent"
 
 type RawStrategy = {
   name: string,
