@@ -40,7 +40,10 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
       <Flex align='center top'>
         <Box auto>{this.renderChart()}</Box>
         <Box w={256}>
-          <ul className="pt-list-unstyled" style={{paddingTop: 2 + 'em'}}>
+          <p>Strategy executed from UI is <strong>always</strong> executed against <code>mock</code> market.</p>
+          <p>Executing strategy against real market is possible only via command line on the backend server.</p>
+          <h5>Legend</h5>
+          <ul className="pt-list-unstyled">
             <li><span style={{color: statuses[STATUS_OPEN]}} className="pt-icon-full-circle"/> Open order</li>
             <li><span style={{color: statuses[STATUS_CLOSED]}} className="pt-icon-full-circle"/> Closed order</li>
             <li><span style={{color: statuses[STATUS_CANCELED]}} className="pt-icon-full-circle"/> Canceled order</li>

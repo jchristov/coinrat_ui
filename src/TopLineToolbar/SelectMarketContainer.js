@@ -5,6 +5,7 @@ import {filterStoreInstance} from "./FilterStore"
 import SelectMarketComponent from "../Market/SelectMarketComponent"
 import {marketStoreInstance} from "../Market/MarketStore"
 import {pairStoreInstance} from "../Pair/PairStore"
+import {Market} from "../Market/Market"
 
 class SelectMarketContainer extends Component<{}> {
 
@@ -17,9 +18,26 @@ class SelectMarketContainer extends Component<{}> {
     pairStoreInstance.reloadData(market)
   }
 
+  static getItemsForMarketSelectBox() {
+    let availableMarkets = marketStoreInstance.markets.toJS()
+
+    for (let key in availableMarkets) {
+      if (availableMarkets.hasOwnProperty(key)) {
+        const market: Market = availableMarkets[key]
+        availableMarkets[key] = {key: market.name, title: market.title}
+      }
+
+      if (key === 'mock') {
+        delete availableMarkets['mock']
+      }
+    }
+
+    return availableMarkets
+  }
+
   render = () => {
     return <SelectMarketComponent
-      availableMarkets={marketStoreInstance.markets}
+      availableMarkets={SelectMarketContainer.getItemsForMarketSelectBox()}
       defaultSelectedMarket={filterStoreInstance.market}
       onSelect={this.changeMarket}
     />

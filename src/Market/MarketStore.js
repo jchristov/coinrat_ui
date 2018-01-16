@@ -1,23 +1,26 @@
 import {MarketSocket, marketSocketInstance} from "./MarketSocket"
-import {action, extendObservable} from "mobx"
-import {MarketHashMap} from "./MarketSocket"
+import {action, ObservableMap} from "mobx"
+import {Market} from "./Market"
 
 class MarketStore {
 
-  markets: MarketHashMap
+  markets: ObservableMap<Market>
   marketSocket: MarketSocket
 
   constructor(marketSocket: MarketSocket) {
     this.marketSocket = marketSocket
-    extendObservable(this, {markets: {}})
+    this.markets = new ObservableMap()
   }
 
   reloadData = action((): void => {
     this.marketSocket.loadMarkets(this.setMarkets)
   })
 
-  setMarkets = action((markets: MarketHashMap): void => {
-    this.markets = markets
+  setMarkets = action((markets: Array<Market>): void => {
+    this.markets.clear()
+    markets.forEach((market: Market) => {
+      this.markets.set(market.name, market)
+    })
   })
 }
 
