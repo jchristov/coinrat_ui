@@ -7,7 +7,7 @@ type ProcessMarketsCallbackType = (markets: Array<Market>) => void
 
 type RawMarket = {
   name: string,
-  configuration_structure: Object
+  configuration_structure: Object,
 }
 
 class MarketSocket {

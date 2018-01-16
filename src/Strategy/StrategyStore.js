@@ -1,23 +1,26 @@
 import {StrategySocket, strategySocketInstance} from "./StrategySocket"
-import {action, extendObservable} from "mobx"
-import {StrategyHashMap} from "./StrategySocket"
+import {action, ObservableMap} from "mobx"
+import {Strategy} from "./Strategy"
 
 class StrategyStore {
 
-  strategies: StrategyHashMap
+  strategies: ObservableMap<Strategy>
   strategySocket: StrategySocket
 
   constructor(strategySocket: StrategySocket) {
     this.strategySocket = strategySocket
-    extendObservable(this, {strategies: {}})
+    this.strategies = new ObservableMap()
   }
 
   reloadData = action((): void => {
     this.strategySocket.loadStrategies(this.setStrategies)
   })
 
-  setStrategies = action((strategies: StrategyHashMap): void => {
-    this.strategies = strategies
+  setStrategies = action((strategies: Array<Strategy>): void => {
+    this.strategies.clear()
+    strategies.forEach((strategy: Strategy) => {
+      this.strategies.set(strategy.name, strategy)
+    })
   })
 }
 

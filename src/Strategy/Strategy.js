@@ -1,7 +1,8 @@
-class Market {
+class Strategy {
   name: string
   title: string
   configurationStructure: Object
+
 
   constructor(name: string, title: string, configurationStructure: Object) {
     this.name = name
@@ -11,5 +12,5 @@ class Market {
 }
 
 export {
-  Market,
+  Strategy,
 }

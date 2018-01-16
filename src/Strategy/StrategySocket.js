@@ -1,14 +1,14 @@
 import {AppSocket, socket} from "../Sockets/socket"
 import {convertKeyToName} from "../Strings"
-import loadDataForSelectElementStore from "../Sockets/SynchronousDataLoader"
 import {SOCKET_EVENT_GET_STRATEGIES} from "../Sockets/SocketEvents"
-import {SelectElement} from "../Select/SelectComponent"
+import {Strategy} from "./Strategy"
+
+type ProcessStrategiesCallbackType = (markets: Array<Strategy>) => void
 
 type RawStrategy = {
   name: string,
+  configuration_structure: Object,
 }
-
-type StrategyHashMap = { [key: string ]: SelectElement }
 
 class StrategySocket {
   socket: AppSocket
@@ -17,15 +17,18 @@ class StrategySocket {
     this.socket = socket
   }
 
-  loadStrategies = (processStrategies: (strategies: Array<SelectElement>) => void): StrategyHashMap => {
-    loadDataForSelectElementStore(
-      this.socket,
-      SOCKET_EVENT_GET_STRATEGIES,
-      (rawStrategy: RawStrategy): SelectElement => {
-        return {key: rawStrategy.name, title: convertKeyToName(rawStrategy.name)}
-      },
-      processStrategies
-    )
+  loadStrategies = (processStrategies: ProcessStrategiesCallbackType): void => {
+    const method = SOCKET_EVENT_GET_STRATEGIES
+
+    this.socket.emit(method, {}, (status: String, rawStrategies: Array<RawStrategy>) => {
+      console.log('Received:', method, Object.values(rawStrategies).length)
+
+      const strategies = rawStrategies.map((rawStrategy: RawStrategy): Strategy => {
+        return new Strategy(rawStrategy.name, convertKeyToName(rawStrategy.name), rawStrategy.configuration_structure)
+      })
+
+      processStrategies(strategies)
+    })
   }
 
 }
@@ -35,5 +38,4 @@ const strategySocketInstance: StrategySocket = new StrategySocket(socket)
 export {
   StrategySocket,
   strategySocketInstance,
-  StrategyHashMap,
 }
