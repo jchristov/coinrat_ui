@@ -1,7 +1,7 @@
 import React, {Component} from "react"
-import {Tooltip, Icon, Intent, Position} from "@blueprintjs/core"
 import {STATUS_CANCELED, STATUS_CLOSED, STATUS_OPEN} from "../Orders/Order"
 import {ORDERS_STATUS_COLORS} from "../Orders/ChartColors"
+import HelpIconComponent from "../HelpIconComponent"
 
 class LegendComponent extends Component<{}> {
   render() {
@@ -18,9 +18,7 @@ class LegendComponent extends Component<{}> {
         {' '}
         <strong>mock market</strong>
         {' '}
-        <Tooltip content={mockMarketTooltip} position={Position.BOTTOM_RIGHT}>
-          <Icon iconSize={Icon.SIZE_STANDARD} intent={Intent.PRIMARY} iconName="pt-icon-info-sign"/>
-        </Tooltip>
+        <HelpIconComponent helpText={mockMarketTooltip}/>
         .
       </p>
       <p>Executing strategy against real market is possible only via command line on the backend server.</p>

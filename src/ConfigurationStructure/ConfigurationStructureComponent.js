@@ -1,6 +1,6 @@
 import React from "react"
-import {Popover2} from "@blueprintjs/labs"
-import {Button, Tooltip, Position, NonIdealState} from "@blueprintjs/core"
+import {Popover2, Tooltip2} from "@blueprintjs/labs"
+import {Button, NonIdealState} from "@blueprintjs/core"
 import {
   ConfigurationDirective,
   ConfigurationStructure,
@@ -53,7 +53,12 @@ const ConfigurationStructureComponent = (
     }
 
     return <Box key={key}>
-      <FormItemComponent labelSize={200} label={directive.title} element={element} suffix={directive.unit}/>
+      <FormItemComponent
+        labelSize={200}
+        label={directive.title}
+        element={element}
+        suffix={directive.unit}
+        description={directive.description}/>
     </Box>
   }
 
@@ -71,9 +76,9 @@ const ConfigurationStructureComponent = (
     </Flex>
   }
 
-  const target = <Tooltip content={tooltip} position={Position.BOTTOM}>
+  const target = <Tooltip2 content={tooltip}>
     <Button style={{marginTop: 1 + 'px'}} iconName="pt-icon-settings"/>
-  </Tooltip>
+  </Tooltip2>
 
   return <Popover2 content={<Flex column style={{padding: 15 + 'px'}}>{content}</Flex>} target={target}/>
 }

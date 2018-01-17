@@ -1,6 +1,7 @@
 // @flow
 import React, {Component} from 'react'
-import {Intent, Icon, Position, Tooltip} from "@blueprintjs/core"
+import {Intent, Icon} from "@blueprintjs/core"
+import {Tooltip2} from "@blueprintjs/labs"
 import {observer} from "mobx-react"
 import {StatusIndicatorStore} from "./StatusIndicatorStore"
 
@@ -19,9 +20,9 @@ const StatusIndicatorComponent = observer(class StatusIndicatorComponent extends
       : 'Connection with backend cannot be established.'
 
     return (
-      <Tooltip content={tooltipContent} position={Position.BOTTOM_LEFT}>
+      <Tooltip2 content={tooltipContent}>
         <Icon intent={intent} iconName="pt-icon-dot" iconSize="inherit"/>
-      </Tooltip>
+      </Tooltip2>
     )
   }
 })

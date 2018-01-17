@@ -1,4 +1,4 @@
-import {extendObservable} from "mobx/lib/mobx"
+import {extendObservable} from "mobx"
 import {ConfigurationDirective} from "../ConfigurationStructure/ConfigurationStructure"
 
 const MOCK_MARKET_NAME = 'mock'

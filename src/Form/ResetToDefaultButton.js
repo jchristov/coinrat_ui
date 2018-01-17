@@ -1,14 +1,15 @@
 import React from "react"
-import {Position, Tooltip, Button} from "@blueprintjs/core"
+import {Tooltip2} from "@blueprintjs/labs"
+import {Button} from "@blueprintjs/core"
 
 type Props = {
   onClick: () => void,
 }
 
 const ResetToDefaultButton = ({onClick}: Props) => {
-  return <Tooltip content="Reset to default" position={Position.BOTTOM}>
+  return <Tooltip2 content="Reset to default">
     <Button style={{marginTop: 1 + 'px'}} iconName="pt-icon-repeat" className="pt-intent-danger" onClick={onClick}/>
-  </Tooltip>
+  </Tooltip2>
 }
 
 export default ResetToDefaultButton

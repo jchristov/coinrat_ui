@@ -6,6 +6,8 @@ const TYPE_DECIMAL = 'Decimal'
 
 const POSSIBLE_TYPES = TYPE_STRING | TYPE_INTEGER | TYPE_DECIMAL
 
+const MOCKED_MARKET_NAME_FIELD = 'mocked_market_name'
+
 class ConfigurationDirective {
   key: string
   type: POSSIBLE_TYPES
@@ -15,6 +17,7 @@ class ConfigurationDirective {
   unit: ?string
   isRequired: boolean
   isDisabled: boolean
+  description: ?string
 
   constructor(
     key: string,
@@ -23,11 +26,13 @@ class ConfigurationDirective {
     defaultValue: string | number,
     unit: ?string,
     isRequired: boolean,
-    isDisabled: boolean
+    isDisabled: boolean,
+    description: ?string
   ) {
     this.key = key
     this.type = type
     this.title = title
+    this.description = description
 
     extendObservable(this, {
       _value: defaultValue
@@ -66,7 +71,7 @@ class ConfigurationStructure {
 }
 
 function isDisabledByFieldName(key: string): boolean {
-  return ['mocked_market_name'].includes(key)
+  return [MOCKED_MARKET_NAME_FIELD].includes(key)
 }
 
 const createConfigurationStructureFromRawData = (data) => {
@@ -80,7 +85,8 @@ const createConfigurationStructureFromRawData = (data) => {
       rawDirective.default,
       rawDirective.unit || null,
       !rawDirective.type.startsWith('?'),
-      isDisabledByFieldName(key)
+      isDisabledByFieldName(key),
+      rawDirective.description || '',
     )
   })
 
@@ -88,6 +94,7 @@ const createConfigurationStructureFromRawData = (data) => {
 }
 
 export {
+  MOCKED_MARKET_NAME_FIELD,
   ConfigurationStructure,
   ConfigurationDirective,
   createConfigurationStructureFromRawData,

@@ -6,6 +6,7 @@ import SelectMarketComponent from "../Market/SelectMarketComponent"
 import {marketStoreInstance} from "../Market/MarketStore"
 import {pairStoreInstance} from "../Pair/PairStore"
 import {Market, MOCK_MARKET_NAME} from "../Market/Market"
+import {MOCKED_MARKET_NAME_FIELD} from "../ConfigurationStructure/ConfigurationStructure"
 
 class SelectMarketContainer extends Component<{}> {
 
@@ -13,9 +14,10 @@ class SelectMarketContainer extends Component<{}> {
     marketStoreInstance.reloadData()
   }
 
-  changeMarket = (market: string) => {
-    filterStoreInstance.changeMarket(market)
-    pairStoreInstance.reloadData(market)
+  changeMarket = (marketName: string) => {
+    filterStoreInstance.changeMarket(marketName)
+    pairStoreInstance.reloadData(marketName)
+    marketStoreInstance.changeMarketConfigurationField(MOCK_MARKET_NAME, MOCKED_MARKET_NAME_FIELD, marketName)
   }
 
   static getItemsForMarketSelectBox() {
