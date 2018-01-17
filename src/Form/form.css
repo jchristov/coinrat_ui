@@ -1,0 +1,14 @@
+.form-item {
+    vertical-align: middle;
+    line-height: 30px;
+    display: inline;
+    margin-left: 7px;
+}
+
+.form-label {
+    text-align: right;
+}
+
+.form-element {
+    text-align: left;
+}

@@ -5,23 +5,33 @@ import {
   ConfigurationDirective, ConfigurationStructure,
   TYPE_INTEGER, TYPE_STRING, TYPE_TIME_DELTA
 } from "./ConfigurationStructure"
+import {Box, Flex} from "reflexbox"
+import FormItemComponent from "../Form/FormItemComponent"
 
 type Props = {
   configurationStructure: ConfigurationStructure,
 }
 
 const ConfigurationStructureComponent = ({configurationStructure}: Props) => {
-  const content = configurationStructure.configuration.map((directive: ConfigurationDirective) => {
+
+  const configurationMapFunction = (directive: ConfigurationDirective, key: number) => {
+    let element = ''
     if (directive.type === TYPE_INTEGER) {
-      return <div>{directive.title} <input className="pt-input" type="number"/></div>
+      element = <input className="pt-input" type="number"/>
 
     } else if (directive.type === TYPE_STRING) {
-      return <div>{directive.title} <input className="pt-input" type="text"/></div>
+      element = <input className="pt-input" type="text"/>
 
     } else if (directive.type === TYPE_TIME_DELTA) {
-      return <div>{directive.title} <input className="pt-input" type="number"/> minutes</div>
+      element = <input className="pt-input" type="number"/>
     }
-  })
+
+    return <Box key={key}><FormItemComponent label={directive.title} element={element}/></Box>
+  }
+
+  const content = <Flex column style={{padding: 15 + 'px'}}>
+    {configurationStructure.configuration.map(configurationMapFunction)}
+  </Flex>
 
   const target = <Tooltip content="You can change settings of a strategy." position={Position.BOTTOM}>
     <Button

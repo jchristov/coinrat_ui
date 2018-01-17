@@ -1,22 +1,13 @@
 // @flow
 import React, {Component} from "react"
 import {DateRangeInput} from "@blueprintjs/datetime"
-import {Label} from "@blueprintjs/core"
 import Interval from "./Interval"
 import appMainToaster from "../Toaster"
-import {Box, Flex} from "reflexbox"
+import FormItemComponent from "../Form/FormItemComponent"
 
 type Props = {
   defaultSelectedInterval: Interval,
   onChange: (interval: Interval) => void,
-}
-
-const lineStyles = {
-  verticalAlign: 'middle',
-  lineHeight: 30 + 'px',
-  display: 'inline',
-  marginLeft: 7 + 'px',
-  minWidth: 120 + 'px',
 }
 
 class SelectIntervalComponent extends Component<Props> {
@@ -38,19 +29,13 @@ class SelectIntervalComponent extends Component<Props> {
 
   render() {
     const interval = this.props.defaultSelectedInterval
-    return <Flex>
-      <Box w={120} style={{textAlign: 'right', ...lineStyles}}>
-        <Label text='Interval:'/>
-      </Box>
-      <Box style={{textAlign: 'left', ...lineStyles}}>
-        <DateRangeInput
-          format="YYYY-MM-DD HH:mm:ss"
-          value={[interval.since, interval.till]}
-          onChange={this.handleChange}
-          allowSingleDayRange={true}
-        />
-      </Box>
-    </Flex>
+    const element = <DateRangeInput
+      format="YYYY-MM-DD HH:mm:ss"
+      value={[interval.since, interval.till]}
+      onChange={this.handleChange}
+      allowSingleDayRange={true}
+    />
+    return <FormItemComponent label="Interval" element={element}/>
   }
 }
 

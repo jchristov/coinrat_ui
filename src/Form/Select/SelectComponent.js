@@ -2,8 +2,9 @@
 import * as classNames from "classnames"
 import React, {Component} from "react"
 import {Select} from "@blueprintjs/labs"
-import {Button, MenuItem, Classes, Label, Spinner} from "@blueprintjs/core"
+import {Button, MenuItem, Classes, Spinner} from "@blueprintjs/core"
 import {Box, Flex} from "reflexbox"
+import FormItemComponent from "../FormItemComponent"
 
 const ConcreateSelect = Select.ofType()
 
@@ -19,13 +20,6 @@ type Props = {
   selectedItem: ?SelectElement,
   label: string,
   onChange: (element: SelectElement) => void,
-}
-
-const lineStyles = {
-  verticalAlign: 'middle',
-  lineHeight: 30 + 'px',
-  display: 'inline',
-  marginLeft: 7 + 'px',
 }
 
 class SelectComponent extends Component<Props> {
@@ -77,14 +71,7 @@ class SelectComponent extends Component<Props> {
   }
 
   render() {
-    return <Flex>
-      <Box w={120} style={{textAlign: 'right', ...lineStyles}}>
-        <Label text={`${this.props.label}:`}/>
-      </Box>
-      <Box auto style={{textAlign: 'left', ...lineStyles}}>
-        {this.renderSelect()}
-      </Box>
-    </Flex>
+    return <FormItemComponent label={this.props.label} element={this.renderSelect()}/>
   }
 }
 

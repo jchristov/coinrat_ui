@@ -2,7 +2,7 @@ import {AppSocket, socket} from "../../Sockets/socket"
 import {convertKeyToName} from "../../Strings"
 import {SOCKET_EVENT_GET_CANDLE_STORAGES} from "../../Sockets/SocketEvents"
 import loadDataForSelectElementStore from "../../Sockets/SynchronousDataLoader"
-import {SelectElement} from "../../Select/SelectComponent"
+import {SelectElement} from "../../Form/Select/SelectComponent"
 
 type RawCandleStorage = {
   name: string,

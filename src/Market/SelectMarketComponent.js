@@ -1,6 +1,6 @@
 // @flow
 import React from "react"
-import {DefaultSelectDataType, SelectElement, SelectComponent} from "../Select/SelectComponent"
+import {SelectComponent, DefaultSelectDataType, SelectElement} from "../Form/Select/SelectComponent"
 
 type Props = {
   availableMarkets: DefaultSelectDataType,

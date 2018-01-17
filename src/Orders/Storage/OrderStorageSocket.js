@@ -2,7 +2,7 @@ import {AppSocket, socket} from "../../Sockets/socket"
 import {SOCKET_EVENT_GET_ORDER_STORAGES} from "../../Sockets/SocketEvents"
 import {convertKeyToName} from "../../Strings"
 import loadDataForSelectElementStore from "../../Sockets/SynchronousDataLoader"
-import {SelectElement} from "../../Select/SelectComponent"
+import {SelectElement} from "../../Form/Select/SelectComponent"
 
 type RawOrderStorage = {
   name: string,
