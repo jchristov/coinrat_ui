@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 import ConfigurationStructureComponent from "../ConfigurationStructure/ConfigurationStructureComponent"
-import {observer} from "mobx-react/index"
+import {observer} from "mobx-react"
 import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import {strategyStoreInstance} from "../Strategy/StrategyStore"
 import {Strategy} from "../Strategy/Strategy"
@@ -8,7 +8,7 @@ import {Strategy} from "../Strategy/Strategy"
 class StrategyConfigurationContainer extends Component<{}> {
 
   render = () => {
-    const strategy: Strategy = strategyStoreInstance.strategies[filterStoreInstance.strategy]
+    const strategy: Strategy = strategyStoreInstance.strategies.get(filterStoreInstance.strategy)
     if (strategy === undefined) {
       return null
     }

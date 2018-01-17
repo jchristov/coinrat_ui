@@ -12,6 +12,10 @@ class SelectStrategyContainer extends Component<{}> {
     strategyStoreInstance.reloadData()
   }
 
+  changeStrategy = (strategy: string) => {
+    filterStoreInstance.changeStrategy(strategy)
+  }
+
   static getItemsForStrategySelectBox() {
     let availableStrategies = strategyStoreInstance.strategies.toJS()
 
@@ -29,7 +33,7 @@ class SelectStrategyContainer extends Component<{}> {
     return <SelectStrategyComponent
       availableStrategies={SelectStrategyContainer.getItemsForStrategySelectBox()}
       defaultSelectedStrategy={filterStoreInstance.strategy}
-      onSelect={filterStoreInstance.changeStrategy}
+      onSelect={this.changeStrategy}
     />
   }
 }

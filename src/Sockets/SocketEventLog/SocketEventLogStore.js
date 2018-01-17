@@ -29,7 +29,7 @@ class SocketEventLogStore {
   }
 
   logMessage = action((message) => {
-    console.log(message)
+    // console.log(message)
     this.log.set(new Date().getTime(), message)
   })
 }

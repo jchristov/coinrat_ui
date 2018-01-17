@@ -6,7 +6,6 @@ import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import {orderStoreInstance} from "../Orders/OrderStore"
 import {candleStoreInstance} from "../Candle/CandleStore"
 import Interval from "../Interval/Interval"
-import StrategyConfigurationContainer from "./StrategyConfigurationContainer"
 
 type Props = {
   pair: string,
@@ -50,7 +49,6 @@ class DashboardComponent extends Component<Props> {
 
   render = () => <div>
     <TopLineToolbarComponent/>
-    <StrategyConfigurationContainer/>
     <CandlestickChartComponent/>
   </div>
 }

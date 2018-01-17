@@ -9,6 +9,7 @@ import RunStrategyButtonContainer from "./RunStrategyButtonContainer"
 import SelectCandleStorageContainer from "./SelectCandleStorageContainer"
 import SelectStrategyContainer from "./SelectStrategyContainer"
 import SelectIntervalContainer from "./SelectIntervalContainer"
+import StrategyConfigurationContainer from "./StrategyConfigurationContainer"
 
 const TopLineToolbarComponent = () => {
   return <div>
@@ -36,6 +37,7 @@ const TopLineToolbarComponent = () => {
           <Box>
             <Flex>
               <Box><SelectStrategyContainer/></Box>
+              <Box><StrategyConfigurationContainer/></Box>
               <Box><RunStrategyButtonContainer/></Box>
             </Flex>
           </Box>
