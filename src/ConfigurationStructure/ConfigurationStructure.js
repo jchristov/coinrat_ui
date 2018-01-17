@@ -1,8 +1,9 @@
 const TYPE_STRING = 'string'
 const TYPE_INTEGER = 'int'
 const TYPE_TIME_DELTA = 'timedelta'
+const TYPE_SECONDS = 'seconds'
 
-const POSSIBLE_TYPES = TYPE_STRING | TYPE_INTEGER | TYPE_TIME_DELTA
+const POSSIBLE_TYPES = TYPE_STRING | TYPE_INTEGER | TYPE_TIME_DELTA | TYPE_SECONDS
 
 class ConfigurationDirective {
   key: string
@@ -44,4 +45,5 @@ export {
   TYPE_STRING,
   TYPE_INTEGER,
   TYPE_TIME_DELTA,
+  TYPE_SECONDS,
 }

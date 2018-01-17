@@ -12,3 +12,7 @@
 .form-element {
     text-align: left;
 }
+
+.form-suffix {
+    text-align: right;
+}

@@ -8,12 +8,7 @@ type Props = {
 
 const CleanOrderStorageButtonComponent = ({onClick}: Props) => {
   return <Tooltip content="Delete all orders from selected storage in given time range" position={Position.BOTTOM}>
-    <Button
-      style={{marginTop: 1 + 'px', marginLeft: 7 + 'px'}}
-      className="pt-intent-danger"
-      iconName="pt-icon-eraser"
-      onClick={onClick}
-    />
+    <Button style={{marginTop: 1 + 'px'}} className="pt-intent-danger" iconName="pt-icon-eraser" onClick={onClick}/>
   </Tooltip>
 }
 
