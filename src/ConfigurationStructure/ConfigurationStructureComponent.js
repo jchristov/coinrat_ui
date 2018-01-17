@@ -11,6 +11,7 @@ import {
 import {Box, Flex} from "reflexbox"
 import FormItemComponent from "../Form/FormItemComponent"
 import ResetToDefaultButton from "../Form/ResetToDefaultButton"
+import {observer} from "mobx-react"
 
 type Props = {
   configurationStructure: ConfigurationStructure,
@@ -23,7 +24,7 @@ const ConfigurationStructureComponent = ({configurationStructure, onChange, onRe
   const configurationMapFunction = (directive: ConfigurationDirective, key: number) => {
     const inputProps = {
       style: {width: 80 + 'px'},
-      defaultValue: directive.value,
+      value: directive.value,
       className: "pt-input",
       onChange: onChange,
       name: directive.key,
@@ -66,4 +67,4 @@ const ConfigurationStructureComponent = ({configurationStructure, onChange, onRe
   return <Popover2 content={<Flex column style={{padding: 15 + 'px'}}>{content}</Flex>} target={target}/>
 }
 
-export default ConfigurationStructureComponent
+export default observer(ConfigurationStructureComponent)

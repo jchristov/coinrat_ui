@@ -21,8 +21,6 @@ class StrategyConfigurationContainer extends Component<{}> {
       return null
     }
 
-    console.log('rerender')
-
     return <ConfigurationStructureComponent
       configurationStructure={strategy.configurationStructure}
       onChange={this.handleOnChange}

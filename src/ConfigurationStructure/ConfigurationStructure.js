@@ -28,7 +28,7 @@ class ConfigurationDirective {
     this.title = title
 
     extendObservable(this, {
-      value: defaultValue,
+      value: defaultValue
     })
 
     this.defaultValue = defaultValue
