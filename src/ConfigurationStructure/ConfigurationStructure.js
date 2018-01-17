@@ -1,3 +1,5 @@
+import {extendObservable} from "mobx"
+
 const TYPE_STRING = 'string'
 const TYPE_INTEGER = 'int'
 const TYPE_DECIMAL = 'Decimal'
@@ -8,7 +10,8 @@ class ConfigurationDirective {
   key: string
   type: POSSIBLE_TYPES
   title: string
-  defaults: string | number
+  value: string | number
+  defaultValue: string | number
   isRequired: boolean
   unit: ?string
 
@@ -16,16 +19,25 @@ class ConfigurationDirective {
     key: string,
     type: POSSIBLE_TYPES,
     title: string,
-    defaults: string | number,
+    defaultValue: string | number,
     unit: ?string,
     isRequired: boolean
   ) {
     this.key = key
     this.type = type
     this.title = title
-    this.defaults = defaults
+
+    extendObservable(this, {
+      value: defaultValue,
+    })
+
+    this.defaultValue = defaultValue
     this.unit = unit
     this.isRequired = isRequired
+  }
+
+  resetToDefault = () => {
+    this.value = this.defaultValue
   }
 }
 
@@ -33,7 +45,9 @@ class ConfigurationStructure {
   configuration: Array<ConfigurationDirective>
 
   constructor(configuration: Array<ConfigurationDirective>) {
-    this.configuration = configuration
+    extendObservable(this, {
+      configuration: configuration,
+    })
   }
 }
 

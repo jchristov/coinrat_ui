@@ -22,6 +22,14 @@ class StrategyStore {
       this.strategies.set(strategy.name, strategy)
     })
   })
+
+  changeStrategyConfigurationField = action((strategy: string, key: string, value: string) => {
+    this.strategies.get(strategy).setConfigurationField(key, value)
+  })
+
+  resetConfigurationValuesToDefault = action((strategy: string) => {
+    this.strategies.get(strategy).resetConfigurationToDefault()
+  })
 }
 
 const strategyStoreInstance: StrategyStore = new StrategyStore(strategySocketInstance)

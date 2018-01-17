@@ -10,25 +10,34 @@ import {
 } from "./ConfigurationStructure"
 import {Box, Flex} from "reflexbox"
 import FormItemComponent from "../Form/FormItemComponent"
+import ResetToDefaultButton from "../Form/ResetToDefaultButton"
 
 type Props = {
   configurationStructure: ConfigurationStructure,
+  onChange: () => void,
+  onReset: () => void,
 }
 
-const ConfigurationStructureComponent = ({configurationStructure}: Props) => {
+const ConfigurationStructureComponent = ({configurationStructure, onChange, onReset}: Props) => {
 
   const configurationMapFunction = (directive: ConfigurationDirective, key: number) => {
-    const inputStyles = {width: 80 + 'px'}
+    const inputProps = {
+      style: {width: 80 + 'px'},
+      defaultValue: directive.value,
+      className: "pt-input",
+      onChange: onChange,
+      name: directive.key,
+    }
 
     let element = ''
     if (directive.type === TYPE_INTEGER) {
-      element = <input style={inputStyles} value={directive.defaults} className="pt-input" type="number"/>
+      element = <input {...inputProps} type="number"/>
 
     } else if (directive.type === TYPE_STRING) {
-      element = <input style={inputStyles} value={directive.defaults} className="pt-input" type="text"/>
+      element = <input {...inputProps} type="text"/>
 
     } else if (directive.type === TYPE_DECIMAL) {
-      element = <input style={inputStyles} value={directive.defaults} className="pt-input" type="text"/>
+      element = <input {...inputProps} type="text"/>
     }
 
     return <Box key={key}>
@@ -41,10 +50,13 @@ const ConfigurationStructureComponent = ({configurationStructure}: Props) => {
     content = <NonIdealState
       visual="lightbulb"
       title="Nothing to configure."
-      description="If you want to change some property of this strategy, you need to adjust implementation and allow configuration."
+      description="If you want to change some property, you need to adjust implementation and allow configuration."
     />
   } else {
-    content = configurationStructure.configuration.map(configurationMapFunction)
+    content = <Flex column>
+      <Box>{configurationStructure.configuration.map(configurationMapFunction)}</Box>
+      <Box style={{textAlign: 'right'}}><ResetToDefaultButton onClick={onReset}/></Box>
+    </Flex>
   }
 
   const target = <Tooltip content="You can change settings of a strategy." position={Position.BOTTOM}>

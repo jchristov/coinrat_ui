@@ -1,13 +1,32 @@
+import {ConfigurationDirective, ConfigurationStructure} from "../ConfigurationStructure/ConfigurationStructure"
+import {extendObservable} from "mobx"
+
 class Strategy {
   name: string
   title: string
-  configurationStructure: Object
+  configurationStructure: ConfigurationStructure
 
-
-  constructor(name: string, title: string, configurationStructure: Object) {
+  constructor(name: string, title: string, configurationStructure: ConfigurationStructure) {
     this.name = name
     this.title = title
-    this.configurationStructure = configurationStructure
+
+    extendObservable(this, {
+      configurationStructure: configurationStructure
+    })
+  }
+
+  setConfigurationField = (key: string, value: string) => {
+    const findDirectiveFunction = (directive: ConfigurationDirective) => {
+      return directive.key === key
+    }
+    const directive: ConfigurationDirective = this.configurationStructure.configuration.find(findDirectiveFunction)
+    directive.value = value
+  }
+
+  resetConfigurationToDefault = () => {
+    this.configurationStructure.configuration.forEach((directive: ConfigurationDirective) => {
+      directive.resetToDefault()
+    })
   }
 }
 
