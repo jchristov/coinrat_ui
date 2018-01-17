@@ -14,20 +14,31 @@ import ResetToDefaultButton from "../Form/ResetToDefaultButton"
 import {observer} from "mobx-react"
 
 type Props = {
+  tooltip: string,
+  noConfigurationDescription: string,
   configurationStructure: ConfigurationStructure,
   onChange: () => void,
   onReset: () => void,
 }
 
-const ConfigurationStructureComponent = ({configurationStructure, onChange, onReset}: Props) => {
+const ConfigurationStructureComponent = (
+  {
+    tooltip,
+    noConfigurationDescription,
+    configurationStructure,
+    onChange,
+    onReset
+  }: Props) => {
 
   const configurationMapFunction = (directive: ConfigurationDirective, key: number) => {
+
     const inputProps = {
       style: {width: 80 + 'px'},
       value: directive.value,
       className: "pt-input",
       onChange: onChange,
       name: directive.key,
+      disabled: directive.isDisabled,
     }
 
     let element = ''
@@ -50,8 +61,8 @@ const ConfigurationStructureComponent = ({configurationStructure, onChange, onRe
   if (configurationStructure.configuration.length === 0) {
     content = <NonIdealState
       visual="lightbulb"
-      title="Nothing to configure."
-      description="If you want to change some property, you need to adjust implementation and allow configuration."
+      title="Nothing to configure"
+      description={noConfigurationDescription}
     />
   } else {
     content = <Flex column>
@@ -60,7 +71,7 @@ const ConfigurationStructureComponent = ({configurationStructure, onChange, onRe
     </Flex>
   }
 
-  const target = <Tooltip content="You can change settings of a strategy." position={Position.BOTTOM}>
+  const target = <Tooltip content={tooltip} position={Position.BOTTOM}>
     <Button style={{marginTop: 1 + 'px'}} iconName="pt-icon-settings"/>
   </Tooltip>
 

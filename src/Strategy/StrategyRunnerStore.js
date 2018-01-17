@@ -6,16 +6,24 @@ import {EVENT_RUN_REPLY} from "../Sockets/SocketEvents"
 import {StrategyStore, strategyStoreInstance} from "./StrategyStore"
 import {Strategy} from "./Strategy"
 import {ConfigurationDirective, ConfigurationStructure} from "../ConfigurationStructure/ConfigurationStructure"
+import {MarketStore, marketStoreInstance} from "../Market/MarketStore"
+import {Market} from "../Market/Market"
 
 class StrategyRunnerStore {
   socket: AppSocket
   filterStore: FilterStore
   strategyStoreInstance: StrategyStore
 
-  constructor(socket: AppSocket, filterStore: FilterStore, strategyStoreInstance: StrategyStore) {
+  constructor(
+    socket: AppSocket,
+    filterStore: FilterStore,
+    strategyStoreInstance: StrategyStore,
+    marketStoreInstance: MarketStore
+  ) {
     this.socket = socket
     this.filterStore = filterStore
     this.strategyStoreInstance = strategyStoreInstance
+    this.marketStoreInstance = marketStoreInstance
   }
 
   runStrategy = () => {
@@ -24,17 +32,19 @@ class StrategyRunnerStore {
       return
     }
 
+    const market: Market = this.marketStoreInstance.markets.get(this.filterStore.market)
     const strategy: Strategy = this.strategyStoreInstance.strategies.get(this.filterStore.strategy)
 
     this.socket.emit(EVENT_RUN_REPLY, {
-      market: this.filterStore.market,
+      market: market.name,
       pair: this.filterStore.pair,
       start: this.filterStore.interval.since.toISOString(),
       stop: this.filterStore.interval.till.toISOString(),
       candles_storage: this.filterStore.candleStorage,
       orders_storage: this.filterStore.orderStorage,
       strategy_name: strategy.name,
-      configuration: this.serializeConfiguration(strategy.configurationStructure)
+      strategy_configuration: this.serializeConfiguration(strategy.configurationStructure),
+      market_configuration: this.serializeConfiguration(market.configurationStructure),
     }, (status, data) => {
       if (status !== 'OK') {
         console.log('Server returned ERROR: ', data['message'])
@@ -55,6 +65,11 @@ class StrategyRunnerStore {
   }
 }
 
-const strategyRunnerStoreInstance = new StrategyRunnerStore(socket, filterStoreInstance, strategyStoreInstance)
+const strategyRunnerStoreInstance = new StrategyRunnerStore(
+  socket,
+  filterStoreInstance,
+  strategyStoreInstance,
+  marketStoreInstance
+)
 
 export {strategyRunnerStoreInstance, StrategyRunnerStore}

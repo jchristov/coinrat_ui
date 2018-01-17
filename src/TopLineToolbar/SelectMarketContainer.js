@@ -5,7 +5,7 @@ import {filterStoreInstance} from "./FilterStore"
 import SelectMarketComponent from "../Market/SelectMarketComponent"
 import {marketStoreInstance} from "../Market/MarketStore"
 import {pairStoreInstance} from "../Pair/PairStore"
-import {Market} from "../Market/Market"
+import {Market, MOCK_MARKET_NAME} from "../Market/Market"
 
 class SelectMarketContainer extends Component<{}> {
 
@@ -27,8 +27,8 @@ class SelectMarketContainer extends Component<{}> {
         availableMarkets[key] = {key: market.name, title: market.title}
       }
 
-      if (key === 'mock') {
-        delete availableMarkets['mock']
+      if (key === MOCK_MARKET_NAME) {
+        delete availableMarkets[key]
       }
     }
 

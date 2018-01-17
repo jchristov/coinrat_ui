@@ -12,8 +12,9 @@ class ConfigurationDirective {
   title: string
   _value: string | number
   defaultValue: string | number
-  isRequired: boolean
   unit: ?string
+  isRequired: boolean
+  isDisabled: boolean
 
   constructor(
     key: string,
@@ -21,7 +22,8 @@ class ConfigurationDirective {
     title: string,
     defaultValue: string | number,
     unit: ?string,
-    isRequired: boolean
+    isRequired: boolean,
+    isDisabled: boolean
   ) {
     this.key = key
     this.type = type
@@ -34,10 +36,10 @@ class ConfigurationDirective {
     this.defaultValue = defaultValue
     this.unit = unit
     this.isRequired = isRequired
+    this.isDisabled = isDisabled
   }
 
   set value(value) {
-    console.log(value)
     if (this.type === TYPE_INTEGER) {
       value = Number(value)
     }
@@ -63,6 +65,10 @@ class ConfigurationStructure {
   }
 }
 
+function isDisabledByFieldName(key: string): boolean {
+  return ['mocked_market_name'].includes(key)
+}
+
 const createConfigurationStructureFromRawData = (data) => {
   const configuration = Object.keys(data).map((key: string) => {
     const rawDirective = data[key]
@@ -73,7 +79,8 @@ const createConfigurationStructureFromRawData = (data) => {
       rawDirective.title,
       rawDirective.default,
       rawDirective.unit || null,
-      !rawDirective.type.startsWith('?')
+      !rawDirective.type.startsWith('?'),
+      isDisabledByFieldName(key)
     )
   })
 

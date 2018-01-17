@@ -22,6 +22,8 @@ class StrategyConfigurationContainer extends Component<{}> {
     }
 
     return <ConfigurationStructureComponent
+      tooltip="You can change settings of a strategy."
+      noConfigurationDescription="If you want to change some property of the strategy, you need to adjust implementation in plugin in order to allow configuration."
       configurationStructure={strategy.configurationStructure}
       onChange={this.handleOnChange}
       onReset={this.handleReset}

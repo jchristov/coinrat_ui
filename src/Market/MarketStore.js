@@ -22,6 +22,14 @@ class MarketStore {
       this.markets.set(market.name, market)
     })
   })
+
+  changeMarketConfigurationField = action((market: string, key: string, value: string) => {
+    this.markets.get(market).setConfigurationField(key, value)
+  })
+
+  resetConfigurationValuesToDefault = action((market: string) => {
+    this.markets.get(market).resetConfigurationToDefault()
+  })
 }
 
 const marketStoreInstance: MarketStore = new MarketStore(marketSocketInstance)
