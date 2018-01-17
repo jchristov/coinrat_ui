@@ -10,7 +10,7 @@ class ConfigurationDirective {
   key: string
   type: POSSIBLE_TYPES
   title: string
-  value: string | number
+  _value: string | number
   defaultValue: string | number
   isRequired: boolean
   unit: ?string
@@ -28,7 +28,7 @@ class ConfigurationDirective {
     this.title = title
 
     extendObservable(this, {
-      value: defaultValue
+      _value: defaultValue
     })
 
     this.defaultValue = defaultValue
@@ -36,8 +36,20 @@ class ConfigurationDirective {
     this.isRequired = isRequired
   }
 
+  set value(value) {
+    console.log(value)
+    if (this.type === TYPE_INTEGER) {
+      value = Number(value)
+    }
+    this._value = value
+  }
+
+  get value() {
+    return this._value
+  }
+
   resetToDefault = () => {
-    this.value = this.defaultValue
+    this._value = this.defaultValue
   }
 }
 
