@@ -6,7 +6,7 @@ import {Balance} from "./Balance"
 type ProcessBalanceCallbackType = (balances: Array<Balance>) => void
 
 type RawBalance = {
-  name: string,
+  currency: string,
   available_amount: string,
 }
 
@@ -20,11 +20,11 @@ class BalanceSocket {
   loadBalances = (marketName: string, processBalances: ProcessBalanceCallbackType): void => {
     const method = SOCKET_EVENT_GET_BALANCE
 
-    this.socket.emit(method, {market: marketName}, (status: String, rawBalances: Array<RawBalance>) => {
+    this.socket.emit(method, {market_name: marketName}, (status: String, rawBalances: Array<RawBalance>) => {
       console.log('Received:', method, Object.values(rawBalances).length)
 
       const balances = rawBalances.map((rawBalance: RawBalance): Balance => {
-        return new Balance(rawBalance.name, rawBalance.available_amount)
+        return new Balance(rawBalance.currency, rawBalance.available_amount)
       })
 
       processBalances(balances)
