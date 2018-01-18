@@ -1,5 +1,5 @@
 // @flow
-import {action, ObservableMap} from "mobx"
+import {action, ObservableMap, extendObservable} from "mobx"
 import {DIRECTION_BUY, DIRECTION_SELL, Order, OrderDirectionAggregate} from "./Order"
 import {aggregateDateSecond, calculateAggregateHash} from "../DateAggregate/aggregateHash"
 import Interval from "../Interval/Interval"
@@ -7,6 +7,7 @@ import {FilterStore} from "../TopLineToolbar/FilterStore"
 import {orderSocketInstance, OrdersSocket} from "./OrderSocket"
 
 class OrderStore {
+  orders: Array<Order>
   buyOrders: ObservableMap<OrderDirectionAggregate>
   sellOrders: ObservableMap<OrderDirectionAggregate>
 
@@ -14,12 +15,16 @@ class OrderStore {
     this.orderSocket = orderSocket
     this.buyOrders = new ObservableMap()
     this.sellOrders = new ObservableMap()
+    extendObservable(this, {
+      orders: []
+    })
     this.orderSocket.registerNewOrderEvent(this.processOrders)
   }
 
   reloadData = action((market: string, pair: string, interval: Interval, orderStorage: string): void => {
     this.buyOrders.clear()
     this.sellOrders.clear()
+    this.orders = []
     this.orderSocket.reloadOrders(market, pair, interval, orderStorage, this.processOrders)
   })
 
@@ -38,6 +43,9 @@ class OrderStore {
 
     for (let i = 0; i < orders.length; i++) {
       const order = orders[i]
+
+      this.orders.push(order)
+
       const date = aggregateDateSecond(order.createdAt)
       const key = calculateAggregateHash(date)
 

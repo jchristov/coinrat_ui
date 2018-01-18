@@ -1,11 +1,10 @@
 // @flow
 import React, {Component} from 'react'
-import CandlestickChartComponent from "../MainChart/CandlestickChartComponent"
+import OrdersTableContainer from "./OrdersTableContainer"
 import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
-import {orderStoreInstance} from "../Orders/OrderStore"
-import {candleStoreInstance} from "../Candle/CandleStore"
 import Interval from "../Interval/Interval"
-import TopLineAllToolbarComponent from "../TopLineToolbar/TopLineAllToolbarComponent"
+import {orderStoreInstance} from "../Orders/OrderStore"
+import TopLineOrdersToolbarComponent from "../TopLineToolbar/TopLineOrdersToolbarComponent"
 
 type Props = {
   pair: string,
@@ -16,15 +15,10 @@ type Props = {
   strategy: string,
 }
 
-class DashboardComponent extends Component<Props> {
+class OrdersOverviewComponent extends Component<Props> {
 
   componentDidMount() {
-    this.reloadStores()
-  }
-
-  reloadStores = () => {
     orderStoreInstance.reloadByFilter(filterStoreInstance)
-    candleStoreInstance.reloadByFilter(filterStoreInstance)
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -35,11 +29,7 @@ class DashboardComponent extends Component<Props> {
       || current.pair !== nextProps.pair
       || current.interval !== nextProps.interval
     ) {
-      this.reloadStores()
-    }
-
-    if (current.candleStorage !== nextProps.candleStorage) {
-      candleStoreInstance.reloadByFilter(filterStoreInstance)
+      orderStoreInstance.reloadByFilter(filterStoreInstance)
     }
 
     if (current.orderStorage !== nextProps.orderStorage) {
@@ -48,9 +38,9 @@ class DashboardComponent extends Component<Props> {
   }
 
   render = () => <div>
-    <TopLineAllToolbarComponent/>
-    <CandlestickChartComponent/>
+    <TopLineOrdersToolbarComponent/>
+    <OrdersTableContainer/>
   </div>
 }
 
-export default DashboardComponent
+export default OrdersOverviewComponent

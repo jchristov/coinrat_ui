@@ -12,7 +12,7 @@ import SelectIntervalContainer from "./SelectIntervalContainer"
 import StrategyConfigurationContainer from "./StrategyConfigurationContainer"
 import MarketConfigurationContainer from "./MarketConfigurationContainer"
 
-const TopLineToolbarComponent = () => {
+const TopLineAllToolbarComponent = () => {
   return <div>
     <Flex>
       <Box>
@@ -51,4 +51,4 @@ const TopLineToolbarComponent = () => {
   </div>
 }
 
-export default TopLineToolbarComponent
+export default TopLineAllToolbarComponent
