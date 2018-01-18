@@ -8,6 +8,7 @@ const TYPE_DECIMAL = 'Decimal'
 const POSSIBLE_TYPES = TYPE_STRING | TYPE_INTEGER | TYPE_DECIMAL
 
 const MOCKED_MARKET_NAME_FIELD = 'mocked_market_name'
+const MOCKED_BASE_CURRENCY_FIELD = 'mocked_base_currency'
 
 class ConfigurationDirective {
   key: string
@@ -72,7 +73,7 @@ class ConfigurationStructure {
 }
 
 function isDisabledByFieldName(key: string): boolean {
-  return [MOCKED_MARKET_NAME_FIELD].includes(key)
+  return [MOCKED_MARKET_NAME_FIELD, MOCKED_BASE_CURRENCY_FIELD].includes(key)
 }
 
 const createConfigurationStructureFromRawData = (data) => {
@@ -96,9 +97,12 @@ const createConfigurationStructureFromRawData = (data) => {
 
 export {
   MOCKED_MARKET_NAME_FIELD,
+  MOCKED_BASE_CURRENCY_FIELD,
+
   ConfigurationStructure,
   ConfigurationDirective,
   createConfigurationStructureFromRawData,
+
   POSSIBLE_TYPES,
   TYPE_STRING,
   TYPE_INTEGER,

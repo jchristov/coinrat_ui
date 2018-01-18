@@ -6,6 +6,9 @@ import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import {candleStoreInstance} from "../Candle/CandleStore"
 import {orderStoreInstance} from "../Orders/OrderStore"
 import {pairStoreInstance} from "../Pair/PairStore"
+import {MOCKED_BASE_CURRENCY_FIELD} from "../ConfigurationStructure/ConfigurationStructure"
+import {MOCK_MARKET_NAME} from "../Market/Market"
+import {marketStoreInstance} from "../Market/MarketStore"
 
 class SelectPairContainer extends Component<{}> {
 
@@ -17,6 +20,7 @@ class SelectPairContainer extends Component<{}> {
     filterStoreInstance.changePair(pair)
     orderStoreInstance.reloadByFilter(filterStoreInstance)
     candleStoreInstance.reloadByFilter(filterStoreInstance)
+    marketStoreInstance.changeMarketConfigurationField(MOCK_MARKET_NAME, MOCKED_BASE_CURRENCY_FIELD, pair.split('_')[0])
   }
 
   render = () => {
