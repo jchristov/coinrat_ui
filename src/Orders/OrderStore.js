@@ -78,6 +78,7 @@ class OrderStore {
     // Todo call this.reloadData() here but with some co-rutine/generator to make it synchronous
     this.buyOrders.clear()
     this.sellOrders.clear()
+    this.orders = []
   })
 }
 
