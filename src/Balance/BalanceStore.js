@@ -1,10 +1,7 @@
 // @flow
 import {action, extendObservable} from "mobx"
 import {BalanceSocket, balanceSocketInstance} from "./BalanceSocket"
-import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import {Balance} from "./Balance"
-import {aggregateDateSecond, calculateAggregateHash} from "../DateAggregate/aggregateHash"
-import Interval from "../Interval/Interval"
 
 class BalanceStore {
   balances: Array<Balance>
