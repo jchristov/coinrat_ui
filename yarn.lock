@@ -15,6 +15,19 @@
     tether "^1.4"
     tslib "^1.5.0"
 
+"@blueprintjs/core@^2.0.0-beta.1":
+  version "2.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-2.0.0-beta.1.tgz#21faecdffd83e3233d0a17a1de1c87a64edeb179"
+  dependencies:
+    "@blueprintjs/icons" "^2.0.0-beta.1"
+    "@types/dom4" "^1.5.20"
+    classnames "^2.2"
+    dom4 "^1.8"
+    normalize.css "^7.0.0"
+    popper.js "^1.12.6"
+    react-popper "~0.7.4"
+    tslib "^1.5.0"
+
 "@blueprintjs/datetime@^1.25.1":
   version "1.25.1"
   resolved "https://registry.yarnpkg.com/@blueprintjs/datetime/-/datetime-1.25.1.tgz#277d7f4d03328669ba95196648bccd3c56b3596b"
@@ -23,6 +36,13 @@
     classnames "^2.2"
     moment "^2.14.1"
     react-day-picker "^5.3.0"
+    tslib "^1.5.0"
+
+"@blueprintjs/icons@^2.0.0-beta.1":
+  version "2.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/icons/-/icons-2.0.0-beta.1.tgz#f17f12ca2b221219d592cce11d2af682a4fec0f9"
+  dependencies:
+    classnames "^2.2"
     tslib "^1.5.0"
 
 "@blueprintjs/labs@^0.14.2":
@@ -37,6 +57,14 @@
     popper.js "^1.12.6"
     pure-render-decorator "^1.2.1"
     react-popper "~0.7.4"
+    tslib "^1.5.0"
+
+"@blueprintjs/table@^2.0.0-beta.1":
+  version "2.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/table/-/table-2.0.0-beta.1.tgz#b6c0bef6f4d69d6c72a7edab4a1ff3f31a292ca6"
+  dependencies:
+    "@blueprintjs/core" "^2.0.0-beta.1"
+    classnames "^2.2"
     tslib "^1.5.0"
 
 "@types/dom4@^1.5.20":
@@ -4574,6 +4602,10 @@ normalize-url@^1.4.0:
 normalize.css@4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-4.1.1.tgz#4f0b1d5a235383252b04d8566b866cc5fcad9f0c"
+
+normalize.css@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-7.0.0.tgz#abfb1dd82470674e0322b53ceb1aaf412938e4bf"
 
 npm-run-path@^2.0.0:
   version "2.0.2"

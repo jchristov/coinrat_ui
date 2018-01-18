@@ -1,3 +1,4 @@
+// @flow
 import React from "react"
 import {Popover2, Tooltip2} from "@blueprintjs/labs"
 import {Button, NonIdealState} from "@blueprintjs/core"

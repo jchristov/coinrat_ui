@@ -1,3 +1,4 @@
+// @flow
 import {CandleStorageSocket, candleStorageSocketInstance} from "./CandleStorageSocket"
 import {action, extendObservable} from "mobx"
 import {CandleStorageHashMap} from "./CandleStorageSocket"

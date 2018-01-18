@@ -16,11 +16,15 @@ class HeaderComponent extends Component<{}> {
           <span className="pt-navbar-divider"/>
 
           <Link className="pt-button pt-minimal pt-icon-dashboard" to="/">Dashboard</Link>
-          <Link className="pt-button pt-minimal pt-icon-console" to="/socket-event-log">Socket Event Log</Link>
+          <Link className="pt-button pt-minimal pt-icon-applications" to="/orders">Orders</Link>
         </div>
 
         <div className="pt-navbar-group pt-align-right">
           <span className="pt-navbar-divider"/>
+
+          <Tooltip2 content="Socket Event Log">
+            <Link className="pt-button pt-minimal pt-icon-console" to="/socket-event-log"/>
+          </Tooltip2>
 
           <Tooltip2 content="View source on Github">
             <a target="_blank" rel="noopener noreferrer" href="https://github.com/Achse/coinrat_ui">

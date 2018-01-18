@@ -1,3 +1,4 @@
+// @flow
 import React from "react"
 import {orderStoreInstance} from "../Orders/OrderStore"
 import CleanOrderStorageButtonComponent from "../Orders/Storage/CleanOrderStorageButtonComponent"

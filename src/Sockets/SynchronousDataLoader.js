@@ -1,3 +1,4 @@
+// @flow
 import {SelectElement} from "../Form/Select/SelectComponent"
 
 const loadDataForSelectElementStore = (

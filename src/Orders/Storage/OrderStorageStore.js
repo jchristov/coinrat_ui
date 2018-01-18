@@ -1,3 +1,4 @@
+// @flow
 import {OrderStorageSocket, orderStorageSocketInstance} from "./OrderStorageSocket"
 import {action, extendObservable} from "mobx"
 import {OrderStorageHashMap} from "./OrderStorageSocket"

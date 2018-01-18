@@ -1,3 +1,4 @@
+// @flow
 import {AppSocket, socket} from "../Sockets/socket"
 import {SOCKET_EVENT_GET_PAIRS} from "../Sockets/SocketEvents"
 import loadDataForSelectElementStore from "../Sockets/SynchronousDataLoader"

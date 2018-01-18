@@ -1,3 +1,4 @@
+// @flow
 import {MarketSocket, marketSocketInstance} from "./MarketSocket"
 import {action, ObservableMap} from "mobx"
 import {Market} from "./Market"

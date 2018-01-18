@@ -1,3 +1,4 @@
+// @flow
 import React, {Component} from "react"
 import {STATUS_CANCELED, STATUS_CLOSED, STATUS_OPEN} from "../Orders/Order"
 import {ORDERS_STATUS_COLORS} from "../Orders/ChartColors"

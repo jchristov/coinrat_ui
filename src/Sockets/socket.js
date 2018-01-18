@@ -1,3 +1,4 @@
+// @flow
 import Interval from "../Interval/Interval"
 import appMainToaster from "../Toaster"
 import {SOCKET_EVENT_SUBSCRIBE, SOCKET_EVENT_UNSUBSCRIBE} from "./SocketEvents"

@@ -1,3 +1,4 @@
+// @flow
 const SOCKET_EVENT_PING_REQUEST = 'ping_request'
 const SOCKET_EVENT_PING_RESPONSE = 'ping_response'
 

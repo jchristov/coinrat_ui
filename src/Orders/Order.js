@@ -1,3 +1,4 @@
+// @flow
 const DIRECTION_SELL = 'sell'
 const DIRECTION_BUY = 'buy'
 

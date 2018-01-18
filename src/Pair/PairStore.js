@@ -1,3 +1,4 @@
+// @flow
 import {PairSocket, pairSocketInstance} from "./PairSocket"
 import {action, extendObservable} from "mobx"
 import {PairHashMap} from "./PairSocket"

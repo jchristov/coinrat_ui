@@ -1,3 +1,4 @@
+// @flow
 class Candle {
   constructor(
     date: Date,

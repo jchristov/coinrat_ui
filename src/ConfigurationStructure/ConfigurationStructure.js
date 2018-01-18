@@ -1,3 +1,4 @@
+// @flow
 import {extendObservable} from "mobx"
 
 const TYPE_STRING = 'string'

@@ -1,3 +1,4 @@
+// @flow
 import {extendObservable} from "mobx"
 import {ConfigurationDirective, ConfigurationStructure} from "../ConfigurationStructure/ConfigurationStructure"
 

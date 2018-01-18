@@ -1,3 +1,4 @@
+// @flow
 import {DIRECTION_BUY, DIRECTION_SELL, OrderDirectionAggregate} from "../Orders/Order"
 import {CandleAggregate} from "../Candle/Candle"
 import {aggregateDateSecond, calculateAggregateHash} from "../DateAggregate/aggregateHash"

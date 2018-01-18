@@ -1,3 +1,4 @@
+// @flow
 import {AppSocket, socket} from "../../Sockets/socket"
 import {convertKeyToName} from "../../Strings"
 import {SOCKET_EVENT_GET_CANDLE_STORAGES} from "../../Sockets/SocketEvents"

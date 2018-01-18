@@ -1,3 +1,4 @@
+// @flow
 const aggregateDateSecond = (date: Date): Date => {
  const clonedDate = new Date(date.getTime())
  clonedDate.setSeconds(0)
