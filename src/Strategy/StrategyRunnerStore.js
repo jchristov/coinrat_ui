@@ -7,7 +7,7 @@ import {StrategyStore, strategyStoreInstance} from "./StrategyStore"
 import {Strategy} from "./Strategy"
 import {ConfigurationDirective, ConfigurationStructure} from "../ConfigurationStructure/ConfigurationStructure"
 import {MarketStore, marketStoreInstance} from "../Market/MarketStore"
-import {Market} from "../Market/Market"
+import {Market, MOCK_MARKET_NAME} from "../Market/Market"
 
 class StrategyRunnerStore {
   socket: AppSocket
@@ -32,10 +32,10 @@ class StrategyRunnerStore {
       return
     }
 
-    const market: Market = this.marketStoreInstance.markets.get(this.filterStore.market)
+    const market: Market = this.marketStoreInstance.markets.get(MOCK_MARKET_NAME)
     const strategy: Strategy = this.strategyStoreInstance.strategies.get(this.filterStore.strategy)
 
-    this.socket.emit(EVENT_RUN_REPLY, {
+    const strategyRunData = {
       market: market.name,
       pair: this.filterStore.pair,
       start: this.filterStore.interval.since.toISOString(),
@@ -45,7 +45,9 @@ class StrategyRunnerStore {
       strategy_name: strategy.name,
       strategy_configuration: this.serializeConfiguration(strategy.configurationStructure),
       market_configuration: this.serializeConfiguration(market.configurationStructure),
-    }, (status, data) => {
+    }
+
+    this.socket.emit(EVENT_RUN_REPLY, strategyRunData, (status, data) => {
       if (status !== 'OK') {
         console.log('Server returned ERROR: ', data['message'])
         return

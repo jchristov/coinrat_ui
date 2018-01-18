@@ -1,14 +1,14 @@
 import {extendObservable} from "mobx"
-import {ConfigurationDirective} from "../ConfigurationStructure/ConfigurationStructure"
+import {ConfigurationDirective, ConfigurationStructure} from "../ConfigurationStructure/ConfigurationStructure"
 
 const MOCK_MARKET_NAME = 'mock'
 
 class Market {
   name: string
   title: string
-  configurationStructure: Object
+  configurationStructure: ConfigurationStructure
 
-  constructor(name: string, title: string, configurationStructure: Object) {
+  constructor(name: string, title: string, configurationStructure: ConfigurationStructure) {
     this.name = name
     this.title = title
 
