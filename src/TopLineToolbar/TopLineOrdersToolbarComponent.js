@@ -5,9 +5,10 @@ import SelectPairContainer from "./SelectPairContainer"
 import SelectMarketContainer from "./SelectMarketContainer"
 import SelectOrderStorageContainer from "./SelectOrderStorageContainer"
 import CleanOrderStorageButtonContainer from "./CleanOrderStorageButtonContainer"
+import SelectIntervalContainer from "./SelectIntervalContainer"
 
 const TopLineOrdersToolbarComponent = () => {
-  return <div>
+  return <div style={{marginBottom: 15 + 'px'}}>
     <Flex>
       <Box>
         <Flex column>
@@ -23,6 +24,11 @@ const TopLineOrdersToolbarComponent = () => {
               <Box><CleanOrderStorageButtonContainer/></Box>
             </Flex>
           </Box>
+        </Flex>
+      </Box>
+      <Box>
+        <Flex column>
+          <Box><SelectIntervalContainer/></Box>
         </Flex>
       </Box>
     </Flex>

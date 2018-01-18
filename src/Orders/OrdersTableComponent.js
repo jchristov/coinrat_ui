@@ -1,6 +1,6 @@
 // @flow
 import React from "react"
-import {Table, Column, Cell, TableLoadingOption} from "@blueprintjs/table"
+import {Table, Column, Cell, ColumnHeaderCell, TableLoadingOption} from "@blueprintjs/table"
 import {Order} from "./Order"
 import {ORDERS_DIRECTION_COLORS, ORDERS_STATUS_COLORS} from "./ChartColors"
 import ColoredDotComponent from "../Icon/ColoredDotComponent"
@@ -13,7 +13,6 @@ const OrdersTableComponent = ({orders}: Props) => {
   const loadingOptions: Array<TableLoadingOption> = []
   if (orders.length === 0) {
     loadingOptions.push(TableLoadingOption.CELLS)
-    loadingOptions.push(TableLoadingOption.COLUMN_HEADERS)
     loadingOptions.push(TableLoadingOption.ROW_HEADERS)
   }
 
@@ -34,8 +33,12 @@ const OrdersTableComponent = ({orders}: Props) => {
     <Column name="Created" renderCell={(row: number) => <Cell>{orders[row].createdAt.toLocaleString()}</Cell>}/>
     <Column name="Pair" renderCell={(row: number) => <Cell>{orders[row].pair}</Cell>}/>
     <Column name="Type" renderCell={(row: number) => <Cell>{orders[row].type}</Cell>}/>
-    <Column name="Quantity" renderCell={(row: number) => <Cell>{orders[row].quantity}</Cell>}/>
-    <Column name="Rate" renderCell={(row: number) => <Cell>{orders[row].rate}</Cell>}/>
+    <Column name="Quantity" renderCell={(row: number) =>
+      <Cell style={{textAlign: 'right'}}><code>{Number(orders[row].quantity).toFixed(8)}</code></Cell>}
+    />
+    <Column name="Rate" renderCell={(row: number) =>
+      <Cell style={{textAlign: 'right'}}><code>{Number(orders[row].rate).toFixed(2)}</code></Cell>}
+    />
     <Column name="Id on market" renderCell={(row: number) => <Cell>{orders[row].idOnMarket}</Cell>}/>
     <Column name="Status" renderCell={statusCellRender}/>
     <Column name="Closed" renderCell={(row: number) =>

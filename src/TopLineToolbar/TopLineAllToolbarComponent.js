@@ -13,7 +13,7 @@ import StrategyConfigurationContainer from "./StrategyConfigurationContainer"
 import MarketConfigurationContainer from "./MarketConfigurationContainer"
 
 const TopLineAllToolbarComponent = () => {
-  return <div>
+  return <div style={{marginBottom: 15 + 'px'}}>
     <Flex>
       <Box>
         <Flex column>
