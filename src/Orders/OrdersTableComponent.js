@@ -1,6 +1,6 @@
 // @flow
 import React from "react"
-import {Table, Column, Cell, ColumnHeaderCell, TableLoadingOption} from "@blueprintjs/table"
+import {Table, Column, Cell, TableLoadingOption} from "@blueprintjs/table"
 import {Order} from "./Order"
 import {ORDERS_DIRECTION_COLORS, ORDERS_STATUS_COLORS} from "./ChartColors"
 import ColoredDotComponent from "../Icon/ColoredDotComponent"

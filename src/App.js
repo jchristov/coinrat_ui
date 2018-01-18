@@ -7,6 +7,7 @@ import SocketEventLogComponent from "./Sockets/SocketEventLog/SocketEventLogComp
 import {observer} from "mobx-react"
 import DashboardContainer from "./Dashboard/DashboardContainer"
 import OrdersOverviewContainer from "./OrderOverview/OrdersOverviewContainer"
+import BalancesOverviewContainer from "./BalanceOverview/BalancesOverviewContainer"
 
 class App extends Component<{}> {
   render() {
@@ -19,6 +20,7 @@ class App extends Component<{}> {
               <Route exact path="/" component={DashboardContainer}/>
               <Route path="/socket-event-log" component={SocketEventLogComponent}/>
               <Route path="/orders" component={OrdersOverviewContainer}/>
+              <Route path="/balances" component={BalancesOverviewContainer}/>
             </div>
           </div>
         </div>

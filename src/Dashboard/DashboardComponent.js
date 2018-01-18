@@ -5,7 +5,7 @@ import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import {orderStoreInstance} from "../Orders/OrderStore"
 import {candleStoreInstance} from "../Candle/CandleStore"
 import Interval from "../Interval/Interval"
-import TopLineAllToolbarComponent from "../TopLineToolbar/TopLineAllToolbarComponent"
+import TopLineToolbarComponent from "../TopLineToolbar/TopLineAllToolbarComponent"
 
 type Props = {
   pair: string,
@@ -48,7 +48,7 @@ class DashboardComponent extends Component<Props> {
   }
 
   render = () => <div>
-    <TopLineAllToolbarComponent/>
+    <TopLineToolbarComponent/>
     <CandlestickChartComponent/>
   </div>
 }

@@ -1,7 +1,7 @@
 // @flow
 import {action, ObservableMap} from "mobx"
 import {CandleSocket, candleSocketInstance} from "./CandleSocket"
-import {FilterStore, filterStoreInstance} from "../TopLineToolbar/FilterStore"
+import {FilterStore} from "../TopLineToolbar/FilterStore"
 import {Candle, CandleAggregate} from "./Candle"
 import {aggregateDateSecond, calculateAggregateHash} from "../DateAggregate/aggregateHash"
 import Interval from "../Interval/Interval"
@@ -46,7 +46,7 @@ class CandleStore {
   })
 }
 
-const candleStoreInstance: CandleStore = new CandleStore(candleSocketInstance, filterStoreInstance)
+const candleStoreInstance: CandleStore = new CandleStore(candleSocketInstance)
 
 export {
   candleStoreInstance,

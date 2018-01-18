@@ -4,7 +4,7 @@ import OrdersTableContainer from "./OrdersTableContainer"
 import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import Interval from "../Interval/Interval"
 import {orderStoreInstance} from "../Orders/OrderStore"
-import TopLineOrdersToolbarComponent from "../TopLineToolbar/TopLineOrdersToolbarComponent"
+import TopLineToolbarComponent from "../TopLineToolbar/TopLineAllToolbarComponent"
 
 type Props = {
   pair: string,
@@ -37,10 +37,24 @@ class OrdersOverviewComponent extends Component<Props> {
     }
   }
 
-  render = () => <div>
-    <TopLineOrdersToolbarComponent/>
-    <OrdersTableContainer/>
-  </div>
+  render = () => {
+    const toolbarProps = {
+      isPairSelectorEnabled: true,
+      isMarketSelectorEnabled: true,
+      isMarketConfiguratorEnabled: false,
+      isCandleStorageSelectorEnabled: false,
+      isOrderStorageSelectorEnabled: true,
+      isOrderClearButtonEnabled: true,
+      isIntervalSelectorEnabled: true,
+      isStrategySelectorEnabled: false,
+      isStrategyConfiguratorEnabled: false,
+      isRunStrategyButtonEnabled: false,
+    }
+    return <div>
+      <TopLineToolbarComponent {...toolbarProps}/>
+      <OrdersTableContainer/>
+    </div>
+  }
 }
 
 export default OrdersOverviewComponent

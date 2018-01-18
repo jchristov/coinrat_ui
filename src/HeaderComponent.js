@@ -17,6 +17,7 @@ class HeaderComponent extends Component<{}> {
 
           <Link className="pt-button pt-minimal pt-icon-dashboard" to="/">Dashboard</Link>
           <Link className="pt-button pt-minimal pt-icon-applications" to="/orders">Orders</Link>
+          <Link className="pt-button pt-minimal pt-icon-dollar" to="/balances">Balance</Link>
         </div>
 
         <div className="pt-navbar-group pt-align-right">

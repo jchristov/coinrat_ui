@@ -1,0 +1,40 @@
+// @flow
+import {AppSocket, socket} from "../Sockets/socket"
+import {SOCKET_EVENT_GET_BALANCE} from "../Sockets/SocketEvents"
+import {Balance} from "./Balance"
+
+type ProcessBalanceCallbackType = (balances: Array<Balance>) => void
+
+type RawBalance = {
+  name: string,
+  available_amount: string,
+}
+
+class BalanceSocket {
+  socket: AppSocket
+
+  constructor(socket: AppSocket) {
+    this.socket = socket
+  }
+
+  loadBalances = (marketName: string, processBalances: ProcessBalanceCallbackType): void => {
+    const method = SOCKET_EVENT_GET_BALANCE
+
+    this.socket.emit(method, {market: marketName}, (status: String, rawBalances: Array<RawBalance>) => {
+      console.log('Received:', method, Object.values(rawBalances).length)
+
+      const balances = rawBalances.map((rawBalance: RawBalance): Balance => {
+        return new Balance(rawBalance.name, rawBalance.available_amount)
+      })
+
+      processBalances(balances)
+    })
+  }
+}
+
+const balanceSocketInstance: BalanceSocket = new BalanceSocket(socket)
+
+export {
+  BalanceSocket,
+  balanceSocketInstance,
+}
