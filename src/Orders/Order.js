@@ -6,19 +6,53 @@ const STATUS_OPEN = 'open'
 const STATUS_CLOSED = 'closed'
 const STATUS_CANCELED = 'canceled'
 
-type OrderDirectionType = DIRECTION_SELL | DIRECTION_BUY
+const ORDER_TYPE_LIMIT = 'limit'
+const ORDER_TYPE_MARKET = 'market'
 
+type OrderDirectionType = DIRECTION_SELL | DIRECTION_BUY
+type OrderType = ORDER_TYPE_LIMIT | ORDER_TYPE_MARKET
 type OrderStatusType = STATUS_OPEN | STATUS_CLOSED | STATUS_CANCELED
 
 class Order {
-  createdAt: Date
+  orderId: string
+  market: string
   direction: OrderDirectionType
+  createdAt: Date
+  pair: string
+  type: OrderType
+  quantity: string
+  rate: string
+  idOnMarket: string
   status: OrderStatusType
+  closedAt: ?Date
+  canceledAt: ?Date
 
-  constructor(createdAt: Date, direction: OrderDirectionType, status: OrderStatusType) {
-    this.createdAt = createdAt
+  constructor(
+    orderId: string,
+    market: string,
+    direction: OrderDirectionType,
+    createdAt: Date,
+    pair: string,
+    type: OrderType,
+    quantity: string,
+    rate: string,
+    idOnMarket: string,
+    status: OrderStatusType,
+    closedAt: Date,
+    canceledAt: Date
+  ) {
+    this.orderId = orderId
+    this.market = market
     this.direction = direction
+    this.createdAt = createdAt
+    this.pair = pair
+    this.type = type
+    this.quantity = quantity
+    this.rate = rate
+    this.idOnMarket = idOnMarket
     this.status = status
+    this.closedAt = closedAt
+    this.canceledAt = canceledAt
   }
 }
 
@@ -44,6 +78,10 @@ class OrderDirectionAggregate {
 export {
   Order,
   OrderDirectionAggregate,
+
+  OrderType,
+  ORDER_TYPE_LIMIT,
+  ORDER_TYPE_MARKET,
 
   OrderDirectionType,
   DIRECTION_SELL,

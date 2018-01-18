@@ -1,7 +1,7 @@
 // @flow
 import {AppSocket, socket} from "../Sockets/socket"
 import Interval from "../Interval/Interval"
-import {Order, OrderDirectionType} from "./Order"
+import {Order, OrderDirectionType, OrderType} from "./Order"
 import appMainToaster from "../Toaster"
 import {OrderStatusType} from "./Order"
 import {
@@ -15,12 +15,13 @@ type RawOrder = {
   pair: string,
   created_at: string,
   direction: OrderDirectionType,
-  type: 'limit' | 'market',
+  type: OrderType,
   quantity: string,
   rate: string,
   id_on_market: string,
   status: OrderStatusType,
-  canceled_at: string,
+  closed_at: ?string,
+  canceled_at: ?string,
 }
 
 class OrdersSocket {
@@ -70,11 +71,20 @@ class OrdersSocket {
     return ordersRaw.map((rawOrder: RawOrder) => OrdersSocket.parseOneOrderFromData(rawOrder))
   }
 
-  static parseOneOrderFromData(order: RawOrder): Order {
+  static parseOneOrderFromData(rawOrder: RawOrder): Order {
     return new Order(
-      new Date(Date.parse(order.created_at)),
-      order.direction,
-      order.status,
+      rawOrder.order_id,
+      rawOrder.market,
+      rawOrder.direction,
+      new Date(Date.parse(rawOrder.created_at)),
+      rawOrder.pair,
+      rawOrder.type,
+      rawOrder.quantity,
+      rawOrder.rate,
+      rawOrder.id_on_market,
+      rawOrder.status,
+      rawOrder.closed_at !== null ? new Date(Date.parse(rawOrder.closed_at)) : null,
+      rawOrder.canceled_at !== null ? new Date(Date.parse(rawOrder.canceled_at)) : null
     )
   }
 }
