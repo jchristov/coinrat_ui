@@ -24,6 +24,10 @@ const createAggregateFromData = (
 ): Array<ChartAggregate> => {
   let data: { [key: string]: ChartAggregate } = {}
 
+  if (candles.length === 0) {
+    return []
+  }
+
   for (let i = 0; i < candles.length; i++) {
     const candle = candles[i]
     const date = aggregateDateSecond(candle.date)
