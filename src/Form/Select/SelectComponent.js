@@ -1,5 +1,5 @@
 // @flow
-import * as classNames from "classnames"
+import classNames from 'classnames'
 import React, {Component} from "react"
 import {Select} from "@blueprintjs/labs"
 import {Button, MenuItem, Classes, Spinner} from "@blueprintjs/core"

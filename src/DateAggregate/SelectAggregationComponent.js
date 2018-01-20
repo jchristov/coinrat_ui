@@ -19,8 +19,6 @@ const SelectAggregationComponent = ({availableMarkets, defaultSelectedAggregatio
     '1-day': {key: '1-day', title: '1 day'},
   }
 
-  console.log(defaultSelectedAggregation)
-
   const item = availableAggregations[defaultSelectedAggregation]
   return <SelectComponent
     label="Chart"
