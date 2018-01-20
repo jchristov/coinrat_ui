@@ -14,8 +14,8 @@ const SelectAggregationComponent = ({availableMarkets, defaultSelectedAggregatio
     '15-minute': {key: '15-minute', title: '15 minutes'},
     '30-minute': {key: '30-minute', title: '30 minutes'},
     '1-hour': {key: '1-hour', title: '1 hour'},
-    '6-hours': {key: '6-hours', title: '6 hours'},
-    '12-hours': {key: '12-hours', title: '12 hours'},
+    '6-hour': {key: '6-hour', title: '6 hours'},
+    '12-hour': {key: '12-hour', title: '12 hours'},
     '1-day': {key: '1-day', title: '1 day'},
   }
 

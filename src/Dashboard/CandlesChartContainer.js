@@ -9,8 +9,9 @@ import {NonIdealState} from "@blueprintjs/core"
 import {createAggregateFromData} from "../MainChart/ChartAggregate"
 import CandlesChartComponent from "../MainChart/CandlesChartComponent"
 import DashboardLegendComponent from "./DashboardLegendComponent"
-import {hourAggregationFunction} from "../DateAggregate/aggregatorFunctions"
 import SelectAggregationContainer from "../MainChart/SelectAggregationContainer"
+import {createAggregationFunction} from "../DateAggregate/aggregatorFunctions"
+import {aggregationStoreInstance} from "../DateAggregate/AggregationStore"
 
 const CandlestickChartComponent = observer(class CandlestickChartComponent extends Component<{}> {
 
@@ -20,7 +21,11 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
     const candles = Object.values(candleStoreInstance.candles.toJS())
     const buyOrders = Object.values(orderStoreInstance.buyOrders.toJS())
     const sellOrders = Object.values(orderStoreInstance.sellOrders.toJS())
-    const dataArray = createAggregateFromData(candles, buyOrders, sellOrders, hourAggregationFunction)
+    const aggregationFunction = createAggregationFunction(
+      aggregationStoreInstance.unit,
+      aggregationStoreInstance.aggregationSize
+    )
+    const dataArray = createAggregateFromData(candles, buyOrders, sellOrders, aggregationFunction)
 
     if (dataArray.length < 1 || interval.isEmpty()) {
       return <div style={{marginTop: 25 + 'px'}}>
@@ -40,7 +45,7 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
       <Box auto>
         <Flex column align='center top'>
           <Box><SelectAggregationContainer/></Box>
-          <Box >{this.renderChart()}</Box>
+          <Box>{this.renderChart()}</Box>
         </Flex>
       </Box>
       <Box style={{paddingRight: 10 + 'px'}} w={256}><DashboardLegendComponent/></Box>
