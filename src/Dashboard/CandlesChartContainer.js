@@ -1,14 +1,14 @@
 // @flow
 import React, {Component} from 'react'
 import {observer} from "mobx-react"
-import CandlesChart from "./CandlesChart"
 import {Flex, Box} from 'reflexbox'
 import {orderStoreInstance} from "../Orders/OrderStore"
 import {candleStoreInstance} from "../Candle/CandleStore"
-import {createAggregateFromData} from "./ChartAggregate"
 import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import {NonIdealState} from "@blueprintjs/core"
-import LegendComponent from "../Dashboard/LegendComponent"
+import {createAggregateFromData} from "../MainChart/ChartAggregate"
+import CandlesChartComponent from "../MainChart/CandlesChartComponent"
+import DashboardLegendComponent from "./DashboardLegendComponent"
 
 const CandlestickChartComponent = observer(class CandlestickChartComponent extends Component<{}> {
 
@@ -30,16 +30,14 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
       </div>
     }
 
-    return <CandlesChart type="svg" data={dataArray} interval={interval}/>
+    return <CandlesChartComponent type="svg" data={dataArray} interval={interval}/>
   }
 
   render() {
-    return (
-      <Flex align='center top'>
-        <Box auto>{this.renderChart()}</Box>
-        <Box w={256}><LegendComponent/></Box>
-      </Flex>
-    )
+    return <Flex align='center top'>
+      <Box auto>{this.renderChart()}</Box>
+      <Box style={{paddingRight: 10 + 'px'}} w={256}><DashboardLegendComponent/></Box>
+    </Flex>
   }
 })
 

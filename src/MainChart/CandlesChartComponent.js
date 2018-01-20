@@ -36,7 +36,7 @@ const wholeChartHeight =
   + BETWEEN_SPACE + sellOrderChartHeight
   + margin.bottom
 
-class CandlesChart extends Component<Props> {
+class CandlesChartComponent extends Component<Props> {
   props: Props
 
   getColorForOrder = (chartAggregate: ChartAggregate, i: number): string => {
@@ -162,6 +162,6 @@ class CandlesChart extends Component<Props> {
 
 }
 
-CandlesChart = fitWidth(CandlesChart)
+CandlesChartComponent = fitWidth(CandlesChartComponent)
 
-export default CandlesChart
+export default CandlesChartComponent

@@ -1,7 +1,7 @@
 // @flow
 import React from "react"
 import {Table, Column, Cell, TableLoadingOption} from "@blueprintjs/table"
-import {Balance} from "./Balance"
+import {Balance} from "./../Balance"
 
 type Props = {
   balances: Array<Balance>

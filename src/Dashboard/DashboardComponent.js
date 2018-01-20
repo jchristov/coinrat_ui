@@ -1,11 +1,11 @@
 // @flow
 import React, {Component} from 'react'
-import CandlestickChartComponent from "../MainChart/CandlestickChartComponent"
 import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import {orderStoreInstance} from "../Orders/OrderStore"
 import {candleStoreInstance} from "../Candle/CandleStore"
 import Interval from "../Interval/Interval"
 import TopLineToolbarComponent from "../TopLineToolbar/TopLineAllToolbarComponent"
+import CandlesChartContainer from "./CandlesChartContainer"
 
 type Props = {
   pair: string,
@@ -49,7 +49,7 @@ class DashboardComponent extends Component<Props> {
 
   render = () => <div>
     <TopLineToolbarComponent/>
-    <CandlestickChartComponent/>
+    <CandlesChartContainer/>
   </div>
 }
 
