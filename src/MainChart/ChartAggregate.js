@@ -1,7 +1,8 @@
 // @flow
 import {DIRECTION_BUY, DIRECTION_SELL, OrderDirectionAggregate} from "../Orders/Order"
 import {CandleAggregate} from "../Candle/Candle"
-import {aggregateDateSecond, calculateAggregateHash} from "../DateAggregate/aggregateHash"
+import {AggregatorFunction} from "../DateAggregate/aggregatorFunctions"
+
 
 class ChartAggregate {
   date: Date
@@ -20,7 +21,8 @@ class ChartAggregate {
 const createAggregateFromData = (
   candles: Array<CandleAggregate>,
   buyOrders: Array<OrderDirectionAggregate>,
-  sellOrders: Array<OrderDirectionAggregate>
+  sellOrders: Array<OrderDirectionAggregate>,
+  aggregatorFunction: AggregatorFunction
 ): Array<ChartAggregate> => {
   let data: { [key: string]: ChartAggregate } = {}
 
@@ -30,7 +32,7 @@ const createAggregateFromData = (
 
   for (let i = 0; i < candles.length; i++) {
     const candle = candles[i]
-    const date = aggregateDateSecond(candle.date)
+    const date = aggregatorFunction(candle.date)
     const key = calculateAggregateHash(date)
     if (data[key] === undefined) {
       data[key] = new ChartAggregate(date)
@@ -40,7 +42,7 @@ const createAggregateFromData = (
 
   for (let i = 0; i < buyOrders.length; i++) {
     const order = buyOrders[i]
-    const date = aggregateDateSecond(order.dateBucket)
+    const date = aggregatorFunction(order.dateBucket)
     const key = calculateAggregateHash(date)
     if (data[key] === undefined) {
       data[key] = new ChartAggregate(date)
@@ -50,7 +52,7 @@ const createAggregateFromData = (
 
   for (let i = 0; i < sellOrders.length; i++) {
     const order = sellOrders[i]
-    const date = aggregateDateSecond(order.dateBucket)
+    const date = aggregatorFunction(order.dateBucket)
     const key = calculateAggregateHash(date)
     if (data[key] === undefined) {
       data[key] = new ChartAggregate(date)
@@ -67,7 +69,17 @@ const createAggregateFromData = (
   return Object.values(data).sort(sortBy)
 }
 
+const calculateAggregateHash = (date: Date): string => {
+  function str_pad(n) {
+    return String('00' + n).slice(-2)
+  }
+
+  return `${date.getFullYear()}-${str_pad(date.getMonth() + 1)}-${str_pad(date.getDate())} `
+    + `${str_pad(date.getHours())}:${str_pad(date.getMinutes())}:${str_pad(date.getSeconds())}`
+}
+
 export {
   ChartAggregate,
-  createAggregateFromData
+  createAggregateFromData,
+  calculateAggregateHash,
 }

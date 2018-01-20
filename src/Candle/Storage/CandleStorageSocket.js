@@ -33,8 +33,10 @@ class CandleStorageSocket {
 
 const candleStorageSocketInstance: CandleStorageSocket = new CandleStorageSocket(socket)
 
+export type {
+  CandleStorageHashMap,
+}
 export {
   CandleStorageSocket,
   candleStorageSocketInstance,
-  CandleStorageHashMap,
 }

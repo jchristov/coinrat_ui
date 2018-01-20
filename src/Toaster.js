@@ -1,5 +1,5 @@
 // @flow
-import {Position, Toaster} from "@blueprintjs/core/dist/esm/index"
+import {Position, Toaster} from "@blueprintjs/core"
 
 const appMainToaster = Toaster.create({
   className: "app-main-toaster",

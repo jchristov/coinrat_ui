@@ -34,8 +34,10 @@ class PairSocket {
 
 const pairSocketInstance: PairSocket = new PairSocket(socket)
 
+export type {
+  PairHashMap,
+}
 export {
   PairSocket,
   pairSocketInstance,
-  PairHashMap,
 }

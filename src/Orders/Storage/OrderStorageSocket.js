@@ -33,8 +33,10 @@ class OrderStorageSocket {
 
 const orderStorageSocketInstance: OrderStorageSocket = new OrderStorageSocket(socket)
 
+export type {
+  OrderStorageHashMap,
+}
 export {
   OrderStorageSocket,
   orderStorageSocketInstance,
-  OrderStorageHashMap,
 }

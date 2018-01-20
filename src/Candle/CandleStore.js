@@ -3,8 +3,9 @@ import {action, ObservableMap} from "mobx"
 import {CandleSocket, candleSocketInstance} from "./CandleSocket"
 import {FilterStore} from "../TopLineToolbar/FilterStore"
 import {Candle, CandleAggregate} from "./Candle"
-import {aggregateDateSecond, calculateAggregateHash} from "../DateAggregate/aggregateHash"
 import Interval from "../Interval/Interval"
+import {calculateAggregateHash} from "../MainChart/ChartAggregate"
+import {minuteAggregationFunction} from "../DateAggregate/aggregatorFunctions"
 
 class CandleStore {
   candles: ObservableMap<CandleAggregate>
@@ -19,7 +20,7 @@ class CandleStore {
 
     for (let i = 0; i < candles.length; i++) {
       const candle = candles[i]
-      const date = aggregateDateSecond(candle.date)
+      const date = minuteAggregationFunction(candle.date)
       const key = calculateAggregateHash(date)
 
       if (candlesAggregates[key] === undefined) {

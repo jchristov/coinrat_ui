@@ -75,8 +75,10 @@ class SelectComponent extends Component<Props> {
   }
 }
 
+export type {
+  DefaultSelectDataType,
+  SelectElement,
+}
 export {
   SelectComponent,
-  SelectElement,
-  DefaultSelectDataType,
 }

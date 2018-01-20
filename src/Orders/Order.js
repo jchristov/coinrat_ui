@@ -75,19 +75,22 @@ class OrderDirectionAggregate {
   }
 }
 
+export type {
+  OrderType,
+  OrderDirectionType,
+  OrderStatusType,
+}
+
 export {
   Order,
   OrderDirectionAggregate,
 
-  OrderType,
   ORDER_TYPE_LIMIT,
   ORDER_TYPE_MARKET,
 
-  OrderDirectionType,
   DIRECTION_SELL,
   DIRECTION_BUY,
 
-  OrderStatusType,
   STATUS_OPEN,
   STATUS_CLOSED,
   STATUS_CANCELED,

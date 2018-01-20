@@ -1,10 +1,11 @@
 // @flow
 import {action, ObservableMap, extendObservable} from "mobx"
 import {DIRECTION_BUY, DIRECTION_SELL, Order, OrderDirectionAggregate} from "./Order"
-import {aggregateDateSecond, calculateAggregateHash} from "../DateAggregate/aggregateHash"
 import Interval from "../Interval/Interval"
 import {FilterStore} from "../TopLineToolbar/FilterStore"
 import {orderSocketInstance, OrdersSocket} from "./OrderSocket"
+import {calculateAggregateHash} from "../MainChart/ChartAggregate"
+import {minuteAggregationFunction} from "../DateAggregate/aggregatorFunctions"
 
 class OrderStore {
   orders: Array<Order>
@@ -46,7 +47,7 @@ class OrderStore {
 
       this.orders.push(order)
 
-      const date = aggregateDateSecond(order.createdAt)
+      const date = minuteAggregationFunction(order.createdAt)
       const key = calculateAggregateHash(date)
 
       if (order.direction === DIRECTION_BUY) {

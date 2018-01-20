@@ -1,19 +1,24 @@
 // @flow
 import React, {Component} from 'react'
+
+import {scaleTime} from "d3-scale"
+import {timeFormat} from "d3-time-format"
+import {format} from "d3-format"
+
 import {ChartCanvas, Chart} from "react-stockcharts"
 import {CandlestickSeries} from "react-stockcharts/lib/series"
 import {XAxis, YAxis} from "react-stockcharts/lib/axes"
 import {fitWidth} from "react-stockcharts/lib/helper"
-import {scaleTime} from "d3-scale"
+import {StackedBarSeries} from "react-stockcharts/lib/series"
+import {
+  CrossHairCursor,
+  MouseCoordinateX,
+  MouseCoordinateY,
+} from "react-stockcharts/lib/coordinates"
+
 import Interval from "../Interval/Interval"
-import {timeFormat} from "d3-time-format"
-import {format} from "d3-format"
-import MouseCoordinateY from "react-stockcharts/es/lib/coordinates/MouseCoordinateY"
-import MouseCoordinateX from "react-stockcharts/es/lib/coordinates/MouseCoordinateX"
-import CrossHairCursor from "react-stockcharts/es/lib/coordinates/CrossHairCursor"
 import {OrderDirectionAggregate, STATUS_CANCELED, STATUS_CLOSED, STATUS_OPEN} from "../Orders/Order"
 import {ORDERS_STATUS_COLORS} from "../Orders/ChartColors"
-import StackedBarSeries from "react-stockcharts/es/lib/series/StackedBarSeries"
 import {ChartAggregate} from "./ChartAggregate"
 
 type Props = {
