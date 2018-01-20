@@ -19,45 +19,45 @@ class ChartAggregate {
 }
 
 const createAggregateFromData = (
-  candles: Array<CandleAggregate>,
-  buyOrders: Array<OrderDirectionAggregate>,
-  sellOrders: Array<OrderDirectionAggregate>,
+  candleAggregates: Array<CandleAggregate>,
+  buyOrderAggregates: Array<OrderDirectionAggregate>,
+  sellOrderAggregates: Array<OrderDirectionAggregate>,
   aggregatorFunction: AggregatorFunction
 ): Array<ChartAggregate> => {
   let data: { [key: string]: ChartAggregate } = {}
 
-  if (candles.length === 0) {
+  if (candleAggregates.length === 0) {
     return []
   }
 
-  for (let i = 0; i < candles.length; i++) {
-    const candle = candles[i]
-    const date = aggregatorFunction(candle.date)
+  for (let i = 0; i < candleAggregates.length; i++) {
+    const candleAggregate = candleAggregates[i]
+    const date = aggregatorFunction(candleAggregate.date)
     const key = calculateAggregateHash(date)
     if (data[key] === undefined) {
       data[key] = new ChartAggregate(date)
     }
-    data[key].candleAggregate = candle
+    data[key].candleAggregate.addCandle(candleAggregate)
   }
 
-  for (let i = 0; i < buyOrders.length; i++) {
-    const order = buyOrders[i]
-    const date = aggregatorFunction(order.dateBucket)
+  for (let i = 0; i < buyOrderAggregates.length; i++) {
+    const buyOrderAggregate = buyOrderAggregates[i]
+    const date = aggregatorFunction(buyOrderAggregate.dateBucket)
     const key = calculateAggregateHash(date)
     if (data[key] === undefined) {
       data[key] = new ChartAggregate(date)
     }
-    data[key].buyOrderAggregate = order
+    data[key].buyOrderAggregate.addAggregate(buyOrderAggregate)
   }
 
-  for (let i = 0; i < sellOrders.length; i++) {
-    const order = sellOrders[i]
-    const date = aggregatorFunction(order.dateBucket)
+  for (let i = 0; i < sellOrderAggregates.length; i++) {
+    const sellOrderAggregate = sellOrderAggregates[i]
+    const date = aggregatorFunction(sellOrderAggregate.dateBucket)
     const key = calculateAggregateHash(date)
     if (data[key] === undefined) {
       data[key] = new ChartAggregate(date)
     }
-    data[key].sellOrderAggregate = order
+    data[key].sellOrderAggregate.addAggregate(sellOrderAggregate)
   }
 
   const sortBy = (first: ChartAggregate, second: ChartAggregate) => {

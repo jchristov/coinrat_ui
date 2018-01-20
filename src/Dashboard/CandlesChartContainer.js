@@ -9,7 +9,7 @@ import {NonIdealState} from "@blueprintjs/core"
 import {createAggregateFromData} from "../MainChart/ChartAggregate"
 import CandlesChartComponent from "../MainChart/CandlesChartComponent"
 import DashboardLegendComponent from "./DashboardLegendComponent"
-import {minuteAggregationFunction} from "../DateAggregate/aggregatorFunctions"
+import {hourAggregationFunction} from "../DateAggregate/aggregatorFunctions"
 
 const CandlestickChartComponent = observer(class CandlestickChartComponent extends Component<{}> {
 
@@ -19,7 +19,7 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
     const candles = Object.values(candleStoreInstance.candles.toJS())
     const buyOrders = Object.values(orderStoreInstance.buyOrders.toJS())
     const sellOrders = Object.values(orderStoreInstance.sellOrders.toJS())
-    const dataArray = createAggregateFromData(candles, buyOrders, sellOrders, minuteAggregationFunction)
+    const dataArray = createAggregateFromData(candles, buyOrders, sellOrders, hourAggregationFunction)
 
     if (dataArray.length < 1 || interval.isEmpty()) {
       return <div style={{marginTop: 25 + 'px'}}>

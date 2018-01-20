@@ -69,10 +69,26 @@ class OrderDirectionAggregate {
   }
 
   increment = (status: OrderStatusType) => {
-    if (status === STATUS_OPEN) this.countOpen++
-    if (status === STATUS_CLOSED) this.countClosed++
-    if (status === STATUS_CANCELED) this.countCanceled++
+    if (status === STATUS_OPEN) {
+      this.countOpen++
+
+    } else if (status === STATUS_CLOSED) {
+      this.countClosed++
+
+    } else if (status === STATUS_CANCELED) {
+      this.countCanceled++
+
+    } else {
+      console.error('ERROR: unsupported order status: ', status)
+    }
   }
+
+  addAggregate = (aggregate: OrderDirectionAggregate) => {
+    this.countOpen += aggregate.countOpen
+    this.countClosed += aggregate.countClosed
+    this.countCanceled += aggregate.countCanceled
+  }
+
 }
 
 export type {
