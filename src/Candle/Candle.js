@@ -42,22 +42,9 @@ class CandleAggregate {
   }
 
   addCandle = (candle: Candle | CandleAggregate) => {
-    if (this.open === null) {
-      this.open = candle.open
-    }
-
-    if (this.low === null) {
-      this.low = candle.low
-    } else {
-      this.low = Math.min(this.low, candle.low)
-    }
-
-    if (this.high === null) {
-      this.high = candle.high
-    } else {
-      this.high = Math.max(this.high, candle.high)
-    }
-
+    this.open = this.open === null ? candle.open : this.open
+    this.low = this.low === null ? candle.low : Math.min(this.low, candle.low)
+    this.high = this.high === null ? candle.high : Math.max(this.high, candle.high)
     this.close = candle.close
     this.volume += candle.volume
   }
