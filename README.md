@@ -14,3 +14,7 @@ flow-typed install
 ```bash
 cp .env.example .env
 ```
+Change socket port in `.env` if needed.
+
+## Run:
+`yarn start`
