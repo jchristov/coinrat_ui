@@ -10,6 +10,7 @@ import {createAggregateFromData} from "../MainChart/ChartAggregate"
 import CandlesChartComponent from "../MainChart/CandlesChartComponent"
 import DashboardLegendComponent from "./DashboardLegendComponent"
 import {hourAggregationFunction} from "../DateAggregate/aggregatorFunctions"
+import SelectAggregationContainer from "../MainChart/SelectAggregationContainer"
 
 const CandlestickChartComponent = observer(class CandlestickChartComponent extends Component<{}> {
 
@@ -36,7 +37,12 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
 
   render() {
     return <Flex align='center top'>
-      <Box auto>{this.renderChart()}</Box>
+      <Box auto>
+        <Flex column align='center top'>
+          <Box><SelectAggregationContainer/></Box>
+          <Box >{this.renderChart()}</Box>
+        </Flex>
+      </Box>
       <Box style={{paddingRight: 10 + 'px'}} w={256}><DashboardLegendComponent/></Box>
     </Flex>
   }

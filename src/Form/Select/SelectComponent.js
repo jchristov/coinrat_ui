@@ -13,10 +13,10 @@ type SelectElement = {
   key: string,
 }
 
-type DefaultSelectDataType = { [key: string]: SelectElement }
+type SelectItemsType = { [key: string]: SelectElement }
 
 type Props = {
-  items: { [key: string]: SelectElement },
+  items: SelectItemsType,
   selectedItem: ?SelectElement,
   label: string,
   onChange: (element: SelectElement) => void,
@@ -76,7 +76,7 @@ class SelectComponent extends Component<Props> {
 }
 
 export type {
-  DefaultSelectDataType,
+  SelectItemsType,
   SelectElement,
 }
 export {
