@@ -1,13 +1,14 @@
 // @flow
 import React from "react"
-import {SelectComponent, SelectItemsType, SelectElement} from "../Form/Select/SelectComponent"
+import {SelectComponent} from "../../Form/Select/SelectComponent"
+import type {SelectElement, SelectItemsType} from "../../Form/Select/SelectComponent"
 
 type Props = {
   onSelect: (aggregation: string) => void,
   defaultSelectedAggregation: string,
 }
 
-const SelectAggregationComponent = ({availableMarkets, defaultSelectedAggregation, onSelect}: Props) => {
+const CandleSizeSelectComponent = ({availableMarkets, defaultSelectedAggregation, onSelect}: Props) => {
   const availableAggregations: SelectItemsType = {
     '1-minute': {key: '1-minute', title: '1 minute'},
     '5-minute': {key: '5-minute', title: '5 minutes'},
@@ -17,6 +18,7 @@ const SelectAggregationComponent = ({availableMarkets, defaultSelectedAggregatio
     '6-hour': {key: '6-hour', title: '6 hours'},
     '12-hour': {key: '12-hour', title: '12 hours'},
     '1-day': {key: '1-day', title: '1 day'},
+    '7-day': {key: '7-day', title: '7 days'},
   }
 
   const item = availableAggregations[defaultSelectedAggregation]
@@ -28,4 +30,4 @@ const SelectAggregationComponent = ({availableMarkets, defaultSelectedAggregatio
   />
 }
 
-export default SelectAggregationComponent
+export default CandleSizeSelectComponent

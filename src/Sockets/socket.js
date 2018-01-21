@@ -27,25 +27,15 @@ class AppSocket {
     })
   }
 
-  subscribeForUpdates = (event: string, market: string, pair: string, interval: Interval, storage: string) => {
-    this.socketio.emit(SOCKET_EVENT_UNSUBSCRIBE, {event: event}, () => {
-      this.socketio.emit(SOCKET_EVENT_SUBSCRIBE, {
-        event: event,
-        storage: storage,
-        market: market,
-        pair: pair,
-        interval: interval,
-      })
-    })
-  }
-
-  emit = (event: string, data: Object, onSuccess: (status: string, data: Object) => void) => {
-    this.socketio.emit(event, data, (status: string, data: Object) => {
+  emit = (event: string, requestData: Object, onSuccess: (status: string, data: Object) => void) => {
+    this.socketio.emit(event, requestData, (status: string, resultData: Object) => {
       if (status !== 'OK') {
-        console.log('Server returned ERROR: ', data)
+        console.error('Server returned status:', status, 'with data:', resultData, 'for event:', event, 'data:', requestData)
         return
       }
-      onSuccess(status, data)
+      if (onSuccess) {
+        onSuccess(status, resultData)
+      }
     })
   }
 

@@ -1,63 +1,31 @@
 // @flow
 import {DIRECTION_BUY, DIRECTION_SELL, OrderDirectionAggregate} from "../Orders/Order"
-import {CandleAggregate} from "../Candle/Candle"
-import {AggregatorFunction} from "../DateAggregate/aggregatorFunctions"
+import {Candle} from "../Candle/Candle"
 
 
 class ChartAggregate {
-  date: Date
   buyOrderAggregate: OrderDirectionAggregate
   sellOrderAggregate: OrderDirectionAggregate
-  candleAggregate: CandleAggregate
+  candle: Candle
 
-  constructor(date: Date) {
-    this.date = date
-    this.buyOrderAggregate = new OrderDirectionAggregate(date, DIRECTION_BUY)
-    this.sellOrderAggregate = new OrderDirectionAggregate(date, DIRECTION_SELL)
-    this.candleAggregate = new CandleAggregate(date)
+  constructor(candle: Candle) {
+    this.buyOrderAggregate = new OrderDirectionAggregate(candle.date, DIRECTION_BUY)
+    this.sellOrderAggregate = new OrderDirectionAggregate(candle.date, DIRECTION_SELL)
+    this.candle = candle
+  }
+
+  get date() {
+    return this.candle.date
   }
 }
 
 const createAggregateFromData = (
-  candleAggregates: Array<CandleAggregate>,
+  candles: Array<Candle>,
   buyOrderAggregates: Array<OrderDirectionAggregate>,
-  sellOrderAggregates: Array<OrderDirectionAggregate>,
-  aggregatorFunction: AggregatorFunction
+  sellOrderAggregates: Array<OrderDirectionAggregate>
 ): Array<ChartAggregate> => {
-  let data: { [key: string]: ChartAggregate } = {}
-
-  if (candleAggregates.length === 0) {
+  if (candles.length === 0) {
     return []
-  }
-
-  for (let i = 0; i < candleAggregates.length; i++) {
-    const candleAggregate = candleAggregates[i]
-    const date = aggregatorFunction(candleAggregate.date)
-    const key = calculateAggregateHash(date)
-    if (data[key] === undefined) {
-      data[key] = new ChartAggregate(date)
-    }
-    data[key].candleAggregate.addCandle(candleAggregate)
-  }
-
-  for (let i = 0; i < buyOrderAggregates.length; i++) {
-    const buyOrderAggregate = buyOrderAggregates[i]
-    const date = aggregatorFunction(buyOrderAggregate.dateBucket)
-    const key = calculateAggregateHash(date)
-    if (data[key] === undefined) {
-      data[key] = new ChartAggregate(date)
-    }
-    data[key].buyOrderAggregate.addAggregate(buyOrderAggregate)
-  }
-
-  for (let i = 0; i < sellOrderAggregates.length; i++) {
-    const sellOrderAggregate = sellOrderAggregates[i]
-    const date = aggregatorFunction(sellOrderAggregate.dateBucket)
-    const key = calculateAggregateHash(date)
-    if (data[key] === undefined) {
-      data[key] = new ChartAggregate(date)
-    }
-    data[key].sellOrderAggregate.addAggregate(sellOrderAggregate)
   }
 
   const sortBy = (first: ChartAggregate, second: ChartAggregate) => {
@@ -66,7 +34,31 @@ const createAggregateFromData = (
     return 0
   }
 
-  return Object.values(data).sort(sortBy)
+  let data: { [key: string]: ChartAggregate } = {}
+
+  candles.sort(sortBy)
+  buyOrderAggregates.sort(sortBy)
+  sellOrderAggregates.sort(sortBy)
+
+  for (let i = 0; i < candles.length; i++) {
+    const candle = candles[i]
+    const key = calculateAggregateHash(candle.date)
+    data[key] = new ChartAggregate(candle)
+
+    const lastBuyOrder = buyOrderAggregates[buyOrderAggregates.length - 1]
+    if (lastBuyOrder !== undefined && lastBuyOrder.date <= candle.date) {
+      data[key].buyOrderAggregate.addAggregate(lastBuyOrder)
+      buyOrderAggregates.pop()
+    }
+
+    const lastSellOrder = sellOrderAggregates[sellOrderAggregates.length - 1]
+    if (lastSellOrder !== undefined && lastSellOrder.date <= candle.date) {
+      data[key].buyOrderAggregate.addAggregate(lastSellOrder)
+      sellOrderAggregates.pop()
+    }
+  }
+
+  return Object.values(data)
 }
 
 const calculateAggregateHash = (date: Date): string => {

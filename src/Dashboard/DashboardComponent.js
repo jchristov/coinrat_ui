@@ -6,6 +6,7 @@ import {candleStoreInstance} from "../Candle/CandleStore"
 import Interval from "../Interval/Interval"
 import TopLineToolbarComponent from "../TopLineToolbar/TopLineAllToolbarComponent"
 import CandlesChartContainer from "./CandlesChartContainer"
+import {candleSizeStoreInstance} from "../Candle/CandleSize/CandleSizeStore"
 
 type Props = {
   pair: string,
@@ -24,7 +25,7 @@ class DashboardComponent extends Component<Props> {
 
   reloadStores = () => {
     orderStoreInstance.reloadByFilter(filterStoreInstance)
-    candleStoreInstance.reloadByFilter(filterStoreInstance)
+    candleStoreInstance.reloadByFilter(filterStoreInstance, candleSizeStoreInstance.candleSize)
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -39,7 +40,7 @@ class DashboardComponent extends Component<Props> {
     }
 
     if (current.candleStorage !== nextProps.candleStorage) {
-      candleStoreInstance.reloadByFilter(filterStoreInstance)
+      candleStoreInstance.reloadByFilter(filterStoreInstance, candleSizeStoreInstance.candleSize)
     }
 
     if (current.orderStorage !== nextProps.orderStorage) {

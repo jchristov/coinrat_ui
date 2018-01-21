@@ -1,7 +1,7 @@
 // @flow
 import {AppSocket, socket} from "../socket"
 import {action, ObservableMap} from "mobx"
-import {SOCKET_EVENT_NEW_CANDLES, SOCKET_EVENT_NEW_ORDERS, SOCKET_EVENT_PING_RESPONSE} from "../SocketEvents"
+import {SOCKET_EVENT_LAST_CANDLE_UPDATED, SOCKET_EVENT_NEW_ORDERS, SOCKET_EVENT_PING_RESPONSE} from "../SocketEvents"
 
 class SocketEventLogStore {
   log: ObservableMap<string>
@@ -17,8 +17,8 @@ class SocketEventLogStore {
       const delay = data['request_timestamp'] - data['response_timestamp']
       this.logMessage(SOCKET_EVENT_PING_RESPONSE + ' - ' + data['ping_id'] + ' (delay: ' + (Math.floor(delay * 1000) / 1000) + 's)')
     })
-    this.socket.socketio.on(SOCKET_EVENT_NEW_CANDLES, (data) => {
-      this.logMessage(SOCKET_EVENT_NEW_CANDLES + ' - ' + JSON.stringify(data))
+    this.socket.socketio.on(SOCKET_EVENT_LAST_CANDLE_UPDATED, (data) => {
+      this.logMessage(SOCKET_EVENT_LAST_CANDLE_UPDATED + ' - ' + JSON.stringify(data))
     })
     this.socket.socketio.on(SOCKET_EVENT_NEW_ORDERS, (data) => {
       this.logMessage(SOCKET_EVENT_NEW_ORDERS + ' - ' + JSON.stringify(data))

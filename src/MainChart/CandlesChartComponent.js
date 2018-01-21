@@ -73,16 +73,16 @@ class CandlesChartComponent extends Component<Props> {
     }
 
     const yCandlesExtends = (chartAggregate: ChartAggregate) => [
-      chartAggregate.candleAggregate.high,
-      chartAggregate.candleAggregate.low,
+      chartAggregate.candle.high,
+      chartAggregate.candle.low,
     ]
 
     const yCandleAccessor = (chartAggregate: ChartAggregate) => {
       return {
-        open: chartAggregate.candleAggregate.open,
-        high: chartAggregate.candleAggregate.high,
-        low: chartAggregate.candleAggregate.low,
-        close: chartAggregate.candleAggregate.close,
+        open: chartAggregate.candle.open,
+        high: chartAggregate.candle.high,
+        low: chartAggregate.candle.low,
+        close: chartAggregate.candle.close,
       }
     }
 

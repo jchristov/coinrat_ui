@@ -5,7 +5,8 @@ import {Order, OrderDirectionType, OrderType} from "./Order"
 import appMainToaster from "../Toaster"
 import {OrderStatusType} from "./Order"
 import {
-  SOCKET_EVENT_CLEAR_ORDERS, SOCKET_EVENT_GET_ORDERS, SOCKET_EVENT_NEW_ORDERS,
+  SOCKET_EVENT_CLEAR_ORDERS, SOCKET_EVENT_GET_ORDERS, SOCKET_EVENT_NEW_ORDERS, SOCKET_EVENT_SUBSCRIBE,
+  SOCKET_EVENT_UNSUBSCRIBE,
   SUBSCRIBED_EVENT_NEW_ORDER
 } from "../Sockets/SocketEvents"
 
@@ -43,15 +44,29 @@ class OrdersSocket {
     orderStorage: string,
     processOrders: (order: Array<Order>) => void
   ) {
-    this.socket.emit(SOCKET_EVENT_GET_ORDERS, {
+    const getOrdersData = {
       pair: pair,
       market: market,
       interval: interval.toIso(),
       order_storage: orderStorage,
-    }, (status: string, rawOrders: Array<RawOrder>) => {
+    }
+
+    this.socket.emit(SOCKET_EVENT_GET_ORDERS, getOrdersData, (status: string, rawOrders: Array<RawOrder>) => {
       console.log('Received ORDER', Object.values(rawOrders).length)
       processOrders(OrdersSocket.parseOrdersDataIntoStateObject(rawOrders))
-      this.socket.subscribeForUpdates(SUBSCRIBED_EVENT_NEW_ORDER, market, pair, interval, orderStorage)
+
+      this.socket.emit(
+        SOCKET_EVENT_UNSUBSCRIBE,
+        {event: SUBSCRIBED_EVENT_NEW_ORDER},
+        () => {
+          this.socket.emit(SOCKET_EVENT_SUBSCRIBE, {
+            event: SUBSCRIBED_EVENT_NEW_ORDER,
+            storage: orderStorage,
+            market: market,
+            pair: pair,
+            interval: interval,
+          })
+        })
     })
   }
 
