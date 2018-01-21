@@ -16,6 +16,7 @@ class CandleSizeStore {
     extendObservable(this, {
       unit: unit,
       size: size,
+      candleSize: `${unit}-${size}`
     })
     this._concatCandleSize()
   }
@@ -28,7 +29,6 @@ class CandleSizeStore {
 
   _concatCandleSize = () => {
     this.candleSize = `${this.size}-${this.unit}`
-    console.log(this.candleSize)
   }
 
 }

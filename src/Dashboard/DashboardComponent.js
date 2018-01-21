@@ -15,6 +15,7 @@ type Props = {
   candleStorage: string,
   orderStorage: string,
   strategy: string,
+  candleSize: string,
 }
 
 class DashboardComponent extends Component<Props> {
@@ -35,6 +36,7 @@ class DashboardComponent extends Component<Props> {
       current.market !== nextProps.market
       || current.pair !== nextProps.pair
       || current.interval !== nextProps.interval
+      || current.candleSize !== nextProps.candleSize
     ) {
       this.reloadStores()
     }

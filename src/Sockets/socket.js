@@ -1,7 +1,5 @@
 // @flow
-import Interval from "../Interval/Interval"
 import appMainToaster from "../Toaster"
-import {SOCKET_EVENT_SUBSCRIBE, SOCKET_EVENT_UNSUBSCRIBE} from "./SocketEvents"
 
 const url = process.env.REACT_APP_BACKEND_SOCKET_URL
 const socketio = require('socket.io-client')(url)
