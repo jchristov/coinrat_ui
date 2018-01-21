@@ -45,15 +45,19 @@ const createAggregateFromData = (
     const key = calculateAggregateHash(candle.date)
     data[key] = new ChartAggregate(candle)
 
+    const isOrderInCandleBucket = (order: OrderDirectionAggregate): boolean => {
+      return order.dateBucket >= candle.date && (i + 1 === candles.length || order.dateBucket < candles[i + 1].date)
+    }
+
     let lastBuyOrder = buyOrderAggregates[0]
-    while (lastBuyOrder !== undefined && lastBuyOrder.dateBucket >= candle.date && (i + 1 === candles.length || lastBuyOrder.dateBucket < candles[i + 1].date)) {
+    while (lastBuyOrder !== undefined && isOrderInCandleBucket(lastBuyOrder)) {
       data[key].buyOrderAggregate.addAggregate(lastBuyOrder)
       buyOrderAggregates.shift()
       lastBuyOrder = buyOrderAggregates[0]
     }
 
     let lastSellOrder = sellOrderAggregates[0]
-    while (lastSellOrder !== undefined && lastSellOrder.dateBucket >= candle.date && (i + 1 === candles.length || lastSellOrder.dateBucket < candles[i + 1].date)) {
+    while (lastSellOrder !== undefined && isOrderInCandleBucket(lastSellOrder)) {
       data[key].sellOrderAggregate.addAggregate(lastSellOrder)
       sellOrderAggregates.shift()
       lastSellOrder = sellOrderAggregates[0]
@@ -64,9 +68,7 @@ const createAggregateFromData = (
 }
 
 const calculateAggregateHash = (date: Date): string => {
-  function str_pad(n) {
-    return String('00' + n).slice(-2)
-  }
+  const str_pad = (n) => String('00' + n).slice(-2)
 
   return `${date.getFullYear()}-${str_pad(date.getMonth() + 1)}-${str_pad(date.getDate())} `
     + `${str_pad(date.getHours())}:${str_pad(date.getMinutes())}:${str_pad(date.getSeconds())}`
