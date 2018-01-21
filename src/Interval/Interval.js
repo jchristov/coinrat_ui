@@ -28,7 +28,7 @@ class Interval {
   }
 
   isEmpty = () => {
-    return this.since.getTime() === this.till.getTime()
+    return this.since === null || this.till !== null && this.since.getTime() === this.till.getTime()
   }
 }
 

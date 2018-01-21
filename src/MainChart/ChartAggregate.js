@@ -45,16 +45,18 @@ const createAggregateFromData = (
     const key = calculateAggregateHash(candle.date)
     data[key] = new ChartAggregate(candle)
 
-    const lastBuyOrder = buyOrderAggregates[buyOrderAggregates.length - 1]
-    if (lastBuyOrder !== undefined && lastBuyOrder.date <= candle.date) {
+    let lastBuyOrder = buyOrderAggregates[0]
+    while (lastBuyOrder !== undefined && lastBuyOrder.dateBucket >= candle.date && (i + 1 === candles.length || lastBuyOrder.dateBucket < candles[i + 1].date)) {
       data[key].buyOrderAggregate.addAggregate(lastBuyOrder)
-      buyOrderAggregates.pop()
+      buyOrderAggregates.shift()
+      lastBuyOrder = buyOrderAggregates[0]
     }
 
-    const lastSellOrder = sellOrderAggregates[sellOrderAggregates.length - 1]
-    if (lastSellOrder !== undefined && lastSellOrder.date <= candle.date) {
-      data[key].buyOrderAggregate.addAggregate(lastSellOrder)
-      sellOrderAggregates.pop()
+    let lastSellOrder = sellOrderAggregates[0]
+    while (lastSellOrder !== undefined && lastSellOrder.dateBucket >= candle.date && (i + 1 === candles.length || lastSellOrder.dateBucket < candles[i + 1].date)) {
+      data[key].sellOrderAggregate.addAggregate(lastSellOrder)
+      sellOrderAggregates.shift()
+      lastSellOrder = sellOrderAggregates[0]
     }
   }
 
