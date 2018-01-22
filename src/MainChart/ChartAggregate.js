@@ -19,6 +19,18 @@ class ChartAggregate {
   }
 }
 
+const sortCandleByDate = (first: Candle, second: Candle) => {
+  if (first.date < second.date) return -1
+  if (first.date > second.date) return 1
+  return 0
+}
+
+const sortOrderAggregatesByDate = (first: OrderDirectionAggregate, second: OrderDirectionAggregate) => {
+  if (first.dateBucket < second.dateBucket) return -1
+  if (first.dateBucket > second.dateBucket) return 1
+  return 0
+}
+
 const createAggregateFromData = (
   candles: Array<Candle>,
   buyOrderAggregates: Array<OrderDirectionAggregate>,
@@ -27,18 +39,11 @@ const createAggregateFromData = (
   if (candles.length === 0) {
     return []
   }
-
-  const sortBy = (first: ChartAggregate, second: ChartAggregate) => {
-    if (first.date < second.date) return -1
-    if (first.date > second.date) return 1
-    return 0
-  }
-
   let data: { [key: string]: ChartAggregate } = {}
 
-  candles.sort(sortBy)
-  buyOrderAggregates.sort(sortBy)
-  sellOrderAggregates.sort(sortBy)
+  candles.sort(sortCandleByDate)
+  buyOrderAggregates.sort(sortOrderAggregatesByDate)
+  sellOrderAggregates.sort(sortOrderAggregatesByDate)
 
   for (let i = 0; i < candles.length; i++) {
     const candle = candles[i]

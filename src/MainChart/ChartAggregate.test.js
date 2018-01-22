@@ -39,8 +39,8 @@ const runs: Array<TestRunData> = [
     },
     ordersBuy: [
       createOrder(new Date(2018, 1, 1, 0, 0, 0), 1, DIRECTION_BUY),
+      createOrder(new Date(2018, 1, 2, 0, 0, 0), 2, DIRECTION_BUY), // IMPORTANT: out of order, its not sorted!
       createOrder(new Date(2018, 1, 1, 23, 59, 59), 2, DIRECTION_BUY),
-      createOrder(new Date(2018, 1, 2, 0, 0, 0), 2, DIRECTION_BUY),
       createOrder(new Date(2018, 1, 3, 0, 0, 0), 5, DIRECTION_BUY),
       // ...
       createOrder(new Date(2018, 1, 6, 0, 0, 0), 5, DIRECTION_BUY),
