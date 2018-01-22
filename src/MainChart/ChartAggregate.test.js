@@ -19,6 +19,7 @@ type TestRunData = {
     buy: { closed: Array<number> },
     sell: { closed: Array<number> },
   },
+  expectedMaxOrderTicks: number,
   ordersBuy: Array<OrderDirectionAggregate>,
   ordersSell: Array<OrderDirectionAggregate>,
 }
@@ -29,6 +30,7 @@ const runs: Array<TestRunData> = [
       buy: {closed: [0, 0, 0, 0, 0, 0, 0, 0, 0]},
       sell: {closed: [0, 0, 0, 0, 0, 0, 0, 0, 0]},
     },
+    expectedMaxOrderTicks: 0,
     ordersBuy: [],
     ordersSell: []
   },
@@ -37,6 +39,7 @@ const runs: Array<TestRunData> = [
       buy: {closed: [3, 2, 5, 0, 0, 10, 0, 0, 0]},
       sell: {closed: [10, 0, 0, 0, 0, 2, 5, 0, 0]},
     },
+    expectedMaxOrderTicks: 10,
     ordersBuy: [
       createOrder(new Date(2018, 1, 1, 0, 0, 0), 1, DIRECTION_BUY),
       createOrder(new Date(2018, 1, 2, 0, 0, 0), 2, DIRECTION_BUY), // IMPORTANT: out of order, its not sorted!
@@ -63,11 +66,13 @@ it('orders are aggregated correctly with candles', () => {
 
     const result = createAggregateFromData(candles, data.ordersBuy, data.ordersSell)
 
+    expect(result.maxOrderTickSize).toBe(data.expectedMaxOrderTicks)
+
     data.expected.buy.closed.forEach((expectedValue: number, index: number) => {
-      expect(result[index].buyOrderAggregate.countClosed).toBe(expectedValue)
+      expect(result.data[index].buyOrderAggregate.countClosed).toBe(expectedValue)
     })
     data.expected.sell.closed.forEach((expectedValue: number, index: number) => {
-      expect(result[index].sellOrderAggregate.countClosed).toBe(expectedValue)
+      expect(result.data[index].sellOrderAggregate.countClosed).toBe(expectedValue)
     })
   })
 })

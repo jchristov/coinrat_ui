@@ -19,10 +19,10 @@ import {
 import Interval from "../Interval/Interval"
 import {OrderDirectionAggregate, STATUS_CANCELED, STATUS_CLOSED, STATUS_OPEN} from "../Orders/Order"
 import {ORDERS_STATUS_COLORS} from "../Orders/ChartColors"
-import {ChartAggregate} from "./ChartAggregate"
+import {AggregationResult, ChartAggregate} from "./ChartAggregate"
 
 type Props = {
-  data: Array<ChartAggregate>,
+  result: AggregationResult,
   width: number,
   ratio: number,
   type: 'svg' | 'hybrid',
@@ -55,7 +55,7 @@ class CandlesChartComponent extends Component<Props> {
   }
 
   render() {
-    const {type, width, data, ratio, interval} = this.props
+    const {type, width, result, ratio, interval} = this.props
     const {yGrid, xGrid} = this.calculateGrid(width, candleChartHeight)
 
     const canvasProps = {
@@ -87,7 +87,7 @@ class CandlesChartComponent extends Component<Props> {
     }
 
     return (
-      <ChartCanvas {...canvasProps} data={data}>
+      <ChartCanvas {...canvasProps} data={result.data}>
         <Chart id={1} yExtents={yCandlesExtends} height={400}>
           <MouseCoordinateX at="bottom" orient="top" displayFormat={timeFormat("%Y-%m-%d %X")} rectWidth={160}/>
           <MouseCoordinateY at="left" orient="right" displayFormat={format(".8")} rectWidth={100}/>
@@ -100,14 +100,16 @@ class CandlesChartComponent extends Component<Props> {
           width,
           buyOrderChartHeight,
           sellOrderChartHeight + 30,
-          (chartAggregate: ChartAggregate): OrderDirectionAggregate => chartAggregate.buyOrderAggregate
+          (chartAggregate: ChartAggregate): OrderDirectionAggregate => chartAggregate.buyOrderAggregate,
+          result.maxOrderTickSize
         )}
         {this.renderOrderChart(
           3,
           width,
           sellOrderChartHeight,
           0,
-          (chartAggregate: ChartAggregate): OrderDirectionAggregate => chartAggregate.sellOrderAggregate
+          (chartAggregate: ChartAggregate): OrderDirectionAggregate => chartAggregate.sellOrderAggregate,
+          result.maxOrderTickSize
         )}
         <CrossHairCursor/>
       </ChartCanvas>
@@ -135,7 +137,8 @@ class CandlesChartComponent extends Component<Props> {
     width: number,
     height: number,
     highOffset: number,
-    ordersResolver: (chartAggregate: ChartAggregate) => OrderDirectionAggregate
+    ordersResolver: (chartAggregate: ChartAggregate) => OrderDirectionAggregate,
+    maxOrderTickSize: number
   ) {
     const orderChartProps = {
       height: height,
@@ -160,7 +163,7 @@ class CandlesChartComponent extends Component<Props> {
 
     return <Chart id={id} {...orderChartProps} >
       <XAxis {...xGrid} axisAt="bottom" orient="bottom"/>
-      <YAxis {...yGrid} axisAt="left" orient="left"/>
+      <YAxis {...yGrid} axisAt="left" orient="left" ticks={maxOrderTickSize} tickFormat={format(',d')}/>
       <StackedBarSeries {...orderBarProps} />
     </Chart>
   }

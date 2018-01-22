@@ -21,7 +21,7 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
     const sellOrders = Object.values(orderStoreInstance.sellOrders.toJS())
     const dataArray = createAggregateFromData(candles, buyOrders, sellOrders)
 
-    if (dataArray.length <= 1 || interval.isEmpty()) {
+    if (dataArray.data.length <= 1 || interval.isEmpty()) {
       return <div style={{marginTop: 25 + 'px'}}>
         <NonIdealState
           visual="search"
@@ -31,7 +31,7 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
       </div>
     }
 
-    return <CandlesChartComponent type="svg" data={dataArray} interval={interval}/>
+    return <CandlesChartComponent type="svg" result={dataArray} interval={interval}/>
   }
 
   render() {

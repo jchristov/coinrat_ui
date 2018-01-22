@@ -89,6 +89,7 @@ class OrderDirectionAggregate {
     this.countCanceled += aggregate.countCanceled
   }
 
+  maxValue = () => Math.max(this.countOpen, this.countClosed, this.countCanceled)
 }
 
 export type {

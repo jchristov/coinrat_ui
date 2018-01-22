@@ -31,19 +31,32 @@ const sortOrderAggregatesByDate = (first: OrderDirectionAggregate, second: Order
   return 0
 }
 
+type AggregationResult = {
+  data: Array<ChartAggregate>,
+  maxOrderTickSize: number,
+}
+
 const createAggregateFromData = (
   candles: Array<Candle>,
   buyOrderAggregates: Array<OrderDirectionAggregate>,
   sellOrderAggregates: Array<OrderDirectionAggregate>
-): Array<ChartAggregate> => {
+): AggregationResult => {
   if (candles.length === 0) {
-    return []
+    return {data: [], maxOrderTickSize: null}
   }
   let data: { [key: string]: ChartAggregate } = {}
+  let maxOrderTickSize = 0
 
   candles.sort(sortCandleByDate)
   buyOrderAggregates.sort(sortOrderAggregatesByDate)
   sellOrderAggregates.sort(sortOrderAggregatesByDate)
+
+  const updateMaxValue = (aggregate: ChartAggregate) => {
+    const maxValue = Math.max(aggregate.buyOrderAggregate.maxValue(), aggregate.sellOrderAggregate.maxValue())
+    if (maxOrderTickSize < maxValue) {
+      maxOrderTickSize = maxValue
+    }
+  }
 
   for (let i = 0; i < candles.length; i++) {
     const candle = candles[i]
@@ -57,6 +70,7 @@ const createAggregateFromData = (
     let lastBuyOrder = buyOrderAggregates[0]
     while (lastBuyOrder !== undefined && isOrderInCandleBucket(lastBuyOrder)) {
       data[key].buyOrderAggregate.addAggregate(lastBuyOrder)
+      updateMaxValue(data[key])
       buyOrderAggregates.shift()
       lastBuyOrder = buyOrderAggregates[0]
     }
@@ -69,7 +83,10 @@ const createAggregateFromData = (
     }
   }
 
-  return Object.values(data)
+  return {
+    data: Object.values(data),
+    maxOrderTickSize: maxOrderTickSize,
+  }
 }
 
 const calculateAggregateHash = (date: Date): string => {
@@ -77,6 +94,10 @@ const calculateAggregateHash = (date: Date): string => {
 
   return `${date.getFullYear()}-${str_pad(date.getMonth() + 1)}-${str_pad(date.getDate())} `
     + `${str_pad(date.getHours())}:${str_pad(date.getMinutes())}:${str_pad(date.getSeconds())}`
+}
+
+export type {
+  AggregationResult,
 }
 
 export {
