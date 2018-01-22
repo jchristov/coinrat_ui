@@ -5,7 +5,6 @@ import {FilterStore} from "../TopLineToolbar/FilterStore"
 import {Candle} from "./Candle"
 import Interval from "../Interval/Interval"
 import {calculateAggregateHash} from "../MainChart/ChartAggregate"
-import {minuteAggregationFunction} from "../DateAggregate/aggregatorFunctions"
 
 class CandleStore {
   candles: ObservableMap<Candle>
@@ -13,12 +12,12 @@ class CandleStore {
   constructor(candlesSocket: CandleSocket) {
     this.candlesSocket = candlesSocket
     this.candles = new ObservableMap()
+      this.candlesSocket.registerLastCandleEvent(this.processCandles)
   }
 
   processCandles = action((candles: Array<Candle>): void => {
     candles.forEach((candle: Candle) => {
-      const date = minuteAggregationFunction(candle.date)
-      const key = calculateAggregateHash(date)
+      const key = calculateAggregateHash(candle.date)
       this.candles.set(key, candle)
     })
   })

@@ -7,6 +7,8 @@ class Candle {
   close: number
   volume: number
   size: string
+  market: string
+  pair: string
 
   constructor(
     date: Date,
@@ -15,7 +17,9 @@ class Candle {
     low: number,
     close: number,
     volume: number,
-    size: string
+    size: string,
+    market: string,
+    pair: string
   ) {
     this.date = date
     this.open = open
@@ -24,6 +28,8 @@ class Candle {
     this.close = close
     this.volume = volume
     this.size = size
+    this.market = market
+    this.pair = pair
   }
 }
 
