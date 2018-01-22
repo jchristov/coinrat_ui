@@ -32,8 +32,8 @@ class OrdersSocket {
   }
 
   registerNewOrderEvent(processOrders: (order: Array<Order>) => void) {
-    this.socket.socketio.on(SOCKET_EVENT_NEW_ORDERS, (orderRaw) => {
-      processOrders([OrdersSocket.parseOneOrderFromData(orderRaw)])
+    this.socket.socketio.on(SOCKET_EVENT_NEW_ORDERS, (rawOrder: RawOrder) => {
+      OrdersSocket.processRawOrders([rawOrder], processOrders)
     })
   }
 
@@ -52,22 +52,30 @@ class OrdersSocket {
     }
 
     this.socket.emit(SOCKET_EVENT_GET_ORDERS, getOrdersData, (status: string, rawOrders: Array<RawOrder>) => {
-      console.log('Received ORDER', Object.values(rawOrders).length)
-      processOrders(OrdersSocket.parseOrdersDataIntoStateObject(rawOrders))
-
-      this.socket.emit(
-        SOCKET_EVENT_UNSUBSCRIBE,
-        {event: SUBSCRIBED_EVENT_NEW_ORDER},
-        () => {
-          this.socket.emit(SOCKET_EVENT_SUBSCRIBE, {
-            event: SUBSCRIBED_EVENT_NEW_ORDER,
-            storage: orderStorage,
-            market: market,
-            pair: pair,
-            interval: interval,
-          })
-        })
+      OrdersSocket.processRawOrders(rawOrders, processOrders)
+      this.subscribeToOrdersFeed(orderStorage, market, pair, interval)
     })
+  }
+
+  static processRawOrders(rawOrders, processOrders) {
+    console.log('Received ORDER', Object.values(rawOrders).length)
+    const orders = OrdersSocket.parseOrdersDataIntoStateObject(rawOrders)
+    processOrders(orders)
+  }
+
+  subscribeToOrdersFeed(orderStorage: string, market: string, pair: string, interval: Interval) {
+    this.socket.emit(
+      SOCKET_EVENT_UNSUBSCRIBE,
+      {event: SUBSCRIBED_EVENT_NEW_ORDER},
+      () => {
+        this.socket.emit(SOCKET_EVENT_SUBSCRIBE, {
+          event: SUBSCRIBED_EVENT_NEW_ORDER,
+          storage: orderStorage,
+          market: market,
+          pair: pair,
+          interval: interval,
+        })
+      })
   }
 
   clearAllOrders(market: string, pair: string, interval: Interval, orderStorage: string) {

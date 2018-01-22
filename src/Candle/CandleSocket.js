@@ -65,6 +65,16 @@ class CandleSocket {
     })
   }
 
+  static processRawCandles(
+    rawCandles: Array<RawCandle>,
+    processCandles: ProcessCandleCallback,
+    validateFilterFunction: (candle: Candle) => boolean = (candle: Candle) => candle
+  ) {
+    console.log('Received CANDLES', Object.values(rawCandles).length)
+    const candles = CandleSocket.parseCandlesDataIntoStateObject(rawCandles)
+    processCandles(candles.filter(validateFilterFunction))
+  }
+
   subscribeToCandlesFeed(candleStorage: string, market: string, pair: string, candleSize: string) {
     this.socket.emit(
       SOCKET_EVENT_UNSUBSCRIBE,
@@ -81,15 +91,6 @@ class CandleSocket {
     )
   }
 
-  static processRawCandles(
-    rawCandles: Array<RawCandle>,
-    processCandles: ProcessCandleCallback,
-    validateFilterFunction: (candle: Candle) => boolean = (candle: Candle) => candle
-  ) {
-    console.log('Received CANDLES', Object.values(rawCandles).length)
-    const candles = CandleSocket.parseCandlesDataIntoStateObject(rawCandles)
-    processCandles(candles.filter(validateFilterFunction))
-  }
 
   static parseCandlesDataIntoStateObject(candlesRaw: Array<RawCandle>): Array<Candle> {
     return candlesRaw.map((rawCandle: RawCandle) => CandleSocket.parseOneCandleFromData(rawCandle))
