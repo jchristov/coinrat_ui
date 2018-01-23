@@ -1,5 +1,5 @@
 // @flow
-import {AppSocket, socket} from "../../Sockets/socket"
+import {AppSocket} from "../../Sockets/socket"
 import {SOCKET_EVENT_GET_ORDER_STORAGES} from "../../Sockets/SocketEvents"
 import {convertKeyToName} from "../../Strings"
 import loadDataForSelectElementStore from "../../Sockets/SynchronousDataLoader"
@@ -31,12 +31,9 @@ class OrderStorageSocket {
 
 }
 
-const orderStorageSocketInstance: OrderStorageSocket = new OrderStorageSocket(socket)
-
 export type {
   OrderStorageHashMap,
 }
 export {
   OrderStorageSocket,
-  orderStorageSocketInstance,
 }

@@ -1,5 +1,5 @@
 // @flow
-import {MarketSocket, marketSocketInstance} from "./MarketSocket"
+import {MarketSocket} from "./MarketSocket"
 import {action, ObservableMap} from "mobx"
 import {Market} from "./Market"
 
@@ -33,9 +33,6 @@ class MarketStore {
   })
 }
 
-const marketStoreInstance: MarketStore = new MarketStore(marketSocketInstance)
-
 export {
   MarketStore,
-  marketStoreInstance,
 }

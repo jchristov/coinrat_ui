@@ -1,5 +1,5 @@
 // @flow
-import {PairSocket, pairSocketInstance} from "./PairSocket"
+import {PairSocket} from "./PairSocket"
 import {action, extendObservable} from "mobx"
 import {PairHashMap} from "./PairSocket"
 
@@ -22,9 +22,6 @@ class PairStore {
   })
 }
 
-const pairStoreInstance: PairStore = new PairStore(pairSocketInstance)
-
 export {
   PairStore,
-  pairStoreInstance,
 }

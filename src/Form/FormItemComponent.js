@@ -2,7 +2,7 @@
 import React from "react"
 import {Box, Flex} from "reflexbox"
 import {Label} from "@blueprintjs/core"
-import HelpIconComponent from "../HelpIconComponent"
+import HelpIconComponent from "../Icon/HelpIconComponent"
 
 type Props = {
   element: string,

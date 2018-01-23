@@ -1,5 +1,5 @@
 // @flow
-import {AppSocket, socket} from "../../Sockets/socket"
+import {AppSocket} from "../../Sockets/socket"
 import {convertKeyToName} from "../../Strings"
 import {SOCKET_EVENT_GET_CANDLE_STORAGES} from "../../Sockets/SocketEvents"
 import loadDataForSelectElementStore from "../../Sockets/SynchronousDataLoader"
@@ -31,12 +31,9 @@ class CandleStorageSocket {
 
 }
 
-const candleStorageSocketInstance: CandleStorageSocket = new CandleStorageSocket(socket)
-
 export type {
   CandleStorageHashMap,
 }
 export {
   CandleStorageSocket,
-  candleStorageSocketInstance,
 }

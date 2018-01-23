@@ -1,5 +1,5 @@
 // @flow
-import {AppSocket, socket} from "../Sockets/socket"
+import {AppSocket} from "../Sockets/socket"
 import Interval from "../Interval/Interval"
 import {Candle} from "./Candle"
 import {
@@ -117,9 +117,6 @@ class CandleSocket {
   }
 }
 
-const candleSocketInstance: CandleSocket = new CandleSocket(socket)
-
 export {
   CandleSocket,
-  candleSocketInstance,
 }

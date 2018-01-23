@@ -1,5 +1,5 @@
 // @flow
-import {CandleStorageSocket, candleStorageSocketInstance} from "./CandleStorageSocket"
+import {CandleStorageSocket} from "./CandleStorageSocket"
 import {action, extendObservable} from "mobx"
 import {CandleStorageHashMap} from "./CandleStorageSocket"
 
@@ -22,9 +22,6 @@ class CandleStorageStore {
   })
 }
 
-const candleStorageStoreInstance: CandleStorageStore = new CandleStorageStore(candleStorageSocketInstance)
-
 export {
   CandleStorageStore,
-  candleStorageStoreInstance,
 }

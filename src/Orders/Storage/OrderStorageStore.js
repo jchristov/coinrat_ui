@@ -1,5 +1,5 @@
 // @flow
-import {OrderStorageSocket, orderStorageSocketInstance} from "./OrderStorageSocket"
+import {OrderStorageSocket} from "./OrderStorageSocket"
 import {action, extendObservable} from "mobx"
 import {OrderStorageHashMap} from "./OrderStorageSocket"
 
@@ -22,9 +22,6 @@ class OrderStorageStore {
   })
 }
 
-const orderStorageStoreInstance: OrderStorageStore = new OrderStorageStore(orderStorageSocketInstance)
-
 export {
   OrderStorageStore,
-  orderStorageStoreInstance,
 }

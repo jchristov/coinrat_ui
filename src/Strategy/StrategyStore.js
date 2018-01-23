@@ -1,5 +1,5 @@
 // @flow
-import {StrategySocket, strategySocketInstance} from "./StrategySocket"
+import {StrategySocket} from "./StrategySocket"
 import {action, ObservableMap} from "mobx"
 import {Strategy} from "./Strategy"
 
@@ -33,9 +33,6 @@ class StrategyStore {
   })
 }
 
-const strategyStoreInstance: StrategyStore = new StrategyStore(strategySocketInstance)
-
 export {
   StrategyStore,
-  strategyStoreInstance,
 }

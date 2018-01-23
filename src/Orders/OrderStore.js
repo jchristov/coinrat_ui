@@ -2,10 +2,10 @@
 import {action, ObservableMap, extendObservable} from "mobx"
 import {DIRECTION_BUY, DIRECTION_SELL, Order, OrderDirectionAggregate} from "./Order"
 import Interval from "../Interval/Interval"
-import {FilterStore} from "../TopLineToolbar/FilterStore"
-import {orderSocketInstance, OrdersSocket} from "./OrderSocket"
+import {OrdersSocket} from "./OrderSocket"
 import {calculateAggregateHash} from "../MainChart/ChartAggregate"
 import {minuteAggregationFunction} from "../DateAggregate/aggregatorFunctions"
+import {FilterStore} from "../TopFilter/FilterStore"
 
 class OrderStore {
   orders: Array<Order>
@@ -83,9 +83,6 @@ class OrderStore {
   })
 }
 
-const orderStoreInstance: OrderStore = new OrderStore(orderSocketInstance)
-
 export {
-  orderStoreInstance,
   OrderStore,
 }
