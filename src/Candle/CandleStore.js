@@ -12,7 +12,7 @@ class CandleStore {
   constructor(candlesSocket: CandleSocket) {
     this.candlesSocket = candlesSocket
     this.candles = new ObservableMap()
-      this.candlesSocket.registerLastCandleEvent(this.processCandles)
+    this.candlesSocket.registerLastCandleEvent(this.processCandles)
   }
 
   processCandles = action((candles: Array<Candle>): void => {
