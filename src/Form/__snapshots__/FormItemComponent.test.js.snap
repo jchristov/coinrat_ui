@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="_Rfx0_"
+>
+  <div
+    className="form-item form-label _Rfx1_"
+  >
+    <div
+      className="pt-label"
+    >
+      Yolo label:
+      <span
+        className="pt-text-muted"
+      />
+    </div>
+  </div>
+  <div
+    className="form-item form-element"
+  >
+    <input />
+  </div>
+  <div
+    className="form-item form-suffix"
+  >
+    <span>
+      <div
+        className="pt-popover-target"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          className="pt-icon-standard pt-icon-info-sign pt-intent-primary"
+          disabled={undefined}
+          tabIndex={0}
+        />
+      </div>
+    </span>
+     
+    snuff-fix
+  </div>
+</div>
+`;
