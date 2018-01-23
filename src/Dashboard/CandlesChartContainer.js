@@ -10,6 +10,7 @@ import {createAggregateFromData} from "../MainChart/ChartAggregate"
 import CandlesChartComponent from "../MainChart/CandlesChartComponent"
 import DashboardLegendComponent from "./DashboardLegendComponent"
 import CandleSizeSelectContainer from "../MainChart/CandleSizeSelectContainer"
+import {simulationModeStoreInstance} from "../SimulationMode/SimulationModeStore"
 
 const CandlestickChartComponent = observer(class CandlestickChartComponent extends Component<{}> {
 
@@ -42,7 +43,9 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
           <Box>{this.renderChart()}</Box>
         </Flex>
       </Box>
-      <Box style={{paddingRight: 10 + 'px'}} w={256}><DashboardLegendComponent/></Box>
+      <Box style={{paddingRight: 10 + 'px'}} w={256}>
+        <DashboardLegendComponent isSimulationModeOn={simulationModeStoreInstance.isSimulationModeEnabled}/>
+      </Box>
     </Flex>
   }
 })

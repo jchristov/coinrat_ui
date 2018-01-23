@@ -4,7 +4,11 @@ import {STATUS_CANCELED, STATUS_CLOSED, STATUS_OPEN} from "../Orders/Order"
 import {ORDERS_STATUS_COLORS} from "../Orders/ChartColors"
 import HelpIconComponent from "../HelpIconComponent"
 
-const DashboardLegendComponent = () => {
+type Props = {
+  isSimulationModeOn: boolean
+}
+
+const DashboardLegendComponent = ({isSimulationModeOn}: Props) => {
   const statuses = ORDERS_STATUS_COLORS
 
   const mockMarketTooltip = <div style={{maxWidth: 256 + 'px'}}>
@@ -12,8 +16,7 @@ const DashboardLegendComponent = () => {
     <p>All orders are processed as <strong>closed</strong> immediately.</p>
   </div>
 
-  return <div>
-    <p>
+  const simulationLegend = isSimulationModeOn ? <div><p>
       Strategy executed from UI is <strong>always</strong> executed against
       {' '}
       <strong>mock market</strong>
@@ -21,7 +24,12 @@ const DashboardLegendComponent = () => {
       <HelpIconComponent helpText={mockMarketTooltip}/>
       .
     </p>
-    <p>Executing strategy against real market is possible only via command line on the backend server.</p>
+      <p>Executing strategy against real market is possible only via command line on the backend server.</p>
+    </div>
+    : ''
+
+  return <div>
+    {simulationLegend}
     <h5>Legend</h5>
     <ul className="pt-list-unstyled">
       <li><span style={{color: statuses[STATUS_OPEN]}} className="pt-icon-full-circle"/> Open order</li>

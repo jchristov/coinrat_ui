@@ -48,7 +48,7 @@ const TopLineToolbarComponent = (
   return <div style={{marginBottom: 15 + 'px'}}>
     <Flex>
       <Box>
-        <Flex column>
+        <Flex column style={{minWidth: '270px'}}>
           <Box {...elementProps}>{isPairSelectorEnabled && <SelectPairContainer/>}</Box>
           <Flex>
             <Box {...elementProps}>{isMarketSelectorEnabled && <SelectMarketContainer/>}</Box>
@@ -57,7 +57,7 @@ const TopLineToolbarComponent = (
         </Flex>
       </Box>
       <Box {...elementProps}>
-        <Flex column>
+        <Flex column style={{minWidth: '270px'}}>
           <Box {...elementProps}>{isCandleStorageSelectorEnabled && <SelectCandleStorageContainer/>}</Box>
           <Box>
             <Flex>
