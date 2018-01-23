@@ -1,5 +1,5 @@
 // @flow
-import {SelectElement} from "../Form/Select/SelectComponent"
+import type {SelectElement} from "../Form/Select/SelectComponent"
 
 const loadDataForSelectElementStore = (
   socket,
@@ -8,11 +8,11 @@ const loadDataForSelectElementStore = (
   resultCallback: (Object) => void,
   emitParams = {}
 ): Array<SelectElement> => {
- socket.emit(method, emitParams, (status: String, rawObjects: Array<Object>) => {
-  console.log('Received:', method, Object.values(rawObjects).length)
-  const array = rawObjects.map((rawObject: Object) => fromRawData(rawObject))
-  resultCallback(array.reduce((result, item: SelectElement) => ({...result, [item.key]: item}), {}))
- })
+  socket.emit(method, emitParams, (status: String, rawObjects: Array<Object>) => {
+    console.log('Received:', method, Object.values(rawObjects).length)
+    const array = rawObjects.map((rawObject: Object) => fromRawData(rawObject))
+    resultCallback(array.reduce((result, item: SelectElement) => ({...result, [item.key]: item}), {}))
+  })
 }
 
 export default loadDataForSelectElementStore

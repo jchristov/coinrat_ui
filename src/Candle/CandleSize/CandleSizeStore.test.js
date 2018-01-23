@@ -1,13 +1,10 @@
 // @flow
-import React from 'react'
-import renderer from 'react-test-renderer'
-import CandleSizeSelectComponent from "./CandleSizeSelectComponent"
 
-it.skip('renders correctly', () => {
-  const onSelect = () => undefined
-  global.document = {} // Todo: solve ReferenceError: document is not defined
-  const tree = renderer
-    .create(<CandleSizeSelectComponent defaultSelectedAggregation="1-day" onSelect={onSelect}/>)
-    .toJSON()
-  expect(tree).toMatchSnapshot()
+import {CandleSizeStore, UNIT_DAY, UNIT_MINUTE} from "./CandleSizeStore"
+
+it('change candle size', () => {
+  const store = new CandleSizeStore(UNIT_MINUTE, 1)
+  expect(store.candleSize).toBe('1-minute')
+  store.setCandleSize(UNIT_DAY, 4)
+  expect(store.candleSize).toBe('4-day')
 })

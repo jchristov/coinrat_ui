@@ -1,9 +1,9 @@
 // @flow
-import {AppSocket} from "../../Sockets/socket"
+import type {AppSocket} from "../../Sockets/socket"
+import type {SelectElement} from "../../Form/Select/SelectComponent"
 import {convertKeyToName} from "../../Strings"
 import {SOCKET_EVENT_GET_CANDLE_STORAGES} from "../../Sockets/SocketEvents"
 import loadDataForSelectElementStore from "../../Sockets/SynchronousDataLoader"
-import {SelectElement} from "../../Form/Select/SelectComponent"
 
 type RawCandleStorage = {
   name: string,
