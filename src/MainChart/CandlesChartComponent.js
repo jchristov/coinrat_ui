@@ -15,6 +15,7 @@ import {
   MouseCoordinateX,
   MouseCoordinateY,
 } from "react-stockcharts/lib/coordinates"
+import {Label} from "react-stockcharts/lib/annotation"
 
 import Interval from "../Interval/Interval"
 import {OrderDirectionAggregate, STATUS_CANCELED, STATUS_CLOSED, STATUS_OPEN} from "../Orders/Order"
@@ -29,7 +30,10 @@ type Props = {
   interval: Interval,
 }
 
-const BETWEEN_SPACE = 30
+const BETWEEN_SPACE = 60
+const TITLE_POSITION_COEFFICIENT = 0.8
+const TITLE_FONT_SIZE = 20
+
 const margin = {left: 50, right: 50, top: 10, bottom: 30}
 const candleChartHeight = 400
 const buyOrderChartHeight = 80
@@ -88,20 +92,28 @@ class CandlesChartComponent extends Component<Props> {
 
     return (
       <ChartCanvas {...canvasProps} data={result.data}>
-        <Chart id={1} yExtents={yCandlesExtends} height={400}>
+        <Chart id={1} yExtents={yCandlesExtends} height={candleChartHeight}>
           <MouseCoordinateX at="bottom" orient="top" displayFormat={timeFormat("%Y-%m-%d %X")} rectWidth={160}/>
           <MouseCoordinateY at="left" orient="right" displayFormat={format(".8")} rectWidth={100}/>
           <XAxis {...xGrid} axisAt="bottom" orient="bottom"/>
           <YAxis {...yGrid} axisAt="left" orient="left"/>
           <CandlestickSeries yAccessor={yCandleAccessor}/>
         </Chart>
+        {CandlesChartComponent.renderChartTitle(
+          candleChartHeight + BETWEEN_SPACE * TITLE_POSITION_COEFFICIENT,
+          "Buy orders"
+        )}
         {this.renderOrderChart(
           2,
           width,
           buyOrderChartHeight,
-          sellOrderChartHeight + 30,
+          sellOrderChartHeight + BETWEEN_SPACE,
           (chartAggregate: ChartAggregate): OrderDirectionAggregate => chartAggregate.buyOrderAggregate,
           result.maxOrderTickSize
+        )}
+        {CandlesChartComponent.renderChartTitle(
+          candleChartHeight + sellOrderChartHeight + BETWEEN_SPACE + BETWEEN_SPACE * TITLE_POSITION_COEFFICIENT,
+          "Sell orders"
         )}
         {this.renderOrderChart(
           3,
@@ -114,6 +126,14 @@ class CandlesChartComponent extends Component<Props> {
         <CrossHairCursor/>
       </ChartCanvas>
     )
+  }
+
+  static renderChartTitle(y: number, text: string) {
+    return <Label
+      x={margin.left}
+      y={y} fontSize={TITLE_FONT_SIZE}
+      text={text}
+    />
   }
 
   calculateGrid(width: number, height: number) {
