@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  <p>
+    This table 
+    <strong>
+      ALWAYS
+    </strong>
+     shows real balances on the selected market. There is no mock market involved.
+  </p>
+</div>
+`;
