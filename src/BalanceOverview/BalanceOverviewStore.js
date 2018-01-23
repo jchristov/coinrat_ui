@@ -15,9 +15,7 @@ class BalanceOverviewStore {
   })
 }
 
-const balanceOverviewStoreInstance: BalanceOverviewStore = new BalanceOverviewStore()
 
 export {
   BalanceOverviewStore,
-  balanceOverviewStoreInstance,
 }

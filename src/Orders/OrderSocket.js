@@ -1,5 +1,5 @@
 // @flow
-import {AppSocket, socket} from "../Sockets/socket"
+import {AppSocket} from "../Sockets/socket"
 import Interval from "../Interval/Interval"
 import {Order, OrderDirectionType, OrderType} from "./Order"
 import appMainToaster from "../Toaster"
@@ -112,9 +112,6 @@ class OrdersSocket {
   }
 }
 
-const orderSocketInstance: OrdersSocket = new OrdersSocket(socket)
-
 export {
   OrdersSocket,
-  orderSocketInstance
 }

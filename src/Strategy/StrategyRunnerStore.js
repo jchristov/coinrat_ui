@@ -1,13 +1,13 @@
 // @flow
-import {AppSocket, socket} from "../Sockets/socket"
-import {filterStoreInstance, FilterStore} from "../TopLineToolbar/FilterStore"
+import {AppSocket} from "../Sockets/socket"
 import appMainToaster from "../Toaster"
 import {EVENT_RUN_REPLY} from "../Sockets/SocketEvents"
-import {StrategyStore, strategyStoreInstance} from "./StrategyStore"
 import {Strategy} from "./Strategy"
 import {ConfigurationDirective, ConfigurationStructure} from "../ConfigurationStructure/ConfigurationStructure"
-import {MarketStore, marketStoreInstance} from "../Market/MarketStore"
 import {Market, MOCK_MARKET_NAME} from "../Market/Market"
+import {FilterStore} from "../TopFilter/FilterStore"
+import {StrategyStore} from "./StrategyStore"
+import {MarketStore} from "../Market/MarketStore"
 
 class StrategyRunnerStore {
   socket: AppSocket
@@ -67,11 +67,6 @@ class StrategyRunnerStore {
   }
 }
 
-const strategyRunnerStoreInstance = new StrategyRunnerStore(
-  socket,
-  filterStoreInstance,
-  strategyStoreInstance,
-  marketStoreInstance
-)
-
-export {strategyRunnerStoreInstance, StrategyRunnerStore}
+export {
+  StrategyRunnerStore,
+}

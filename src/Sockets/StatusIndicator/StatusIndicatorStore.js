@@ -1,6 +1,6 @@
 // @flow
 import {action, extendObservable} from "mobx"
-import {AppSocket, socket} from "../socket"
+import {AppSocket} from "../socket"
 
 class StatusIndicatorStore {
   constructor(socket: AppSocket) {
@@ -14,9 +14,6 @@ class StatusIndicatorStore {
 
 }
 
-const statusIndicatorStoreInstance = new StatusIndicatorStore(socket)
-
 export {
-  statusIndicatorStoreInstance,
   StatusIndicatorStore,
 }

@@ -1,6 +1,6 @@
 // @flow
 import {action, extendObservable} from "mobx"
-import {BalanceSocket, balanceSocketInstance} from "./BalanceSocket"
+import type {BalanceSocket} from "./BalanceSocket"
 import {Balance} from "./Balance"
 
 class BalanceStore {
@@ -25,9 +25,6 @@ class BalanceStore {
 
 }
 
-const balanceStoreInstance: BalanceStore = new BalanceStore(balanceSocketInstance)
-
 export {
-  balanceStoreInstance,
   BalanceStore,
 }

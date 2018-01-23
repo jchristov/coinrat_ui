@@ -19,9 +19,6 @@ class SimulationModeStore {
   })
 }
 
-const simulationModeStoreInstance: SimulationModeStore = new SimulationModeStore()
-
 export {
   SimulationModeStore,
-  simulationModeStoreInstance,
 }

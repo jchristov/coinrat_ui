@@ -1,5 +1,5 @@
 // @flow
-import {AppSocket, socket} from "../Sockets/socket"
+import {AppSocket} from "../Sockets/socket"
 import {SOCKET_EVENT_GET_MARKETS} from "../Sockets/SocketEvents"
 import {convertKeyToName} from "../Strings"
 import {Market} from "./Market"
@@ -35,9 +35,6 @@ class MarketSocket {
   }
 }
 
-const marketSocketInstance: MarketSocket = new MarketSocket(socket)
-
 export {
   MarketSocket,
-  marketSocketInstance,
 }

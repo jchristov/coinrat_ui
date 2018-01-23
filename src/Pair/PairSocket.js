@@ -1,5 +1,5 @@
 // @flow
-import {AppSocket, socket} from "../Sockets/socket"
+import {AppSocket} from "../Sockets/socket"
 import {SOCKET_EVENT_GET_PAIRS} from "../Sockets/SocketEvents"
 import loadDataForSelectElementStore from "../Sockets/SynchronousDataLoader"
 import {SelectElement} from "../Form/Select/SelectComponent"
@@ -32,12 +32,9 @@ class PairSocket {
 
 }
 
-const pairSocketInstance: PairSocket = new PairSocket(socket)
-
 export type {
   PairHashMap,
 }
 export {
   PairSocket,
-  pairSocketInstance,
 }

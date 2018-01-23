@@ -2,7 +2,7 @@
 import React from "react"
 import {STATUS_CANCELED, STATUS_CLOSED, STATUS_OPEN} from "../Orders/Order"
 import {ORDERS_STATUS_COLORS} from "../Orders/ChartColors"
-import HelpIconComponent from "../HelpIconComponent"
+import HelpIconComponent from "../Icon/HelpIconComponent"
 
 type Props = {
   isSimulationModeOn: boolean

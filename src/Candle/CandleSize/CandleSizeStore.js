@@ -33,8 +33,6 @@ class CandleSizeStore {
 
 }
 
-const candleSizeStoreInstance: CandleSizeStore = new CandleSizeStore(UNIT_MINUTE, 15)
-
 export type {
   AGGREGATION_UNIT,
 }
@@ -44,5 +42,4 @@ export {
   UNIT_DAY,
 
   CandleSizeStore,
-  candleSizeStoreInstance,
 }

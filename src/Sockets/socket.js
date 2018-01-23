@@ -1,8 +1,6 @@
 // @flow
 import appMainToaster from "../Toaster"
 
-const url = process.env.REACT_APP_BACKEND_SOCKET_URL
-const socketio = require('socket.io-client')(url)
 // const uuidv4 = require('uuid/v4')
 
 
@@ -50,9 +48,7 @@ class AppSocket {
   }
 }
 
-const socket = new AppSocket(socketio)
 
 export {
-  socket,
   AppSocket,
 }

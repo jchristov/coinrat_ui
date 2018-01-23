@@ -1,5 +1,5 @@
 // @flow
-import {AppSocket, socket} from "../Sockets/socket"
+import {AppSocket} from "../Sockets/socket"
 import {convertKeyToName} from "../Strings"
 import {SOCKET_EVENT_GET_STRATEGIES} from "../Sockets/SocketEvents"
 import {Strategy} from "./Strategy"
@@ -36,9 +36,6 @@ class StrategySocket {
 
 }
 
-const strategySocketInstance: StrategySocket = new StrategySocket(socket)
-
 export {
   StrategySocket,
-  strategySocketInstance,
 }
