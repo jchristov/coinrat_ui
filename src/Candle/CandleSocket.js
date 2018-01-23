@@ -1,5 +1,5 @@
 // @flow
-import {AppSocket} from "../Sockets/socket"
+import type {AppSocket} from "../Sockets/socket"
 import Interval from "../Interval/Interval"
 import {Candle} from "./Candle"
 import {
