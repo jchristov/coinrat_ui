@@ -4,7 +4,7 @@ import OrdersTableContainer from "./OrdersTableContainer"
 import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import Interval from "../Interval/Interval"
 import {orderStoreInstance} from "../Orders/OrderStore"
-import TopLineToolbarComponent from "../TopLineToolbar/TopLineAllToolbarComponent"
+import TopLineAllToolbarContainer from "../TopLineToolbar/TopLineAllToolbarContainer"
 
 type Props = {
   pair: string,
@@ -51,7 +51,7 @@ class OrdersOverviewComponent extends Component<Props> {
       isRunStrategyButtonEnabled: false,
     }
     return <div>
-      <TopLineToolbarComponent {...toolbarProps}/>
+      <TopLineAllToolbarContainer {...toolbarProps}/>
       <OrdersTableContainer/>
     </div>
   }

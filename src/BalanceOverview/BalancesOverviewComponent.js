@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import {filterStoreInstance} from "../TopLineToolbar/FilterStore"
 import {balanceStoreInstance} from "../Balance/BalanceStore"
 import BalanceTableContainer from "./BalanceTableContainer"
-import TopLineToolbarComponent from "../TopLineToolbar/TopLineAllToolbarComponent"
+import TopLineAllToolbarContainer from "../TopLineToolbar/TopLineAllToolbarContainer"
 
 type Props = {
   market: string,
@@ -38,7 +38,7 @@ class BalancesOverviewComponent extends Component<Props> {
     }
 
     return <div>
-      <TopLineToolbarComponent {...toolbarProps}/>
+      <TopLineAllToolbarContainer {...toolbarProps}/>
       <BalanceTableContainer/>
     </div>
   }

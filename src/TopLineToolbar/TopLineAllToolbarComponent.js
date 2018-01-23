@@ -12,7 +12,7 @@ import SelectIntervalContainer from "./SelectIntervalContainer"
 import StrategyConfigurationContainer from "./StrategyConfigurationContainer"
 import MarketConfigurationContainer from "./MarketConfigurationContainer"
 
-type Props = {
+type TopLineAllToolbarComponentProps = {
   isPairSelectorEnabled: boolean,
   isMarketSelectorEnabled: boolean,
   isMarketConfiguratorEnabled: boolean,
@@ -44,7 +44,7 @@ const TopLineToolbarComponent = (
     isStrategySelectorEnabled = true,
     isStrategyConfiguratorEnabled = true,
     isRunStrategyButtonEnabled = true,
-  }: Props) => {
+  }: TopLineAllToolbarComponentProps) => {
   return <div style={{marginBottom: 15 + 'px'}}>
     <Flex>
       <Box>
@@ -82,5 +82,10 @@ const TopLineToolbarComponent = (
     </Flex>
   </div>
 }
+export type {
+  TopLineAllToolbarComponentProps
+}
 
-export default TopLineToolbarComponent
+export {
+  TopLineToolbarComponent,
+}
