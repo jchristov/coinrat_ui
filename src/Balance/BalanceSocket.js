@@ -1,5 +1,5 @@
 // @flow
-import {AppSocket} from "../Sockets/socket"
+import type {AppSocket} from "../Sockets/socket"
 import {SOCKET_EVENT_GET_BALANCE} from "../Sockets/SocketEvents"
 import {Balance} from "./Balance"
 
