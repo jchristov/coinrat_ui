@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly when simulation mode is OFF 1`] = `
+<div>
+  
+  <h5>
+    Legend
+  </h5>
+  <ul
+    className="pt-list-unstyled"
+  >
+    <li>
+      <span
+        className="pt-icon-full-circle"
+        style={
+          Object {
+            "color": "orange",
+          }
+        }
+      />
+       Open order
+    </li>
+    <li>
+      <span
+        className="pt-icon-full-circle"
+        style={
+          Object {
+            "color": "blue",
+          }
+        }
+      />
+       Closed order
+    </li>
+    <li>
+      <span
+        className="pt-icon-full-circle"
+        style={
+          Object {
+            "color": "black",
+          }
+        }
+      />
+       Canceled order
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`renders correctly when simulation mode is ON 1`] = `
+<div>
+  <div>
+    <p>
+      Strategy executed from UI is 
+      <strong>
+        always
+      </strong>
+       executed against
+       
+      <strong>
+        mock market
+      </strong>
+       
+      <span>
+        <div
+          className="pt-popover-target"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <span
+            className="pt-icon-standard pt-icon-info-sign pt-intent-primary"
+            disabled={undefined}
+            tabIndex={0}
+          />
+        </div>
+      </span>
+      .
+    </p>
+    <p>
+      Executing strategy against real market is possible only via command line on the backend server.
+    </p>
+  </div>
+  <h5>
+    Legend
+  </h5>
+  <ul
+    className="pt-list-unstyled"
+  >
+    <li>
+      <span
+        className="pt-icon-full-circle"
+        style={
+          Object {
+            "color": "orange",
+          }
+        }
+      />
+       Open order
+    </li>
+    <li>
+      <span
+        className="pt-icon-full-circle"
+        style={
+          Object {
+            "color": "blue",
+          }
+        }
+      />
+       Closed order
+    </li>
+    <li>
+      <span
+        className="pt-icon-full-circle"
+        style={
+          Object {
+            "color": "black",
+          }
+        }
+      />
+       Canceled order
+    </li>
+  </ul>
+</div>
+`;
