@@ -1,17 +1,12 @@
 // @flow
 import React from 'react'
 import renderer from 'react-test-renderer'
-import FormItemComponent from "./FormItemComponent"
+import ResetToDefaultButton from "./ResetToDefaultButton"
 
 it('renders correctly', () => {
+  const onClick = () => undefined
   const tree = renderer
-    .create(<FormItemComponent
-      element={<input/>}
-      label="Yolo label"
-      labelSize={105}
-      suffix="snuff-fix"
-      description="Lorem impsum, dolor sit et amet..."
-    />)
+    .create(<ResetToDefaultButton onClick={onClick}/>)
     .toJSON()
   expect(tree).toMatchSnapshot()
 })
