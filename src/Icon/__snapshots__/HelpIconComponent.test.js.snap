@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<span>
+  <div
+    className="pt-popover-target"
+    onBlur={[Function]}
+    onFocus={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <span
+      className="pt-icon-standard pt-icon-info-sign pt-intent-primary"
+      disabled={undefined}
+      tabIndex={0}
+    />
+  </div>
+</span>
+`;
