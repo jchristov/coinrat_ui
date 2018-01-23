@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly, hide zero balances OFF 1`] = `
+<div
+  className="_Rfx0_"
+>
+  <div
+    className=""
+  >
+    <div
+      className="pt-label"
+    >
+      Hide zero balances:
+      <span
+        className="pt-text-muted"
+      />
+    </div>
+  </div>
+  <div
+    className=""
+  >
+    <label
+      className="pt-control pt-checkbox"
+      style={
+        Object {
+          "marginLeft": "4px",
+        }
+      }
+    >
+      <input
+        checked={false}
+        onChange={[Function]}
+        style={
+          Object {
+            "marginLeft": "4px",
+          }
+        }
+        type="checkbox"
+      />
+      <span
+        className="pt-control-indicator"
+      />
+    </label>
+  </div>
+</div>
+`;
+
+exports[`renders correctly, hide zero balances ON 1`] = `
+<div
+  className="_Rfx0_"
+>
+  <div
+    className=""
+  >
+    <div
+      className="pt-label"
+    >
+      Hide zero balances:
+      <span
+        className="pt-text-muted"
+      />
+    </div>
+  </div>
+  <div
+    className=""
+  >
+    <label
+      className="pt-control pt-checkbox"
+      style={
+        Object {
+          "marginLeft": "4px",
+        }
+      }
+    >
+      <input
+        checked={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "marginLeft": "4px",
+          }
+        }
+        type="checkbox"
+      />
+      <span
+        className="pt-control-indicator"
+      />
+    </label>
+  </div>
+</div>
+`;
