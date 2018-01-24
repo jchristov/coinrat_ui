@@ -1,7 +1,7 @@
 // @flow
 import React, {Component} from 'react'
 import {observer} from "mobx-react"
-import {filterStoreInstance} from "../diContainer"
+import {filterStoreInstance, flashMessageHandler} from "../diContainer"
 import Interval from "../../Interval/Interval"
 import SelectIntervalComponent from "../../Interval/SelectIntervalComponent"
 
@@ -15,6 +15,7 @@ class SelectIntervalContainer extends Component<{}> {
     return <SelectIntervalComponent
       defaultSelectedInterval={filterStoreInstance.interval}
       onChange={this.changeInterval}
+      flashMessageHandler={flashMessageHandler}
     />
   }
 }

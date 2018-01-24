@@ -1,5 +1,5 @@
 // @flow
-import appMainToaster from "../Toaster"
+import type {FlashMessageHandlerType} from "../FlashMessage/handling"
 
 // const uuidv4 = require('uuid/v4')
 
@@ -14,11 +14,13 @@ import appMainToaster from "../Toaster"
 // }, 5000)
 
 class AppSocket {
-  constructor(socketio) {
+  socketio
+
+  constructor(socketio, flashMessageHandler: FlashMessageHandlerType) {
     this.socketio = socketio
     this.onConnect(() => {
       socketio.on('error', (data) => {
-        appMainToaster.show({message: JSON.stringify(data), className: 'pt-intent-danger'})
+        flashMessageHandler(JSON.stringify(data), 'pt-intent-danger')
       })
     })
   }

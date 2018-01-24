@@ -2,13 +2,13 @@
 import {AppSocket} from "../Sockets/socket"
 import Interval from "../Interval/Interval"
 import {Order, OrderDirectionType, OrderType} from "./Order"
-import appMainToaster from "../Toaster"
 import {OrderStatusType} from "./Order"
 import {
   SOCKET_EVENT_CLEAR_ORDERS, SOCKET_EVENT_GET_ORDERS, SOCKET_EVENT_NEW_ORDERS, SOCKET_EVENT_SUBSCRIBE,
   SOCKET_EVENT_UNSUBSCRIBE,
   SUBSCRIBED_EVENT_NEW_ORDER
 } from "../Sockets/SocketEvents"
+import type {FlashMessageHandlerType} from "../FlashMessage/handling"
 
 type RawOrder = {
   order_id: string,
@@ -26,9 +26,12 @@ type RawOrder = {
 }
 
 class OrdersSocket {
+  socket: AppSocket
+  flashMessageHandler: FlashMessageHandlerType
 
-  constructor(socket: AppSocket) {
+  constructor(socket: AppSocket, flashMessageHandler: FlashMessageHandlerType) {
     this.socket = socket
+    this.flashMessageHandler = flashMessageHandler
   }
 
   registerNewOrderEvent(processOrders: (order: Array<Order>) => void) {
@@ -86,7 +89,7 @@ class OrdersSocket {
       pair: pair,
       interval: interval,
     }, () => {
-      appMainToaster.show({message: "Order storage in given range cleared.", className: 'pt-intent-success'})
+      this.flashMessageHandler({message: "Order storage in given range cleared.", type: 'pt-intent-success'})
     })
   }
 

@@ -21,12 +21,25 @@ import {StrategyStore} from "../Strategy/StrategyStore"
 import {FilterStore} from "../TopFilter/FilterStore"
 import {StatusIndicatorStore} from "../Sockets/StatusIndicator/StatusIndicatorStore"
 import {StrategySocket} from "../Strategy/StrategySocket"
+import {Position, Toaster} from "@blueprintjs/core"
+import type {FlashMessageHandlerType} from "../FlashMessage/handling"
 
 const url = process.env.REACT_APP_BACKEND_SOCKET_URL
 const socketio = require('socket.io-client')(url)
 
+// Toaster / Flesh Messages
+const _appMainToaster = Toaster.create({
+  className: "app-main-toaster",
+  position: Position.TOP_RIGHT,
+  container: document.body
+})
+
+const flashMessageHandler: FlashMessageHandlerType = (message: string, type: string) => {
+  _appMainToaster.show({message: message, className: type})
+}
+
 // Socket
-const appSocketInstance = new AppSocket(socketio)
+const appSocketInstance = new AppSocket(socketio, flashMessageHandler)
 const statusIndicatorStoreInstance = new StatusIndicatorStore(appSocketInstance)
 
 // Balance
@@ -47,7 +60,7 @@ const marketStoreInstance: MarketStore = new MarketStore(marketSocketInstance)
 
 
 // Orders
-const orderSocketInstance: OrdersSocket = new OrdersSocket(appSocketInstance)
+const orderSocketInstance: OrdersSocket = new OrdersSocket(appSocketInstance, flashMessageHandler)
 const orderStoreInstance: OrderStore = new OrderStore(orderSocketInstance)
 const orderStorageSocketInstance: OrderStorageSocket = new OrderStorageSocket(appSocketInstance)
 const orderStorageStoreInstance: OrderStorageStore = new OrderStorageStore(orderStorageSocketInstance)
@@ -69,11 +82,13 @@ const strategyRunnerStoreInstance = new StrategyRunnerStore(
   appSocketInstance,
   filterStoreInstance,
   strategyStoreInstance,
-  marketStoreInstance
+  marketStoreInstance,
+  flashMessageHandler
 )
 
 
 export {
+  flashMessageHandler,
   appSocketInstance,
   statusIndicatorStoreInstance,
   balanceSocketInstance,

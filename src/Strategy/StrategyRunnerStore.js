@@ -1,6 +1,5 @@
 // @flow
 import {AppSocket} from "../Sockets/socket"
-import appMainToaster from "../Toaster"
 import {EVENT_RUN_REPLY} from "../Sockets/SocketEvents"
 import {Strategy} from "./Strategy"
 import {ConfigurationDirective, ConfigurationStructure} from "../ConfigurationStructure/ConfigurationStructure"
@@ -8,27 +7,31 @@ import {Market, MOCK_MARKET_NAME} from "../Market/Market"
 import {FilterStore} from "../TopFilter/FilterStore"
 import {StrategyStore} from "./StrategyStore"
 import {MarketStore} from "../Market/MarketStore"
+import type {FlashMessageHandlerType} from "../FlashMessage/handling"
 
 class StrategyRunnerStore {
   socket: AppSocket
   filterStore: FilterStore
   strategyStoreInstance: StrategyStore
+  flashMessageHandler: FlashMessageHandlerType
 
   constructor(
     socket: AppSocket,
     filterStore: FilterStore,
     strategyStoreInstance: StrategyStore,
-    marketStoreInstance: MarketStore
+    marketStoreInstance: MarketStore,
+    flashMessageHandler: FlashMessageHandlerType
   ) {
     this.socket = socket
     this.filterStore = filterStore
     this.strategyStoreInstance = strategyStoreInstance
     this.marketStoreInstance = marketStoreInstance
+    this.flashMessageHandler = flashMessageHandler
   }
 
   runStrategy = () => {
     if (this.filterStore.interval.since === null || this.filterStore.interval.till === null) {
-      appMainToaster.show({message: "Interval must be complete.", className: 'pt-intent-danger'})
+      this.flashMessageHandler("Interval must be complete.", 'pt-intent-danger')
       return
     }
 
@@ -52,7 +55,7 @@ class StrategyRunnerStore {
         console.log('Server returned ERROR: ', data['message'])
         return
       }
-      appMainToaster.show({message: "Strategy started!", className: 'pt-intent-success'})
+      this.flashMessageHandler("Strategy started!", 'pt-intent-success')
     })
 
   }
