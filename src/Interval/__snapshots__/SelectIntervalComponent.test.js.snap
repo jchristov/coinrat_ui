@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="_Rfx0_"
+>
+  <div
+    className="form-item form-label _Rfx1_"
+  >
+    <div
+      className="pt-label"
+    >
+      Interval:
+      <span
+        className="pt-text-muted"
+      />
+    </div>
+  </div>
+  <div
+    className="form-item form-element"
+  >
+    <span
+      className="pt-popover-target"
+      onClick={[Function]}
+    >
+      <div
+        className="pt-control-group"
+        tabIndex={undefined}
+      >
+        <div
+          className="pt-input-group"
+        >
+          <input
+            autoComplete="off"
+            className="pt-input"
+            disabled={false}
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onMouseDown={[Function]}
+            placeholder="Start date"
+            style={
+              Object {
+                "paddingRight": 0,
+              }
+            }
+            type="text"
+            value="2018-02-01 01:00:00"
+          />
+        </div>
+        <div
+          className="pt-input-group"
+        >
+          <input
+            autoComplete="off"
+            className="pt-input"
+            disabled={false}
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onMouseDown={[Function]}
+            placeholder="End date"
+            style={
+              Object {
+                "paddingRight": 0,
+              }
+            }
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </span>
+  </div>
+  <div
+    className="form-item form-suffix"
+  >
+    
+     
+    
+  </div>
+</div>
+`;

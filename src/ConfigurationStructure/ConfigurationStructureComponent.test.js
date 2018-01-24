@@ -4,9 +4,7 @@ import renderer from 'react-test-renderer'
 import ConfigurationStructureComponent from "./ConfigurationStructureComponent"
 import {ConfigurationDirective, ConfigurationStructure, TYPE_INTEGER} from "./ConfigurationStructure"
 
-it.skip('renders correctly', () => {
-  global.document = {} // Todo: solve ReferenceError: document is not defined
-
+it('renders correctly', () => {
   const configurationStructure = new ConfigurationStructure([
     new ConfigurationDirective('foo', TYPE_INTEGER, 'Foo', 1, 'lumen', true, false, 'This  is Foo!'),
   ])

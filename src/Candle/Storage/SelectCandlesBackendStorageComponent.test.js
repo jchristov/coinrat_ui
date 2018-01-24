@@ -3,13 +3,12 @@ import React from 'react'
 import renderer from 'react-test-renderer'
 import SelectCandlesBackendStorageComponent from "./SelectCandlesBackendStorageComponent"
 
-it.skip('renders correctly', () => {
+it('renders correctly', () => {
   const onSelect = () => undefined
-  global.document = {} // Todo: solve ReferenceError: document is not defined
   const tree = renderer
     .create(
       <SelectCandlesBackendStorageComponent
-        availableStorages={[{foo: 'Foo'}]}
+        availableStorages={{foo: {key: 'foo', title: 'Foo'}}}
         defaultSelectedPair="foo"
         onSelect={onSelect}
       />)

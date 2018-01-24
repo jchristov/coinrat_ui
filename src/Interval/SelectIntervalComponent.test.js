@@ -4,9 +4,7 @@ import renderer from 'react-test-renderer'
 import SelectIntervalComponent from "./SelectIntervalComponent"
 import Interval from "./Interval"
 
-it.skip('renders correctly', () => {
-  global.document = {} // Todo: solve ReferenceError: document is not defined
-
+it('renders correctly', () => {
   const tree = renderer
     .create(
       <SelectIntervalComponent
