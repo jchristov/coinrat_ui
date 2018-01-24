@@ -65,7 +65,7 @@ class ConfigurationDirective {
 class ConfigurationStructure {
   configuration: Array<ConfigurationDirective>
 
-  constructor(configuration: Array<ConfigurationDirective>) {
+  constructor(configuration: Array<ConfigurationDirective> = []) {
     extendObservable(this, {
       configuration: configuration,
     })

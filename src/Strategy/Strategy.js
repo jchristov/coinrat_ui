@@ -1,6 +1,6 @@
 // @flow
-import {ConfigurationDirective, ConfigurationStructure} from "../ConfigurationStructure/ConfigurationStructure"
 import {extendObservable} from "mobx"
+import {ConfigurationDirective, ConfigurationStructure} from "../ConfigurationStructure/ConfigurationStructure"
 
 class Strategy {
   name: string
