@@ -13,7 +13,7 @@ it('strategy can be run', () => {
   const filterStoreMock = {
     pair: 'USD_BTC',
     market: MOCK_MARKET_NAME,
-    interval: new Interval(new Date(2018, 0, 1), new Date(2018, 0, 2)),
+    interval: new Interval(new Date(Date.UTC(2018, 0, 1)), new Date(Date.UTC(2018, 0, 2))),
     candleStorage: 'influx_db',
     orderStorage: 'influx_db',
     strategy: 'my_super_secret_strategy',
@@ -48,8 +48,8 @@ it('strategy can be run', () => {
     "market_configuration": {"x": "XXX"},
     "orders_storage": "influx_db",
     "pair": "USD_BTC",
-    "start": "2017-12-31T23:00:00.000Z",
-    "stop": "2018-01-01T23:00:00.000Z",
+    "start": "2018-01-01T00:00:00.000Z",
+    "stop": "2018-01-02T00:00:00.000Z",
     "strategy_configuration": {"y": "YYY"},
     "strategy_name": "my_super_secret_strategy",
   })
