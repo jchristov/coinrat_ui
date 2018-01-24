@@ -40,9 +40,9 @@ it('Test processing raw orders into objects', () => {
   }], process)
   expect(result.length).toBe(1)
   expect(result[0]).toEqual({
-    "canceledAt": new Date('2018-02-02T02:04:05.003Z'),
-    "closedAt": new Date('2018-02-02T02:04:05.002Z'),
-    "createdAt": new Date('2018-02-02T02:04:05.001Z'),
+    "canceledAt": new Date(2018, 1, 2, 3, 4, 5, 3),
+    "closedAt": new Date(2018, 1, 2, 3, 4, 5, 2),
+    "createdAt": new Date(2018, 1, 2, 3, 4, 5, 1),
     "direction": "buy",
     "idOnMarket": "bzz",
     "market": "foo_market",

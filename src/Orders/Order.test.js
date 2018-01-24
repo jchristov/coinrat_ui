@@ -27,8 +27,8 @@ it('test order constructor', () => {
   const order = _createDummyOrder()
   expect(order).toEqual({
     "canceledAt": null,
-    "closedAt": new Date('2018-02-01T04:06:35.000Z'),
-    "createdAt": new Date('2018-02-01T04:06:00.000Z'),
+    "closedAt": new Date(2018, 1, 1, 5, 6, 35),
+    "createdAt": new Date(2018, 1, 1, 5, 6, 0),
     "direction": "sell",
     "idOnMarket": "",
     "market": "foo_market",
