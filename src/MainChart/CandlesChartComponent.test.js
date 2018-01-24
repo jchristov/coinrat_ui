@@ -7,6 +7,7 @@ import {ChartAggregate} from "./ChartAggregate"
 import {Candle} from "../Candle/Candle"
 
 it.skip('renders correctly', () => {
+  // Todo: solve why jsdom wont render charts library. Ends with: TypeError: Cannot read property 'parentNode' of null
   const tree = renderer
     .create(
       <CandlesChartComponent
