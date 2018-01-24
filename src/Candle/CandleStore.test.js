@@ -24,12 +24,7 @@ it('Load balances calls emit function', () => {
 })
 
 it('reloadData calls socket load function', () => {
-  const loadCandleStoragesMock = jest.fn()
-  const registerLastCandleEventMock = jest.fn()
-  const socketMock = {
-    reloadCandles: loadCandleStoragesMock,
-    registerLastCandleEvent: registerLastCandleEventMock,
-  }
+  const socketMock = {reloadCandles: jest.fn(), registerLastCandleEvent: jest.fn(),}
   const candleStore = new CandleStore(socketMock)
   expect(candleStore.candles.toJS()).toEqual({})
 

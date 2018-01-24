@@ -1,7 +1,7 @@
 // @flow
 import {MarketSocket} from "./MarketSocket"
 
-it('Load balances calls emit function', () => {
+it('Load Markets calls emit function', () => {
   const emitFunctionMock = jest.fn()
   const socketMock = {emit: emitFunctionMock}
   const candleStorageSocket = new MarketSocket(socketMock)
