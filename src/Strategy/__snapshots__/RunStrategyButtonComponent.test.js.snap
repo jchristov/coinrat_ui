@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<span>
+  <div
+    className="pt-popover-target"
+    onBlur={[Function]}
+    onFocus={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <button
+      className="pt-button pt-icon-play pt-intent-primary"
+      disabled={undefined}
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      style={
+        Object {
+          "marginLeft": "7px",
+          "marginTop": "1px",
+        }
+      }
+      tabIndex={0}
+      type="button"
+    />
+  </div>
+</span>
+`;

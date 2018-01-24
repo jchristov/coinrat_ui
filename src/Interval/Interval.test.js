@@ -5,9 +5,19 @@ it('test interval', () => {
   expect(new Interval().isEmpty()).toBe(true)
   expect(new Interval().since).toBe(null)
   expect(new Interval().till).toBe(null)
-  expect(new Interval().withClosedFromRight(new Date(2018, 1, 1, 1, 0, 0, 0)).till)
-    .toEqual(new Date('2018-02-01T00:00:00.000Z'))
+  const newTill = new Date(Date.UTC(2018, 1, 1, 0, 0, 0))
+  expect(new Interval().withClosedFromRight(newTill).till).toEqual(newTill)
 
-  expect(new Interval(new Date(2018, 1, 1, 0, 0, 0), new Date(2018, 1, 2, 0, 0, 0))
-    .toIso()).toEqual({"since": new Date(2018, 1, 1, 1, 0, 0, 0), "till": new Date(2018, 1, 1, 2, 0, 0, 0)})
+
+  console.log(new Date(2018, 0, 1, 1))
+
+  expect(
+    (
+      new Interval(
+        new Date(Date.UTC(2018, 0, 1, 0, 0, 0)),
+        new Date(Date.UTC(2018, 0, 2, 0, 0, 0))
+      )
+    ).toIso()
+  )
+    .toEqual({"since": "2018-01-01T00:00:00.000Z", "till": "2018-01-02T00:00:00.000Z"})
 })

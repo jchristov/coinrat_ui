@@ -8,7 +8,7 @@ it('renders correctly', () => {
   const tree = renderer
     .create(
       <SelectIntervalComponent
-        defaultSelectedInterval={new Interval(new Date(2018, 1, 1, 1))}
+        defaultSelectedInterval={new Interval(new Date(2018, 0, 1))}
         onChange={() => undefined}
         flashMessageHandler={() => undefined}
       />)

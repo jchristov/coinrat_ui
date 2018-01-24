@@ -1,16 +1,9 @@
 // @flow
 import React from 'react'
 import renderer from 'react-test-renderer'
-import SelectStrategyComponent from "./SelectStrategyComponent"
+import RunStrategyButtonComponent from "./RunStrategyButtonComponent"
 
 it('renders correctly', () => {
-  const tree = renderer
-    .create(
-      <SelectStrategyComponent
-        availableStrategies={{foo: {key: 'foo', title: 'Foo'}}}
-        defaultSelectedStrategy="foo"
-        onSelect={() => undefined}
-      />)
-    .toJSON()
+  const tree = renderer.create(<RunStrategyButtonComponent onClick={() => undefined}/>).toJSON()
   expect(tree).toMatchSnapshot()
 })

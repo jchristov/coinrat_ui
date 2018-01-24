@@ -28,12 +28,12 @@ it('reloadData calls socket load function', () => {
   const candleStore = new CandleStore(socketMock)
   expect(candleStore.candles.toJS()).toEqual({})
 
-  const date = new Date(2018, 1, 2, 3, 4, 5, 6)
+  const date = new Date(2018, 0, 2, 3, 4, 5, 6)
   const newCandles = [new Candle(date, 1, 2, 3, 4, 0, '5-minute', 'yolo_market', 'WTF_OMG')]
   candleStore.processCandles(newCandles)
 
   expect(candleStore.candles.toJS()).toEqual({
-    "2018-02-02 03:04:05": {
+    "2018-01-02 03:04:05": {
       close: 4,
       date: date,
       high: 2,

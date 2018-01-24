@@ -5,8 +5,8 @@ import {
 } from "./Order"
 
 const _createDummyOrder = (): Order => {
-  const createdAt = new Date(2018, 1, 1, 5, 6, 0)
-  const closedAt = new Date(2018, 1, 1, 5, 6, 35)
+  const createdAt = new Date(2018, 0, 1, 5, 6, 0)
+  const closedAt = new Date(2018, 0, 1, 5, 6, 35)
   return new Order(
     'ABCDEFGH',
     'foo_market',
@@ -27,8 +27,8 @@ it('test order constructor', () => {
   const order = _createDummyOrder()
   expect(order).toEqual({
     "canceledAt": null,
-    "closedAt": new Date(2018, 1, 1, 5, 6, 35),
-    "createdAt": new Date(2018, 1, 1, 5, 6, 0),
+    "closedAt": new Date(2018, 0, 1, 5, 6, 35),
+    "createdAt": new Date(2018, 0, 1, 5, 6, 0),
     "direction": "sell",
     "idOnMarket": "",
     "market": "foo_market",
@@ -42,7 +42,7 @@ it('test order constructor', () => {
 })
 
 it('test order aggregate', () => {
-  const aggregate = new OrderDirectionAggregate(Date(2018, 1, 1, 5, 6, 0), DIRECTION_SELL)
+  const aggregate = new OrderDirectionAggregate(Date(2018, 0, 1, 5, 6, 0), DIRECTION_SELL)
 
   expect(aggregate.maxValue()).toBe(0)
   expect(aggregate.countOpen).toBe(0)
@@ -64,7 +64,7 @@ it('test order aggregate', () => {
   expect(aggregate.countClosed).toBe(1)
   expect(aggregate.countCanceled).toBe(0)
 
-  const newAggregate = new OrderDirectionAggregate(Date(2018, 1, 1, 5, 6, 30), DIRECTION_SELL)
+  const newAggregate = new OrderDirectionAggregate(Date(2018, 0, 1, 5, 6, 30), DIRECTION_SELL)
   newAggregate.increment(STATUS_CANCELED)
   newAggregate.increment(STATUS_CANCELED)
   newAggregate.increment(STATUS_CANCELED)

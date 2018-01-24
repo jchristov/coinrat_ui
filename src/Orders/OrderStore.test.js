@@ -3,9 +3,9 @@ import {OrderStore} from "./OrderStore"
 import Interval from "../Interval/Interval"
 import {DIRECTION_SELL, Order, ORDER_TYPE_LIMIT, STATUS_CLOSED} from "./Order"
 
-const _createdAt = new Date(2018, 1, 1, 5, 6, 0)
+const _createdAt = new Date(2018, 0, 1, 5, 6, 0)
 const _createDummyOrder = (): Order => {
-  const closedAt = new Date(2018, 1, 1, 5, 6, 35)
+  const closedAt = new Date(2018, 0, 1, 5, 6, 35)
   return new Order(
     'ABCDEFGH',
     'foo_market',
@@ -54,5 +54,5 @@ it('reloadData calls socket load function', () => {
   expect(orderStore.orders.toJS()).toEqual([newOrder])
   expect(orderStore.buyOrders.toJS()).toEqual({})
 
-  expect(orderStore.sellOrders.toJS()["2018-02-01 05:06:00"].countClosed).toBe(1)
+  expect(orderStore.sellOrders.toJS()["2018-01-01 05:06:00"].countClosed).toBe(1)
 })

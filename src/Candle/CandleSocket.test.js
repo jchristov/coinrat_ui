@@ -26,7 +26,7 @@ it('Test processing raw candles into objects', () => {
     result = candles
   }
   CandleSocket.processRawCandles([{
-    time: (new Date(2018, 1, 2, 3, 4, 5, 6)).toISOString(),
+    time: (new Date(2018, 0, 2, 3, 4, 5, 6)).toISOString(),
     open: 1,
     high: 2,
     low: 3,
@@ -37,6 +37,6 @@ it('Test processing raw candles into objects', () => {
   }], process)
   expect(result.length).toBe(1)
   expect(result[0]).toEqual(
-    new Candle(new Date(2018, 1, 2, 3, 4, 5, 6), 1, 2, 3, 4, 0, '5-minute', 'yolo_market', 'WTF_OMG')
+    new Candle(new Date(2018, 0, 2, 3, 4, 5, 6), 1, 2, 3, 4, 0, '5-minute', 'yolo_market', 'WTF_OMG')
   )
 })

@@ -41,19 +41,19 @@ const runs: Array<TestRunData> = [
     },
     expectedMaxOrderTicks: 10,
     ordersBuy: [
-      createOrder(new Date(2018, 1, 1, 0, 0, 0), 1, DIRECTION_BUY),
-      createOrder(new Date(2018, 1, 2, 0, 0, 0), 2, DIRECTION_BUY), // IMPORTANT: out of order, its not sorted!
-      createOrder(new Date(2018, 1, 1, 23, 59, 59), 2, DIRECTION_BUY),
-      createOrder(new Date(2018, 1, 3, 0, 0, 0), 5, DIRECTION_BUY),
+      createOrder(new Date(2018, 0, 1, 0, 0, 0), 1, DIRECTION_BUY),
+      createOrder(new Date(2018, 0, 2, 0, 0, 0), 2, DIRECTION_BUY), // IMPORTANT: out of order, its not sorted!
+      createOrder(new Date(2018, 0, 1, 23, 59, 59), 2, DIRECTION_BUY),
+      createOrder(new Date(2018, 0, 3, 0, 0, 0), 5, DIRECTION_BUY),
       // ...
-      createOrder(new Date(2018, 1, 6, 0, 0, 0), 5, DIRECTION_BUY),
-      createOrder(new Date(2018, 1, 6, 0, 0, 0), 5, DIRECTION_BUY),
+      createOrder(new Date(2018, 0, 6, 0, 0, 0), 5, DIRECTION_BUY),
+      createOrder(new Date(2018, 0, 6, 0, 0, 0), 5, DIRECTION_BUY),
     ],
     ordersSell: [
-      createOrder(new Date(2018, 1, 1, 0, 0, 0), 10, DIRECTION_SELL),
+      createOrder(new Date(2018, 0, 1, 0, 0, 0), 10, DIRECTION_SELL),
       // ...
-      createOrder(new Date(2018, 1, 6, 0, 0, 0), 2, DIRECTION_SELL),
-      createOrder(new Date(2018, 1, 7, 0, 0, 0), 5, DIRECTION_SELL),
+      createOrder(new Date(2018, 0, 6, 0, 0, 0), 2, DIRECTION_SELL),
+      createOrder(new Date(2018, 0, 7, 0, 0, 0), 5, DIRECTION_SELL),
     ]
   },
 ]
@@ -61,7 +61,7 @@ const runs: Array<TestRunData> = [
 it('orders are aggregated correctly with candles', () => {
   runs.forEach((data: TestRunData) => {
     const candles = range(1, 10).map((day: number) => {
-      return new Candle(new Date(2018, 1, day, 0, 0, 0), 1, 2, 3, 4, 0, '1-day', 'foo', 'USD_BTC')
+      return new Candle(new Date(2018, 0, day, 0, 0, 0), 1, 2, 3, 4, 0, '1-day', 'foo', 'USD_BTC')
     })
 
     const result = createAggregateFromData(candles, data.ordersBuy, data.ordersSell)
