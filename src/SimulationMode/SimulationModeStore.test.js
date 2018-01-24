@@ -9,4 +9,3 @@ it('Simulation mode ON and OFF', () => {
   store.turnOn()
   expect(store.isSimulationModeEnabled).toBe(true)
 })
-
