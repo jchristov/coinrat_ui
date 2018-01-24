@@ -4,7 +4,7 @@ import {
   STATUS_OPEN
 } from "./Order"
 
-const _createDummyCandle = (): Order => {
+const _createDummyOrder = (): Order => {
   const createdAt = new Date(2018, 1, 1, 5, 6, 0)
   const closedAt = new Date(2018, 1, 1, 5, 6, 35)
   return new Order(
@@ -24,7 +24,7 @@ const _createDummyCandle = (): Order => {
 }
 
 it('test order constructor', () => {
-  const order = _createDummyCandle()
+  const order = _createDummyOrder()
   expect(order).toEqual({
     "canceledAt": null,
     "closedAt": new Date('2018-02-01T04:06:35.000Z'),
