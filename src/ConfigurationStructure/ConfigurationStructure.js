@@ -76,7 +76,7 @@ function isDisabledByFieldName(key: string): boolean {
   return [MOCKED_MARKET_NAME_FIELD, MOCKED_BASE_CURRENCY_FIELD].includes(key)
 }
 
-const createConfigurationStructureFromRawData = (data) => {
+const createConfigurationStructureFromRawData = (data: Object): ConfigurationStructure => {
   const configuration = Object.keys(data).map((key: string) => {
     const rawDirective = data[key]
 
