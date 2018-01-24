@@ -32,5 +32,13 @@
   },
   "devDependencies": {
     "react-test-renderer": "^16.2.0"
+  },
+  "standard": {
+    "globals": [
+      "expect",
+      "toBe",
+      "toEqual",
+      "jest"
+    ]
   }
 }
