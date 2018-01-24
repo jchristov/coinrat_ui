@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="_Rfx0_"
+>
+  <div
+    className="form-item form-label _Rfx1_"
+  >
+    <div
+      className="pt-label"
+    >
+      Strategy:
+      <span
+        className="pt-text-muted"
+      />
+    </div>
+  </div>
+  <div
+    className="form-item form-element"
+  >
+    <span>
+      <div
+        className="pt-popover-target"
+        onClick={[Function]}
+      >
+        <div
+          className=""
+          disabled={undefined}
+          onKeyDown={[Function]}
+          onKeyUp={undefined}
+          tabIndex={undefined}
+        >
+          <button
+            className="pt-button"
+            disabled={undefined}
+            onClick={undefined}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            type="button"
+          >
+            <div
+              className="_Rfx2_ _Rfx0_"
+            >
+              <div
+                className=""
+                style={
+                  Object {
+                    "whiteSpace": "nowrap",
+                  }
+                }
+              >
+                Foo
+              </div>
+              <div
+                className=""
+              >
+                <span
+                  className="pt-icon-standard pt-icon-caret-down"
+                />
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </span>
+  </div>
+  <div
+    className="form-item form-suffix"
+  >
+    
+     
+    
+  </div>
+</div>
+`;

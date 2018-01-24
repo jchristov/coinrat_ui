@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly, OFFLINE 1`] = `
+<span>
+  <div
+    className="pt-popover-target"
+    onBlur={[Function]}
+    onFocus={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <span
+      className="pt-icon pt-icon-dot pt-intent-danger"
+      disabled={undefined}
+      tabIndex={0}
+    />
+  </div>
+</span>
+`;
+
+exports[`renders correctly, ONLINE 1`] = `
+<span>
+  <div
+    className="pt-popover-target"
+    onBlur={[Function]}
+    onFocus={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <span
+      className="pt-icon pt-icon-dot pt-intent-success"
+      disabled={undefined}
+      tabIndex={0}
+    />
+  </div>
+</span>
+`;

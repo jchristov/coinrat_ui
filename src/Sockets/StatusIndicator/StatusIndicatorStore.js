@@ -3,6 +3,8 @@ import {action, extendObservable} from "mobx"
 import {AppSocket} from "../socket"
 
 class StatusIndicatorStore {
+  isOnline: boolean
+
   constructor(socket: AppSocket) {
     extendObservable(this, {
       isOnline: false

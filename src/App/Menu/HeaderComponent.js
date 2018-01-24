@@ -2,9 +2,8 @@
 import React, {Component} from 'react'
 import {Link} from "react-router-dom"
 import {Tooltip2} from "@blueprintjs/labs"
-import {statusIndicatorStoreInstance} from "../diContainer"
 import SimulationModeSwitcherContainer from "./SimulationModeSwitcherContainer"
-import StatusIndicatorComponent from "../../Sockets/StatusIndicator/StatusIndicatorComponent"
+import StatusIndicatorContainer from "./StatusIndicatorContainer"
 
 class HeaderComponent extends Component<{}> {
   render() {
@@ -12,7 +11,7 @@ class HeaderComponent extends Component<{}> {
       <nav className="pt-navbar pt-dark">
 
         <div className="pt-navbar-group pt-align-left">
-          <StatusIndicatorComponent store={statusIndicatorStoreInstance}/>
+          <StatusIndicatorContainer/>
 
           <span className="pt-navbar-divider"/>
 
