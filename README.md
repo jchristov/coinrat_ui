@@ -1,4 +1,4 @@
-Build: [![CircleCI](https://circleci.com/gh/Achse/coinrat.svg?style=svg&circle-token=33676128239f1d0da010339bfbfb34a0d42576b0)](https://circleci.com/gh/Achse/coinrat)
+Build: [![CircleCI](https://circleci.com/gh/Achse/coinrat_ui.svg?style=svg&circle-token=9fe64fcd447bc71baf0a465a3f6c14ccebb858ca)](https://circleci.com/gh/Achse/coinrat_ui)
 
 # Coinrat - Frontend App for trading platform
 
