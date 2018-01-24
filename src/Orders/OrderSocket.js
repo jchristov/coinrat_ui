@@ -89,7 +89,7 @@ class OrdersSocket {
       pair: pair,
       interval: interval,
     }, () => {
-      this.flashMessageHandler({message: "Order storage in given range cleared.", type: 'pt-intent-success'})
+      this.flashMessageHandler("Order storage in given range cleared.", 'pt-intent-success')
     })
   }
 
