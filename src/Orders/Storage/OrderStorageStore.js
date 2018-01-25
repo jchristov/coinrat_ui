@@ -13,8 +13,11 @@ class OrderStorageStore {
     extendObservable(this, {orderStorages: {}})
   }
 
-  reloadData = action((): void => {
-    this.orderStorageSocket.loadOrderStorages(this.setOrderStorages)
+  reloadData = action((onSuccess: () => void): void => {
+    this.orderStorageSocket.loadOrderStorages((orderStorages: OrderStorageHashMap) => {
+      this.setOrderStorages(orderStorages)
+      onSuccess()
+    })
   })
 
   setOrderStorages = action((orderStorages: OrderStorageHashMap): void => {

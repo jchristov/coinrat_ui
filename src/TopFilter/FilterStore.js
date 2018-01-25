@@ -7,7 +7,7 @@ class FilterStore {
   market: string
   interval: Interval
   candleStorage: string
-  orderStorage: string
+  orderStorage: ?string
   strategy: string
 
   constructor() {
@@ -19,7 +19,7 @@ class FilterStore {
       market: 'bittrex',
       interval: new Interval(since),
       candleStorage: 'influx_db',
-      orderStorage: 'influx_db',
+      orderStorage: null,
       strategy: 'double_crossover',
     })
   }

@@ -28,7 +28,6 @@ class OrderStorageSocket {
       processOrderStorages
     )
   }
-
 }
 
 export type {

@@ -7,7 +7,12 @@ import SelectOrdersBackendStorageComponent from "../../Orders/Storage/SelectOrde
 class SelectOrderStorageContainer extends Component<{}> {
 
   componentDidMount() {
-    orderStorageStoreInstance.reloadData()
+    orderStorageStoreInstance.reloadData(() => {
+      if (filterStoreInstance.orderStorage === null) {
+        const availableStorages = Object.values(orderStorageStoreInstance.orderStorages)
+        filterStoreInstance.changeOrderStorage(availableStorages[0].key)
+      }
+    })
   }
 
   changeOrderStorage = (orderStorage: string) => {

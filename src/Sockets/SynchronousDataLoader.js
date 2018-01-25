@@ -1,8 +1,9 @@
 // @flow
 import type {SelectElement} from "../Form/Select/SelectComponent"
+import type {AppSocket} from "./socket"
 
 const loadDataForSelectElementStore = (
-  socket,
+  socket: AppSocket,
   method: string,
   fromRawData: (Object) => Object,
   resultCallback: (Object) => void,

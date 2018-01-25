@@ -2,8 +2,6 @@
 import type {FlashMessageHandlerType} from "../FlashMessage/handling"
 
 // const uuidv4 = require('uuid/v4')
-
-
 // setTimeout(function next() {
 //   socket.emit(SOCKET_EVENT_PING_REQUEST, {
 //     ping_id: uuidv4(),
