@@ -1,10 +1,11 @@
-const upperCaseFirst = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1)
-const underscoreToSpaces = (text: string): string => text.replace('_', ' ')
-
-const convertKeyToName = (key: string): string => underscoreToSpaces(upperCaseFirst(key))
+const upperCaseAll = (text: string): string => text.replace(/(?:^|\s)\S/g, function (a) {
+  return a.toUpperCase()
+})
+const underscoreToSpaces = (text: string): string => text.replace(/[_\-]/g, ' ')
+const convertKeyToName = (key: string): string => upperCaseAll(underscoreToSpaces(key))
 
 export {
-  upperCaseFirst,
+  upperCaseAll,
   underscoreToSpaces,
   convertKeyToName,
 }
