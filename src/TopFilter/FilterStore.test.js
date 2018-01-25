@@ -9,7 +9,7 @@ it('Filter can be changed', () => {
   expect(store.pair).toBe('USD_BTC')
   expect(store.market).toBe('bittrex')
   expect(store.candleStorage).toBe('influx_db')
-  expect(store.orderStorage).toBe('influx_db')
+  expect(store.orderStorage).toBe(null)
   expect(store.strategy).toBe('double_crossover')
   expect(store.interval).not.toEqual(newInterval)
 
