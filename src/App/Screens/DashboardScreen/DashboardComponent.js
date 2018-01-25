@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import CandlesChartContainer from "./CandlesChartContainer"
 import {
   candleStoreInstance,
-  candleSizeStoreInstance,
+  mainChartStoreInstance,
   filterStoreInstance,
   orderStoreInstance,
 } from "../../diContainer"
@@ -28,7 +28,7 @@ class DashboardComponent extends Component<Props> {
 
   reloadStores = () => {
     orderStoreInstance.reloadByFilter(filterStoreInstance)
-    candleStoreInstance.reloadByFilter(filterStoreInstance, candleSizeStoreInstance.candleSize)
+    candleStoreInstance.reloadByFilter(filterStoreInstance, mainChartStoreInstance.candleSize)
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -44,7 +44,7 @@ class DashboardComponent extends Component<Props> {
     }
 
     if (current.candleStorage !== nextProps.candleStorage) {
-      candleStoreInstance.reloadByFilter(filterStoreInstance, candleSizeStoreInstance.candleSize)
+      candleStoreInstance.reloadByFilter(filterStoreInstance, mainChartStoreInstance.candleSize)
     }
 
     if (current.orderStorage !== nextProps.orderStorage) {

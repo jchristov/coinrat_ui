@@ -4,7 +4,7 @@ import {observer} from "mobx-react"
 import {
   filterStoreInstance,
   pairStoreInstance,
-  candleSizeStoreInstance,
+  mainChartStoreInstance,
   marketStoreInstance,
   candleStoreInstance,
   orderStoreInstance,
@@ -22,7 +22,7 @@ class SelectPairContainer extends Component<{}> {
   changePair = (pair: string) => {
     filterStoreInstance.changePair(pair)
     orderStoreInstance.reloadByFilter(filterStoreInstance)
-    candleStoreInstance.reloadByFilter(filterStoreInstance, candleSizeStoreInstance.candleSize)
+    candleStoreInstance.reloadByFilter(filterStoreInstance, mainChartStoreInstance.candleSize)
     marketStoreInstance.changeMarketConfigurationField(MOCK_MARKET_NAME, MOCKED_BASE_CURRENCY_FIELD, pair.split('_')[0])
   }
 

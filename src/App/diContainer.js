@@ -5,7 +5,6 @@ import {BalanceOverviewStore} from "../BalanceOverview/BalanceOverviewStore"
 import {CandleSocket} from "../Candle/CandleSocket"
 import {PairSocket} from "../Pair/PairSocket"
 import {CandleStore} from "../Candle/CandleStore"
-import {CandleSizeStore, UNIT_MINUTE} from "../Candle/CandleSize/CandleSizeStore"
 import {CandleStorageSocket} from "../Candle/Storage/CandleStorageSocket"
 import {CandleStorageStore} from "../Candle/Storage/CandleStorageStore"
 import {MarketSocket} from "../Market/MarketSocket"
@@ -23,6 +22,8 @@ import {StatusIndicatorStore} from "../Sockets/StatusIndicator/StatusIndicatorSt
 import {StrategySocket} from "../Strategy/StrategySocket"
 import {Position, Toaster} from "@blueprintjs/core"
 import type {FlashMessageHandlerType} from "../FlashMessage/handling"
+import {UNIT_MINUTE} from "../Candle/CandleSize/CandleSize"
+import {MainChartStore} from "../MainChart/MainChartStore"
 
 const url = process.env.REACT_APP_BACKEND_SOCKET_URL
 const socketio = require('socket.io-client')(url)
@@ -50,7 +51,7 @@ const balanceOverviewStoreInstance: BalanceOverviewStore = new BalanceOverviewSt
 // Candle
 const candleSocketInstance: CandleSocket = new CandleSocket(appSocketInstance)
 const candleStoreInstance: CandleStore = new CandleStore(candleSocketInstance)
-const candleSizeStoreInstance: CandleSizeStore = new CandleSizeStore(UNIT_MINUTE, 15)
+const mainChartStoreInstance: MainChartStore = new MainChartStore(UNIT_MINUTE, 15)
 const candleStorageSocketInstance: CandleStorageSocket = new CandleStorageSocket(appSocketInstance)
 const candleStorageStoreInstance: CandleStorageStore = new CandleStorageStore(candleStorageSocketInstance)
 
@@ -96,7 +97,7 @@ export {
   balanceOverviewStoreInstance,
   candleSocketInstance,
   candleStoreInstance,
-  candleSizeStoreInstance,
+  mainChartStoreInstance,
   candleStorageSocketInstance,
   candleStorageStoreInstance,
   marketSocketInstance,

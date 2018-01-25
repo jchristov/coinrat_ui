@@ -69,10 +69,10 @@ it('orders are aggregated correctly with candles', () => {
     expect(result.maxOrderTickSize).toBe(data.expectedMaxOrderTicks)
 
     data.expected.buy.closed.forEach((expectedValue: number, index: number) => {
-      expect(result.data[index].buyOrderAggregate.countClosed).toBe(expectedValue)
+      expect(result.data[index].aggregate.buyOrderAggregate.countClosed).toBe(expectedValue)
     })
     data.expected.sell.closed.forEach((expectedValue: number, index: number) => {
-      expect(result.data[index].sellOrderAggregate.countClosed).toBe(expectedValue)
+      expect(result.data[index].aggregate.sellOrderAggregate.countClosed).toBe(expectedValue)
     })
   })
 })

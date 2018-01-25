@@ -1,0 +1,14 @@
+// @flow
+const CHART_STANDARD_CANDLE = 'standard'
+const CHART_HEIKIN_ASHI_CANDLE = 'heikin-ashi'
+
+type CHART_TYPES = CHART_STANDARD_CANDLE | CHART_HEIKIN_ASHI_CANDLE
+
+export type {
+  CHART_TYPES,
+}
+
+export {
+  CHART_STANDARD_CANDLE,
+  CHART_HEIKIN_ASHI_CANDLE,
+}

@@ -36,6 +36,15 @@ type AggregationResult = {
   maxOrderTickSize: number,
 }
 
+type ChartRow = { // This format is required by 'react-stockcharts' library
+  date: Date,
+  open: number,
+  high: number,
+  low: number,
+  close: number,
+  aggregate: ChartAggregate,
+}
+
 const createAggregateFromData = (
   candles: Array<Candle>,
   buyOrderAggregates: Array<OrderDirectionAggregate>,
@@ -44,7 +53,7 @@ const createAggregateFromData = (
   if (candles.length === 0) {
     return {data: [], maxOrderTickSize: null}
   }
-  let data: { [key: string]: ChartAggregate } = {}
+  let data: { [key: string]: ChartRow } = {}
   let maxOrderTickSize = 0
 
   candles.sort(sortCandleByDate)
@@ -61,7 +70,14 @@ const createAggregateFromData = (
   for (let i = 0; i < candles.length; i++) {
     const candle = candles[i]
     const key = calculateAggregateHash(candle.date)
-    data[key] = new ChartAggregate(candle)
+    data[key] = {
+      date: candle.date,
+      open: candle.open,
+      high: candle.high,
+      low: candle.low,
+      close: candle.close,
+      aggregate: new ChartAggregate(candle),
+    }
 
     const isOrderInCandleBucket = (order: OrderDirectionAggregate): boolean => {
       return order.dateBucket >= candle.date && (i + 1 === candles.length || order.dateBucket < candles[i + 1].date)
@@ -69,15 +85,16 @@ const createAggregateFromData = (
 
     let lastBuyOrder = buyOrderAggregates[0]
     while (lastBuyOrder !== undefined && isOrderInCandleBucket(lastBuyOrder)) {
-      data[key].buyOrderAggregate.addAggregate(lastBuyOrder)
-      updateMaxValue(data[key])
+      data[key].aggregate.buyOrderAggregate.addAggregate(lastBuyOrder)
+      updateMaxValue(data[key].aggregate)
       buyOrderAggregates.shift()
       lastBuyOrder = buyOrderAggregates[0]
     }
 
     let lastSellOrder = sellOrderAggregates[0]
     while (lastSellOrder !== undefined && isOrderInCandleBucket(lastSellOrder)) {
-      data[key].sellOrderAggregate.addAggregate(lastSellOrder)
+      data[key].aggregate.sellOrderAggregate.addAggregate(lastSellOrder)
+      updateMaxValue(data[key].aggregate)
       sellOrderAggregates.shift()
       lastSellOrder = sellOrderAggregates[0]
     }
@@ -98,6 +115,7 @@ const calculateAggregateHash = (date: Date): string => {
 
 export type {
   AggregationResult,
+  ChartRow,
 }
 
 export {

@@ -1,6 +1,6 @@
 // @flow
 
-import {CandleSizeStore, UNIT_DAY, UNIT_MINUTE} from "./CandleSizeStore"
+import {CandleSizeStore, UNIT_DAY, UNIT_MINUTE} from "./MainChartStore"
 
 it('change candle size', () => {
   const store = new CandleSizeStore(UNIT_MINUTE, 1)

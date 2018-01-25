@@ -1,22 +1,21 @@
 // @flow
 import {action, extendObservable} from "mobx"
+import type {AGGREGATION_UNIT} from "../Candle/CandleSize/CandleSize"
+import type {CHART_TYPES} from "../CandlestickChart/ChartType"
 
-const UNIT_MINUTE = 'minute'
-const UNIT_HOUR = 'hour'
-const UNIT_DAY = 'day'
 
-type AGGREGATION_UNIT = UNIT_MINUTE | UNIT_HOUR | UNIT_DAY
-
-class CandleSizeStore {
+class MainChartStore {
   unit: AGGREGATION_UNIT
   size: number
   candleSize: string
+  chartType: CHART_TYPES
 
-  constructor(unit: AGGREGATION_UNIT, size: number) {
+  constructor(unit: AGGREGATION_UNIT, size: number, chartType: CHART_TYPES) {
     extendObservable(this, {
       unit: unit,
       size: size,
-      candleSize: `${unit}-${size}`
+      candleSize: `${unit}-${size}`,
+      chartType: chartType,
     })
     this._concatCandleSize()
   }
@@ -27,19 +26,15 @@ class CandleSizeStore {
     this._concatCandleSize()
   })
 
+  setChartType = action((chartType: CHART_TYPES) => {
+    this.chartType = chartType
+  })
+
   _concatCandleSize = () => {
     this.candleSize = `${this.size}-${this.unit}`
   }
-
 }
 
-export type {
-  AGGREGATION_UNIT,
-}
 export {
-  UNIT_MINUTE,
-  UNIT_HOUR,
-  UNIT_DAY,
-
-  CandleSizeStore,
+  MainChartStore,
 }

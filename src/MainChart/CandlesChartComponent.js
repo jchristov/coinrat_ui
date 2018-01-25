@@ -16,11 +16,13 @@ import {
   MouseCoordinateY,
 } from "react-stockcharts/lib/coordinates"
 import {Label} from "react-stockcharts/lib/annotation"
+import {heikinAshi} from "react-stockcharts/lib/indicator"
 
 import Interval from "../Interval/Interval"
 import {OrderDirectionAggregate, STATUS_CANCELED, STATUS_CLOSED, STATUS_OPEN} from "../Orders/Order"
 import {ORDERS_STATUS_COLORS} from "../Orders/ChartColors"
 import {AggregationResult, ChartAggregate} from "./ChartAggregate"
+import type {ChartRow} from "./ChartAggregate"
 
 type Props = {
   result: AggregationResult,
@@ -28,6 +30,7 @@ type Props = {
   ratio: number,
   type: 'svg' | 'hybrid',
   interval: Interval,
+  isHeikinAshiOn: boolean
 }
 
 const BETWEEN_SPACE = 60
@@ -59,8 +62,11 @@ class CandlesChartComponent extends Component<Props> {
   }
 
   render() {
-    const {type, width, result, ratio, interval} = this.props
+    const {type, width, result, ratio, interval, isHeikinAshiOn} = this.props
     const {yGrid, xGrid} = this.calculateGrid(width, candleChartHeight)
+
+    const concreteHeikinAshi = isHeikinAshiOn ? heikinAshi() : (data) => data
+    const calculatedData = concreteHeikinAshi(result.data)
 
     const canvasProps = {
       zoomEvent: false,
@@ -71,27 +77,16 @@ class CandlesChartComponent extends Component<Props> {
       margin: margin,
       type: type,
       seriesName: 'main-chart',
-      xAccessor: (chartAggregate: ChartAggregate) => chartAggregate.date,
+      xAccessor: (row: ChartRow) => row.date,
       xScale: scaleTime(),
       xExtents: [interval.since, interval.till],
     }
 
-    const yCandlesExtends = (chartAggregate: ChartAggregate) => [
-      chartAggregate.candle.high,
-      chartAggregate.candle.low,
-    ]
-
-    const yCandleAccessor = (chartAggregate: ChartAggregate) => {
-      return {
-        open: chartAggregate.candle.open,
-        high: chartAggregate.candle.high,
-        low: chartAggregate.candle.low,
-        close: chartAggregate.candle.close,
-      }
-    }
+    const yCandlesExtends = (row: ChartRow) => [row.high, row.low]
+    const yCandleAccessor = (row: ChartRow) => row
 
     return (
-      <ChartCanvas {...canvasProps} data={result.data}>
+      <ChartCanvas {...canvasProps} data={calculatedData}>
         <Chart id={1} yExtents={yCandlesExtends} height={candleChartHeight}>
           <MouseCoordinateX at="bottom" orient="top" displayFormat={timeFormat("%Y-%m-%d %X")} rectWidth={160}/>
           <MouseCoordinateY at="left" orient="right" displayFormat={format(".8")} rectWidth={100}/>
@@ -163,8 +158,8 @@ class CandlesChartComponent extends Component<Props> {
     const orderChartProps = {
       height: height,
       origin: (w: number, h: number) => [0, h - height - highOffset],
-      yExtents: (chartAggregate: ChartAggregate) => {
-        const order = ordersResolver(chartAggregate)
+      yExtents: (row: ChartRow) => {
+        const order = ordersResolver(row.aggregate)
         return [0, Math.max(order.countOpen, order.countClosed, order.countCanceled)]
       },
     }
@@ -175,9 +170,9 @@ class CandlesChartComponent extends Component<Props> {
       fill: this.getColorForOrder,
       width: 4,
       yAccessor: [
-        (chartAggregate: ChartAggregate) => ordersResolver(chartAggregate).countOpen,
-        (chartAggregate: ChartAggregate) => ordersResolver(chartAggregate).countClosed,
-        (chartAggregate: ChartAggregate) => ordersResolver(chartAggregate).countCanceled,
+        (row: ChartRow) => ordersResolver(row.aggregate).countOpen,
+        (row: ChartRow) => ordersResolver(row.aggregate).countClosed,
+        (row: ChartRow) => ordersResolver(row.aggregate).countCanceled,
       ]
     }
 
