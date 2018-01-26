@@ -27,7 +27,7 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
     const sellOrders = Object.values(orderStoreInstance.sellOrders.toJS())
     const dataArray = createAggregateFromData(candles, buyOrders, sellOrders)
 
-    if (dataArray.data.length <= 1 || interval.isEmpty()) {
+    if (dataArray.data.length <= 2 || interval.isEmpty()) {
       return <div style={{marginTop: 25 + 'px'}}>
         <NonIdealState
           visual="search"
