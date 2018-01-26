@@ -1,4 +1,6 @@
 // @flow
+import {extendObservable} from "mobx"
+
 const DIRECTION_SELL = 'sell'
 const DIRECTION_BUY = 'buy'
 
@@ -59,13 +61,19 @@ class Order {
 class OrderDirectionAggregate {
   dateBucket: Date
   direction: OrderDirectionType
-  countOpen: number = 0
-  countClosed: number = 0
-  countCanceled: number = 0
+  countOpen: number
+  countClosed: number
+  countCanceled: number
 
   constructor(dateBucket: Date, direction: OrderDirectionType) {
     this.dateBucket = dateBucket
     this.direction = direction
+
+    extendObservable(this, {
+      countOpen: 0,
+      countClosed: 0,
+      countCanceled: 0,
+    })
   }
 
   increment = (status: OrderStatusType) => {
