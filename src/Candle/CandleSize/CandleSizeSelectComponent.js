@@ -17,7 +17,7 @@ const CandleSizeSelectComponent = ({availableMarkets, defaultSelectedAggregation
     '1-hour': {key: '1-hour', title: '1 hour'},
     '2-hour': {key: '2-hour', title: '2 hour'},
     '3-hour': {key: '3-hour', title: '3 hour'},
-    '4-hour': {key: '3-hour', title: '4 hour'},
+    '4-hour': {key: '4-hour', title: '4 hour'},
     '6-hour': {key: '6-hour', title: '6 hours'},
     '12-hour': {key: '12-hour', title: '12 hours'},
     '1-day': {key: '1-day', title: '1 day'},
