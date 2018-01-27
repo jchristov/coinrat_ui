@@ -2,7 +2,7 @@
 import React, {Component} from 'react'
 import {observer} from "mobx-react"
 import {Flex, Box} from 'reflexbox'
-import {NonIdealState} from "@blueprintjs/core"
+import {NonIdealState, Spinner} from "@blueprintjs/core"
 import {
   filterStoreInstance,
   candleStoreInstance,
@@ -26,6 +26,12 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
     const buyOrders = Object.values(orderStoreInstance.buyOrders.toJS())
     const sellOrders = Object.values(orderStoreInstance.sellOrders.toJS())
     const dataArray = createAggregateFromData(candles, buyOrders, sellOrders)
+
+    if (candleStoreInstance.isLoading) {
+      return <div style={{marginTop: 25 + 'px'}}>
+        <NonIdealState visual={<Spinner className="pt-large"/>} title="Loading candles..."/>
+      </div>
+    }
 
     if (dataArray.data.length <= 2 || interval.isEmpty()) {
       return <div style={{marginTop: 25 + 'px'}}>
