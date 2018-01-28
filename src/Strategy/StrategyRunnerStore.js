@@ -41,8 +41,8 @@ class StrategyRunnerStore {
     const strategyRunData = {
       market: market.name,
       pair: this.filterStore.pair,
-      start: this.filterStore.interval.since.toISOString(),
-      stop: this.filterStore.interval.till.toISOString(),
+      since: this.filterStore.interval.since.toISOString(),
+      till: this.filterStore.interval.till.toISOString(),
       candles_storage: this.filterStore.candleStorage,
       orders_storage: this.filterStore.orderStorage,
       strategy_name: strategy.name,
