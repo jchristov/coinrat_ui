@@ -34,6 +34,7 @@ it('test order constructor', () => {
     "idOnMarket": "",
     "market": "foo_market",
     "orderId": "ABCDEFGH",
+    "strategyRunId": "yoloolooolololololooo",
     "pair": "USD_BTC",
     "quantity": "13",
     "rate": "8000",

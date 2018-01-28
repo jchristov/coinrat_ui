@@ -48,8 +48,8 @@ it('strategy can be run', () => {
     "market_configuration": {"x": "XXX"},
     "orders_storage": "influx_db",
     "pair": "USD_BTC",
-    "start": "2018-01-01T00:00:00.000Z",
-    "stop": "2018-01-02T00:00:00.000Z",
+    "since": "2018-01-01T00:00:00.000Z",
+    "till": "2018-01-02T00:00:00.000Z",
     "strategy_configuration": {"y": "YYY"},
     "strategy_name": "my_super_secret_strategy",
   })
