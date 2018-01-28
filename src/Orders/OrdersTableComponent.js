@@ -27,7 +27,8 @@ const OrdersTableComponent = ({orders}: Props) => {
   }
 
   return <Table numRows={orders.length} loadingOptions={loadingOptions}>
-    <Column name="ID" renderCell={(row: number) => <Cell>{orders[row].orderId}</Cell>}/>
+    <Column name="id" renderCell={(row: number) => <Cell>{orders[row].orderId}</Cell>}/>
+    <Column name="Strategy run id" renderCell={(row: number) => <Cell>{orders[row].strategyRunId}</Cell>}/>
     <Column name="Market" renderCell={(row: number) => <Cell>{orders[row].market}</Cell>}/>
     <Column name="Buy/Sell" renderCell={directionCellRender}/>
     <Column name="Created" renderCell={(row: number) => <Cell>{orders[row].createdAt.toLocaleString()}</Cell>}/>

@@ -9,6 +9,7 @@ const _createDummyOrder = (): Order => {
   const closedAt = new Date(2018, 0, 1, 5, 6, 35)
   return new Order(
     'ABCDEFGH',
+    'yoloolooolololololooo',
     'foo_market',
     DIRECTION_SELL,
     createdAt,

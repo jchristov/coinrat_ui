@@ -17,6 +17,7 @@ type OrderStatusType = STATUS_OPEN | STATUS_CLOSED | STATUS_CANCELED
 
 class Order {
   orderId: string
+  strategyRunId: string
   market: string
   direction: OrderDirectionType
   createdAt: Date
@@ -31,6 +32,7 @@ class Order {
 
   constructor(
     orderId: string,
+    strategyRunId: string,
     market: string,
     direction: OrderDirectionType,
     createdAt: Date,
@@ -44,6 +46,7 @@ class Order {
     canceledAt: Date
   ) {
     this.orderId = orderId
+    this.strategyRunId = strategyRunId
     this.market = market
     this.direction = direction
     this.createdAt = createdAt

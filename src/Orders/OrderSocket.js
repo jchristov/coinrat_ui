@@ -12,6 +12,7 @@ import type {FlashMessageHandlerType} from "../FlashMessage/handling"
 
 type RawOrder = {
   order_id: string,
+  strategy_run_id: string,
   market: string,
   pair: string,
   created_at: string,
@@ -100,6 +101,7 @@ class OrdersSocket {
   static parseOneOrderFromData(rawOrder: RawOrder): Order {
     return new Order(
       rawOrder.order_id,
+      rawOrder.strategy_run_id,
       rawOrder.market,
       rawOrder.direction,
       new Date(Date.parse(rawOrder.created_at)),
