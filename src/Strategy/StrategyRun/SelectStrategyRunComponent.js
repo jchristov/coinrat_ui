@@ -1,6 +1,6 @@
 // @flow
 import React from "react"
-import {SelectComponent, SelectItemsType, SelectElement} from "../../Form/Select/SelectComponent"
+import {SelectComponent, SelectItemsType, SelectElement, SORTING_DESC} from "../../Form/Select/SelectComponent"
 
 type Props = {
   availableStrategyRuns: SelectItemsType,
@@ -17,6 +17,7 @@ const SelectStrategyRunComponent = ({availableStrategyRuns, defaultSelectedStrat
     selectedItem={item || null}
     isLoading={isLoading}
     onChange={(strategyRun: SelectElement) => onSelect(strategyRun.key)}
+    sort={SORTING_DESC}
   />
 }
 

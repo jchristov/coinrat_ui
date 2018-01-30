@@ -11,9 +11,13 @@ const ConcreateSelect = Select.ofType()
 type SelectElement = {
   title: string,
   key: string,
+  order: number,
 }
 
 type SelectItemsType = { [key: string]: SelectElement }
+
+const SORTING_DESC = 'DESC'
+const SORTING_ASC = 'ASC'
 
 type Props = {
   items: SelectItemsType,
@@ -21,6 +25,7 @@ type Props = {
   label: string,
   onChange: (element: SelectElement) => void,
   isLoading: boolean,
+  sort: SORTING_DESC | SORTING_ASC
 }
 
 class SelectComponent extends Component<Props> {
@@ -59,8 +64,20 @@ class SelectComponent extends Component<Props> {
   }
 
   renderSelect() {
+    const items = Object.values(this.props.items)
+    items.sort((first: SelectElement, second: SelectElement) => {
+      if (first.order === undefined) first.order = 0
+      if (second.order === undefined) first.order = 0
+
+      let result = 0
+      if (first.order < second.order) result = -1
+      if (first.order > second.order) result = 1
+
+      return (this.props.sort === 'DESC' ? -1 : 1) * result
+    })
+
     return <ConcreateSelect
-      items={Object.values(this.props.items)}
+      items={items}
       itemPredicate={this.filterItem}
       itemRenderer={this.renderItem}
       noResults={<MenuItem disabled text="No results."/>}
@@ -81,5 +98,7 @@ export type {
   SelectElement,
 }
 export {
+  SORTING_ASC,
+  SORTING_DESC,
   SelectComponent,
 }
