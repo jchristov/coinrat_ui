@@ -11,6 +11,8 @@ class StrategyRunStore {
     extendObservable(this, {
       strategyRuns: []
     })
+
+    this.strategyRunSocket.registerNewStrategyRunEvent(this.setStrategyRuns)
   }
 
   reloadData = action((onSuccess: () => void): void => {

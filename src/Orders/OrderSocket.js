@@ -61,7 +61,7 @@ class OrdersSocket {
     })
   }
 
-  static processRawOrders(rawOrders, processOrders) {
+  static processRawOrders(rawOrders: Array<RawOrder>, processOrders: (order: Array<Order>) => void) {
     console.log('Received ORDER', Object.values(rawOrders).length)
     const orders = OrdersSocket.parseOrdersDataIntoStateObject(rawOrders)
     processOrders(orders)

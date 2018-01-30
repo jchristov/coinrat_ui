@@ -1,6 +1,12 @@
 // @flow
 import {AppSocket} from "../../Sockets/socket"
-import {SOCKET_EVENT_GET_STRATEGY_RUNS} from "../../Sockets/SocketEvents"
+import {
+  SOCKET_EVENT_GET_STRATEGY_RUNS,
+  SOCKET_EVENT_NEW_ORDERS,
+  SOCKET_EVENT_SUBSCRIBE,
+  SOCKET_EVENT_UNSUBSCRIBE,
+  SUBSCRIBED_EVENT_NEW_STRATEGY_RUN
+} from "../../Sockets/SocketEvents"
 import {StrategyRun} from "./StrategyRun"
 import type {RawInterval} from "../../Interval/Interval"
 import {deserialize_interval} from "../../Interval/Interval"
@@ -24,16 +30,38 @@ class StrategyRunSocket {
     this.socket = socket
   }
 
-  loadStrategyRuns = (processStrategyRuns: (strategyRuns: Array<StrategyRun>) => void) => {
-    const method = SOCKET_EVENT_GET_STRATEGY_RUNS
-    this.socket.emit(method, {}, (status: String, rawStrategyRuns: Array<Object>) => {
-      console.log('Received:', method, rawStrategyRuns.length)
-      const strategyRuns = rawStrategyRuns.map(this.createStrategyRunFromRaw)
-      processStrategyRuns(strategyRuns)
+  registerNewStrategyRunEvent(processStrategyRuns: (strategyRun: Array<StrategyRun>) => void) {
+    this.socket.socketio.on(SOCKET_EVENT_NEW_ORDERS, (rawStrategyRun: RawStrategyRun) => {
+      StrategyRunSocket.processStrategyRuns([rawStrategyRun], processStrategyRuns)
     })
   }
 
-  createStrategyRunFromRaw = (rawStrategyRun: RawStrategyRun): StrategyRun => {
+  loadStrategyRuns = (processStrategyRuns: (strategyRuns: Array<StrategyRun>) => void) => {
+    this.socket.emit(SOCKET_EVENT_GET_STRATEGY_RUNS, {}, (status: String, rawStrategyRuns: Array<Object>) => {
+      StrategyRunSocket.processStrategyRuns(rawStrategyRuns, processStrategyRuns)
+      this.subscribeToStrategyRunsFeed()
+    })
+  }
+
+  subscribeToStrategyRunsFeed() {
+    this.socket.emit(
+      SOCKET_EVENT_UNSUBSCRIBE,
+      {event: SUBSCRIBED_EVENT_NEW_STRATEGY_RUN},
+      () => {
+        this.socket.emit(SOCKET_EVENT_SUBSCRIBE, {event: SUBSCRIBED_EVENT_NEW_STRATEGY_RUN})
+      })
+  }
+
+  static processStrategyRuns(
+    rawStrategyRuns: Array<RawStrategyRun>,
+    processStrategyRuns: (strategyRuns: Array<StrategyRun>) => void
+  ) {
+    console.log('Received: STRATEGY_RUN', rawStrategyRuns.length)
+    const strategyRuns = rawStrategyRuns.map(StrategyRunSocket.createStrategyRunFromRaw)
+    processStrategyRuns(strategyRuns)
+  }
+
+  static createStrategyRunFromRaw = (rawStrategyRun: RawStrategyRun): StrategyRun => {
     return new StrategyRun(
       rawStrategyRun.strategy_run_id,
       new Date(Date.parse(rawStrategyRun.run_at)),
