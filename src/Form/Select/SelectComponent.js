@@ -2,7 +2,7 @@
 import classNames from 'classnames'
 import React, {Component} from "react"
 import {Select} from "@blueprintjs/labs"
-import {Button, MenuItem, Classes, Spinner, Icon} from "@blueprintjs/core"
+import {Button, MenuItem, Classes, Spinner} from "@blueprintjs/core"
 import {Box, Flex} from "reflexbox"
 import FormItemComponent from "../FormItemComponent"
 

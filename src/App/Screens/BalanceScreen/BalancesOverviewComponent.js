@@ -32,6 +32,7 @@ class BalancesOverviewComponent extends Component<Props> {
       isOrderClearButtonEnabled: false,
       isIntervalSelectorEnabled: false,
       isStrategySelectorEnabled: false,
+      isStrategyRunSelectorEnabled: false,
       isStrategyConfiguratorEnabled: false,
       isRunStrategyButtonEnabled: false,
     }
