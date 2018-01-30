@@ -14,6 +14,7 @@ const SelectCandlesBackendStorageComponent = ({availableStorages, defaultSelecte
     label="Candle storage"
     items={availableStorages}
     selectedItem={item || null}
+    isLoading={!item}
     onChange={(candleStorage: SelectElement) => onSelect(candleStorage.key)}
   />
 }

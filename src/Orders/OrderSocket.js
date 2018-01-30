@@ -1,6 +1,6 @@
 // @flow
 import {AppSocket} from "../Sockets/socket"
-import Interval from "../Interval/Interval"
+import {Interval} from "../Interval/Interval"
 import {Order, OrderDirectionType, OrderType} from "./Order"
 import {OrderStatusType} from "./Order"
 import {

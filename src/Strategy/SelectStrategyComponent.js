@@ -14,6 +14,7 @@ const SelectStrategyComponent = ({availableStrategies, defaultSelectedStrategy, 
     label="Strategy"
     items={availableStrategies}
     selectedItem={item || null}
+    isLoading={!item}
     onChange={(strategy: SelectElement) => onSelect(strategy.key)}
   />
 }

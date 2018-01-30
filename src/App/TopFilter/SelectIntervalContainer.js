@@ -2,7 +2,7 @@
 import React, {Component} from 'react'
 import {observer} from "mobx-react"
 import {filterStoreInstance, flashMessageHandler} from "../diContainer"
-import Interval from "../../Interval/Interval"
+import {Interval} from "../../Interval/Interval"
 import SelectIntervalComponent from "../../Interval/SelectIntervalComponent"
 
 class SelectIntervalContainer extends Component<{}> {

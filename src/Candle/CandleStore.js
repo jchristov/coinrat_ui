@@ -2,7 +2,7 @@
 import {action, ObservableMap, extendObservable} from "mobx"
 import {CandleSocket} from "./CandleSocket"
 import {Candle} from "./Candle"
-import Interval from "../Interval/Interval"
+import {Interval} from "../Interval/Interval"
 import {calculateAggregateHash} from "../MainChart/ChartAggregate"
 import {FilterStore} from "../TopFilter/FilterStore"
 

@@ -1,6 +1,6 @@
 // @flow
 import type {AppSocket} from "../Sockets/socket"
-import Interval from "../Interval/Interval"
+import {Interval} from "../Interval/Interval"
 import {Candle} from "./Candle"
 import {
   SOCKET_EVENT_GET_CANDLES,

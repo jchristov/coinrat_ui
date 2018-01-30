@@ -1,7 +1,7 @@
 // @flow
 import React, {Component} from "react"
 import {DateRangeInput} from "@blueprintjs/datetime"
-import Interval from "./Interval"
+import {Interval} from "./Interval"
 import FormItemComponent from "../Form/FormItemComponent"
 import type {FlashMessageHandlerType} from "../FlashMessage/handling"
 

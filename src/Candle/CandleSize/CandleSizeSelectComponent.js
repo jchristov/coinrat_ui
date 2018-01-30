@@ -29,6 +29,7 @@ const CandleSizeSelectComponent = ({availableMarkets, defaultSelectedAggregation
     label="Chart"
     items={availableAggregations}
     selectedItem={item || null}
+    isLoading={!item}
     onChange={(market: SelectElement) => onSelect(market.key)}
   />
 }

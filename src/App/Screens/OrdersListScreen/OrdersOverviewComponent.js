@@ -1,7 +1,7 @@
 // @flow
 import React, {Component} from 'react'
 import OrdersTableContainer from "./OrdersTableContainer"
-import Interval from "../../../Interval/Interval"
+import {Interval} from "../../../Interval/Interval"
 import {filterStoreInstance, orderStoreInstance} from "../../diContainer"
 import TopLineAllToolbarContainer from "../../TopFilter/TopLineAllToolbarContainer"
 

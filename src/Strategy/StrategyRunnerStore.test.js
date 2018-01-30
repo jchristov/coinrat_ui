@@ -1,7 +1,7 @@
 // @flow
 import {ObservableMap} from "mobx"
 import {StrategyRunnerStore} from "./StrategyRunnerStore"
-import Interval from "../Interval/Interval"
+import {Interval} from "../Interval/Interval"
 import {Market, MOCK_MARKET_NAME} from "../Market/Market"
 import {
   ConfigurationDirective, ConfigurationStructure,

@@ -11,6 +11,7 @@ import SelectStrategyContainer from "./SelectStrategyContainer"
 import SelectIntervalContainer from "./SelectIntervalContainer"
 import StrategyConfigurationContainer from "./StrategyConfigurationContainer"
 import MarketConfigurationContainer from "./MarketConfigurationContainer"
+import SelectStrategyRunContainer from "./SelectStrategyRunContainer"
 
 type TopLineAllToolbarComponentProps = {
   isPairSelectorEnabled: boolean,
@@ -24,6 +25,7 @@ type TopLineAllToolbarComponentProps = {
   isIntervalSelectorEnabled: boolean,
 
   isStrategySelectorEnabled: boolean,
+  isStrategyRunSelectorEnabled: boolean,
   isStrategyConfiguratorEnabled: boolean,
   isRunStrategyButtonEnabled: boolean,
 }
@@ -42,13 +44,14 @@ const TopLineToolbarComponent = (
     isOrderClearButtonEnabled = true,
     isIntervalSelectorEnabled = true,
     isStrategySelectorEnabled = true,
+    isStrategyRunSelectorEnabled = true,
     isStrategyConfiguratorEnabled = true,
     isRunStrategyButtonEnabled = true,
   }: TopLineAllToolbarComponentProps) => {
   return <div style={{marginBottom: 15 + 'px'}}>
     <Flex>
       <Box>
-        <Flex column style={{minWidth: '270px'}}>
+        <Flex column style={{minWidth: '300px'}}>
           <Box {...elementProps}>{isPairSelectorEnabled && <SelectPairContainer/>}</Box>
           <Flex>
             <Box {...elementProps}>{isMarketSelectorEnabled && <SelectMarketContainer/>}</Box>
@@ -57,7 +60,7 @@ const TopLineToolbarComponent = (
         </Flex>
       </Box>
       <Box {...elementProps}>
-        <Flex column style={{minWidth: '270px'}}>
+        <Flex column style={{minWidth: '300px'}}>
           <Box {...elementProps}>{isCandleStorageSelectorEnabled && <SelectCandleStorageContainer/>}</Box>
           <Box>
             <Flex>
@@ -70,6 +73,7 @@ const TopLineToolbarComponent = (
       <Box {...elementProps}>
         <Flex column>
           <Box {...elementProps}>{isIntervalSelectorEnabled && <SelectIntervalContainer/>}</Box>
+          <Box {...elementProps}>{isStrategyRunSelectorEnabled && <SelectStrategyRunContainer/>}</Box>
           <Box {...elementProps}>
             <Flex>
               <Box {...elementProps}>{isStrategySelectorEnabled && <SelectStrategyContainer/>}</Box>

@@ -1,7 +1,7 @@
 // @flow
 
 import {CandleSocket} from "./CandleSocket"
-import Interval from "../Interval/Interval"
+import {Interval} from "../Interval/Interval"
 import {Candle} from "./Candle"
 
 it('Reload candles calls emit function', () => {

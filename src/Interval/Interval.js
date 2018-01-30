@@ -1,4 +1,9 @@
 // @flow
+type RawInterval = {
+  since: string,
+  till: string,
+}
+
 class Interval {
   since = null
   till = null
@@ -32,5 +37,17 @@ class Interval {
   }
 }
 
+const deserialize_interval = (raw: RawInterval): Interval => {
+  const since = raw.since !== null ? new Date(Date.parse(raw.since)) : null
+  const till = raw.till !== null ? new Date(Date.parse(raw.till)) : null
+  return new Interval(since, till)
+}
 
-export default Interval
+export type {
+  RawInterval,
+}
+
+export {
+  Interval,
+  deserialize_interval,
+}

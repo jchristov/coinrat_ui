@@ -2,7 +2,7 @@
 import classNames from 'classnames'
 import React, {Component} from "react"
 import {Select} from "@blueprintjs/labs"
-import {Button, MenuItem, Classes, Spinner} from "@blueprintjs/core"
+import {Button, MenuItem, Classes, Spinner, Icon} from "@blueprintjs/core"
 import {Box, Flex} from "reflexbox"
 import FormItemComponent from "../FormItemComponent"
 
@@ -20,6 +20,7 @@ type Props = {
   selectedItem: ?SelectElement,
   label: string,
   onChange: (element: SelectElement) => void,
+  isLoading: boolean,
 }
 
 class SelectComponent extends Component<Props> {
@@ -45,8 +46,8 @@ class SelectComponent extends Component<Props> {
 
   renderButton() {
     const item = this.props.selectedItem
-    const value = item !== null
-      ? item.title
+    const value = !this.props.isLoading
+      ? (item && Object.values(this.props.items).length > 0 ? item.title : 'Not selected')
       : <div style={{marginTop: 5 + 'px', marginBottom: -5 + 'px'}}><Spinner className="pt-small"/></div>
 
     return <Button>

@@ -18,7 +18,7 @@ import {
 import {Label} from "react-stockcharts/lib/annotation"
 import {heikinAshi} from "react-stockcharts/lib/indicator"
 
-import Interval from "../Interval/Interval"
+import {Interval} from "../Interval/Interval"
 import {OrderDirectionAggregate, STATUS_CANCELED, STATUS_CLOSED, STATUS_OPEN} from "../Orders/Order"
 import {ORDERS_STATUS_COLORS} from "../Orders/ChartColors"
 import {AggregationResult, ChartAggregate} from "./ChartAggregate"

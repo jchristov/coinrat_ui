@@ -1,6 +1,6 @@
 // @flow
 import {extendObservable, action} from "mobx"
-import Interval from "../Interval/Interval"
+import {Interval} from "../Interval/Interval"
 
 class FilterStore {
   pair: string
@@ -9,6 +9,7 @@ class FilterStore {
   candleStorage: string
   orderStorage: ?string
   strategy: string
+  strategyRunId: ?string
 
   constructor() {
     let since = new Date()
@@ -21,6 +22,7 @@ class FilterStore {
       candleStorage: 'influx_db',
       orderStorage: null,
       strategy: 'double_crossover',
+      strategyRunId: null
     })
   }
 
@@ -46,6 +48,10 @@ class FilterStore {
 
   changeStrategy = action((strategy: string) => {
     this.strategy = strategy
+  })
+
+  changeStrategyRun = action((strategyRunId: string) => {
+    this.strategyRunId = strategyRunId
   })
 }
 

@@ -7,7 +7,7 @@ import {
   filterStoreInstance,
   orderStoreInstance,
 } from "../../diContainer"
-import Interval from "../../../Interval/Interval"
+import {Interval} from "../../../Interval/Interval"
 import TopLineAllToolbarContainer from "../../TopFilter/TopLineAllToolbarContainer"
 
 type Props = {

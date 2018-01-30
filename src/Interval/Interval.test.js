@@ -1,16 +1,13 @@
 // @flow
-import Interval from "./Interval"
+import {Interval} from "./Interval"
 
 it('test interval', () => {
   expect(new Interval().isEmpty()).toBe(true)
   expect(new Interval().since).toBe(null)
   expect(new Interval().till).toBe(null)
+
   const newTill = new Date(Date.UTC(2018, 1, 1, 0, 0, 0))
   expect(new Interval().withClosedFromRight(newTill).till).toEqual(newTill)
-
-
-  console.log(new Date(2018, 0, 1, 1))
-
   expect(
     (
       new Interval(

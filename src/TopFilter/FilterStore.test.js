@@ -1,6 +1,6 @@
 // @flow
 import {FilterStore} from "./FilterStore"
-import Interval from "../Interval/Interval"
+import {Interval} from "../Interval/Interval"
 
 it('Filter can be changed', () => {
   const newInterval = new Interval(new Date(2018, 0, 1), new Date(2018, 0, 2))
@@ -12,6 +12,7 @@ it('Filter can be changed', () => {
   expect(store.orderStorage).toBe(null)
   expect(store.strategy).toBe('double_crossover')
   expect(store.interval).not.toEqual(newInterval)
+  expect(store.strategyRunId).toBe(null)
 
 
   store.changePair('A')
@@ -20,6 +21,7 @@ it('Filter can be changed', () => {
   store.changeOrderStorage('D')
   store.changeStrategy('E')
   store.changeInterval(newInterval)
+  store.changeStrategyRun('F')
 
   expect(store.pair).toBe('A')
   expect(store.market).toBe('B')
@@ -27,5 +29,6 @@ it('Filter can be changed', () => {
   expect(store.orderStorage).toBe('D')
   expect(store.strategy).toBe('E')
   expect(store.interval).toEqual(newInterval)
+  expect(store.strategyRunId).toBe('F')
 })
 

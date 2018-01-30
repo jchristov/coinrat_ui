@@ -14,6 +14,7 @@ const SelectPairComponent = ({availablePairs, defaultSelectedPair, onSelect}: Pr
     label="Pair"
     items={availablePairs}
     selectedItem={item || null}
+    isLoading={!item}
     onChange={(pair: SelectElement) => onSelect(pair.key)}
   />
 }

@@ -1,7 +1,7 @@
 // @flow
 
 import {OrdersSocket} from "./OrderSocket"
-import Interval from "../Interval/Interval"
+import {Interval} from "../Interval/Interval"
 import {DIRECTION_BUY, Order, ORDER_TYPE_MARKET, STATUS_CANCELED} from "./Order"
 
 it('Reload orders calls emit function', () => {

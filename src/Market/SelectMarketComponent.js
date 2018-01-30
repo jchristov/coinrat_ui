@@ -14,6 +14,7 @@ const SelectMarketComponent = ({availableMarkets, defaultSelectedMarket, onSelec
     label="Market"
     items={availableMarkets}
     selectedItem={item || null}
+    isLoading={!item}
     onChange={(market: SelectElement) => onSelect(market.key)}
   />
 }

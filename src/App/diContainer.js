@@ -24,6 +24,8 @@ import {Position, Toaster} from "@blueprintjs/core"
 import type {FlashMessageHandlerType} from "../FlashMessage/handling"
 import {UNIT_MINUTE} from "../Candle/CandleSize/CandleSize"
 import {MainChartStore} from "../MainChart/MainChartStore"
+import {StrategyRunSocket} from "../Strategy/StrategyRun/StrategyRunSocket"
+import {StrategyRunStore} from "../Strategy/StrategyRun/StrategyRunStore"
 
 const url = process.env.REACT_APP_BACKEND_SOCKET_URL
 const socketio = require('socket.io-client')(url)
@@ -86,7 +88,8 @@ const strategyRunnerStoreInstance = new StrategyRunnerStore(
   marketStoreInstance,
   flashMessageHandler
 )
-
+const strategyRunSocketInstance: StrategyRunSocket = new StrategyRunSocket(appSocketInstance)
+const strategyRunStoreInstance: StrategyRunStore = new StrategyRunStore(strategyRunSocketInstance)
 
 export {
   flashMessageHandler,
@@ -113,4 +116,6 @@ export {
   strategySocketInstance,
   strategyStoreInstance,
   strategyRunnerStoreInstance,
+  strategyRunSocketInstance,
+  strategyRunStoreInstance,
 }

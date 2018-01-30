@@ -1,6 +1,6 @@
 // @flow
 import {CandleStore} from "./CandleStore"
-import Interval from "../Interval/Interval"
+import {Interval} from "../Interval/Interval"
 import {Candle} from "./Candle"
 
 it('Load balances calls emit function', () => {

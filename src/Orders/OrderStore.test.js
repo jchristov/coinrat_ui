@@ -1,6 +1,6 @@
 // @flow
 import {OrderStore} from "./OrderStore"
-import Interval from "../Interval/Interval"
+import {Interval} from "../Interval/Interval"
 import {DIRECTION_SELL, Order, ORDER_TYPE_LIMIT, STATUS_CLOSED} from "./Order"
 
 const _createdAt = new Date(2018, 0, 1, 5, 6, 0)

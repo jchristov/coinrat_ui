@@ -2,7 +2,7 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 import SelectIntervalComponent from "./SelectIntervalComponent"
-import Interval from "./Interval"
+import {Interval} from "./Interval"
 
 it('renders correctly', () => {
   const tree = renderer

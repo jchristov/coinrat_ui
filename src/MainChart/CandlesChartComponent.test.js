@@ -2,7 +2,7 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 import CandlesChartComponent from "./CandlesChartComponent"
-import Interval from "../Interval/Interval"
+import {Interval} from "../Interval/Interval"
 import {ChartAggregate} from "./ChartAggregate"
 import {Candle} from "../Candle/Candle"
 

@@ -14,6 +14,7 @@ const SelectOrderBackendStorageComponent = ({availableStorages, defaultSelectedO
     label="Order storage"
     items={availableStorages}
     selectedItem={item || null}
+    isLoading={!item}
     onChange={(orderStorage: SelectElement) => onSelect(orderStorage.key)}
   />
 }
