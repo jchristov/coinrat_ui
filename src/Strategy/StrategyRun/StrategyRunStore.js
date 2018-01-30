@@ -1,29 +1,28 @@
 // @flow
 import {StrategyRunSocket} from "./StrategyRunSocket"
-import {action, extendObservable} from "mobx"
+import {action, ObservableMap} from "mobx"
 import {StrategyRun} from "./StrategyRun"
 
 class StrategyRunStore {
-  strategyRuns: Array<StrategyRun>
+  strategyRuns: ObservableMap<StrategyRun>
 
   constructor(strategyRunSocket: StrategyRunSocket) {
     this.strategyRunSocket = strategyRunSocket
-    extendObservable(this, {
-      strategyRuns: []
-    })
-
-    this.strategyRunSocket.registerNewStrategyRunEvent(this.setStrategyRuns)
+    this.strategyRuns = new ObservableMap()
+    this.strategyRunSocket.registerNewStrategyRunEvent(this.processStrategyRuns)
   }
 
   reloadData = action((onSuccess: () => void): void => {
     this.strategyRunSocket.loadStrategyRuns((strategyRuns: Array<StrategyRun>) => {
-      this.setStrategyRuns(strategyRuns)
+      this.processStrategyRuns(strategyRuns)
       onSuccess()
     })
   })
 
-  setStrategyRuns = action((strategyRuns: Array<StrategyRun>): void => {
-    this.strategyRuns = strategyRuns
+  processStrategyRuns = action((strategyRuns: Array<StrategyRun>): void => {
+    strategyRuns.forEach((strategyRun: StrategyRun) => {
+      this.strategyRuns.set(strategyRun.strategyRunId, strategyRun)
+    })
   })
 }
 

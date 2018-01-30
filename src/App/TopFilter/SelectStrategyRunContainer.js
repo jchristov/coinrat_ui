@@ -26,7 +26,7 @@ class SelectStrategyRunContainer extends Component<{}> {
   static getItemsForStrategyRunSelectBox() {
     let availableStrategyRuns = {}
 
-    strategyRunStoreInstance.strategyRuns.forEach((strategyRun: StrategyRun) => {
+    Object.values(strategyRunStoreInstance.strategyRuns.toJS()).forEach((strategyRun: StrategyRun) => {
       availableStrategyRuns[strategyRun.strategyRunId] = {
         key: strategyRun.strategyRunId,
         title: `${strategyRun.strategyName} - ${strategyRun.runAt.toLocaleString()}`

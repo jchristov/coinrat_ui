@@ -2,7 +2,7 @@
 import {AppSocket} from "../../Sockets/socket"
 import {
   SOCKET_EVENT_GET_STRATEGY_RUNS,
-  SOCKET_EVENT_NEW_ORDERS,
+  SOCKET_EVENT_NEW_STRATEGY_RUN,
   SOCKET_EVENT_SUBSCRIBE,
   SOCKET_EVENT_UNSUBSCRIBE,
   SUBSCRIBED_EVENT_NEW_STRATEGY_RUN
@@ -31,7 +31,7 @@ class StrategyRunSocket {
   }
 
   registerNewStrategyRunEvent(processStrategyRuns: (strategyRun: Array<StrategyRun>) => void) {
-    this.socket.socketio.on(SOCKET_EVENT_NEW_ORDERS, (rawStrategyRun: RawStrategyRun) => {
+    this.socket.socketio.on(SOCKET_EVENT_NEW_STRATEGY_RUN, (rawStrategyRun: RawStrategyRun) => {
       StrategyRunSocket.processStrategyRuns([rawStrategyRun], processStrategyRuns)
     })
   }
