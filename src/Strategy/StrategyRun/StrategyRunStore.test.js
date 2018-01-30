@@ -13,8 +13,8 @@ it('reloadData calls socket load function', () => {
 
 it('setStrategyRuns saves new values', () => {
   const strategyRunStore = new StrategyRunStore()
-  expect(strategyRunStore.strategyRuns).toEqual({})
-  const newStrategyRuns = [new StrategyRun('', new Date(), '', '', '', '', Interval(), '', '')]
+  expect(strategyRunStore.strategyRuns.length).toBe(0)
+  const newStrategyRuns = [new StrategyRun('', new Date(), '', '', '', '', new Interval(), '', '')]
   strategyRunStore.setStrategyRuns(newStrategyRuns)
-  expect(strategyRunStore.strategyRuns).toEqual(newStrategyRuns)
+  expect(strategyRunStore.strategyRuns.length).toBe(1)
 })
