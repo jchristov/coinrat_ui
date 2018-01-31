@@ -12,6 +12,7 @@ import SelectIntervalContainer from "./SelectIntervalContainer"
 import StrategyConfigurationContainer from "./StrategyConfigurationContainer"
 import MarketConfigurationContainer from "./MarketConfigurationContainer"
 import SelectStrategyRunContainer from "./SelectStrategyRunContainer"
+import ResetStrategyRunButtonContainer from "./ResetStrategyRunButtonContainer"
 
 type TopLineAllToolbarComponentProps = {
   isPairSelectorEnabled: boolean,
@@ -28,6 +29,7 @@ type TopLineAllToolbarComponentProps = {
   isStrategyRunSelectorEnabled: boolean,
   isStrategyConfiguratorEnabled: boolean,
   isRunStrategyButtonEnabled: boolean,
+  isResetStrategyRunFilterButtonEnabled: boolean,
 }
 
 const elementProps = {
@@ -47,6 +49,7 @@ const TopLineToolbarComponent = (
     isStrategyRunSelectorEnabled = true,
     isStrategyConfiguratorEnabled = true,
     isRunStrategyButtonEnabled = true,
+    isResetStrategyRunFilterButtonEnabled = true,
   }: TopLineAllToolbarComponentProps) => {
   return <div style={{marginBottom: 15 + 'px'}}>
     <Flex>
@@ -73,7 +76,16 @@ const TopLineToolbarComponent = (
       <Box {...elementProps}>
         <Flex column>
           <Box {...elementProps}>{isIntervalSelectorEnabled && <SelectIntervalContainer/>}</Box>
-          <Box {...elementProps}>{isStrategyRunSelectorEnabled && <SelectStrategyRunContainer/>}</Box>
+          <Box {...elementProps}>
+            <Flex>
+              <Box>{isStrategyRunSelectorEnabled && <SelectStrategyRunContainer/>}</Box>
+              <Box>{
+                isStrategyRunSelectorEnabled
+                && isResetStrategyRunFilterButtonEnabled
+                && <ResetStrategyRunButtonContainer/>
+              }</Box>
+            </Flex>
+          </Box>
           <Box {...elementProps}>
             <Flex>
               <Box {...elementProps}>{isStrategySelectorEnabled && <SelectStrategyContainer/>}</Box>

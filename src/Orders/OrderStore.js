@@ -22,11 +22,17 @@ class OrderStore {
     this.orderSocket.registerNewOrderEvent(this.processOrders)
   }
 
-  reloadData = action((market: string, pair: string, interval: Interval, orderStorage: string): void => {
+  reloadData = action((
+    market: string,
+    pair: string,
+    interval: Interval,
+    orderStorage: string,
+    strategyRunId: ?string
+  ): void => {
     this.buyOrders.clear()
     this.sellOrders.clear()
     this.orders = []
-    this.orderSocket.reloadOrders(market, pair, interval, orderStorage, this.processOrders)
+    this.orderSocket.reloadOrders(market, pair, interval, orderStorage, strategyRunId, this.processOrders)
   })
 
   reloadByFilter = action((filterStore: FilterStore) => {
@@ -34,7 +40,8 @@ class OrderStore {
       filterStore.market,
       filterStore.pair,
       filterStore.interval,
-      filterStore.orderStorage
+      filterStore.orderStorage,
+      filterStore.strategyRunId
     )
   })
 

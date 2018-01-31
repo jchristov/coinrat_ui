@@ -46,6 +46,7 @@ class OrdersSocket {
     pair: string,
     interval: Interval,
     orderStorage: string,
+    strategyRunId: ?string,
     processOrders: (order: Array<Order>) => void
   ) {
     const getOrdersData = {
@@ -53,6 +54,7 @@ class OrdersSocket {
       market: market,
       interval: interval.toIso(),
       order_storage: orderStorage,
+      strategy_run_id: strategyRunId,
     }
 
     this.socket.emit(SOCKET_EVENT_GET_ORDERS, getOrdersData, (status: string, rawOrders: Array<RawOrder>) => {

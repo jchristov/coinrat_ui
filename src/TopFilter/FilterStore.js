@@ -50,7 +50,7 @@ class FilterStore {
     this.strategy = strategy
   })
 
-  changeStrategyRun = action((strategyRunId: string) => {
+  changeStrategyRun = action((strategyRunId: ?string) => {
     this.strategyRunId = strategyRunId
   })
 }
