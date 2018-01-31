@@ -4,8 +4,9 @@ import {extendObservable} from "mobx"
 const TYPE_STRING = 'string'
 const TYPE_INTEGER = 'int'
 const TYPE_DECIMAL = 'Decimal'
+const TYPE_CANDLE_SIZE = 'candle_size'
 
-const POSSIBLE_TYPES = TYPE_STRING | TYPE_INTEGER | TYPE_DECIMAL
+const POSSIBLE_TYPES = TYPE_STRING | TYPE_INTEGER | TYPE_DECIMAL | TYPE_CANDLE_SIZE
 
 const MOCKED_MARKET_NAME_FIELD = 'mocked_market_name'
 const MOCKED_BASE_CURRENCY_FIELD = 'mocked_base_currency'
@@ -104,7 +105,9 @@ export {
   createConfigurationStructureFromRawData,
 
   POSSIBLE_TYPES,
+
   TYPE_STRING,
   TYPE_INTEGER,
   TYPE_DECIMAL,
+  TYPE_CANDLE_SIZE,
 }

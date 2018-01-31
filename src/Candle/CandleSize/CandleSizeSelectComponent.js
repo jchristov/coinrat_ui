@@ -4,11 +4,11 @@ import {SelectComponent} from "../../Form/Select/SelectComponent"
 import type {SelectElement, SelectItemsType} from "../../Form/Select/SelectComponent"
 
 type Props = {
-  onSelect: (aggregation: string) => void,
   defaultSelectedAggregation: string,
+  onSelect: (aggregation: string) => void,
 }
 
-const CandleSizeSelectComponent = ({availableMarkets, defaultSelectedAggregation, onSelect}: Props) => {
+const CandleSizeSelectComponent = ({defaultSelectedAggregation, onSelect}: Props) => {
   const availableAggregations: SelectItemsType = {
     '1-minute': {key: '1-minute', title: '1 minute'},
     '5-minute': {key: '5-minute', title: '5 minutes'},

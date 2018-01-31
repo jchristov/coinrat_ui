@@ -4,7 +4,7 @@ import {Popover2, Tooltip2} from "@blueprintjs/labs"
 import {Button, NonIdealState} from "@blueprintjs/core"
 import {
   ConfigurationDirective,
-  ConfigurationStructure,
+  ConfigurationStructure, TYPE_CANDLE_SIZE,
   TYPE_DECIMAL,
   TYPE_INTEGER,
   TYPE_STRING
@@ -13,6 +13,7 @@ import {Box, Flex} from "reflexbox"
 import FormItemComponent from "../Form/FormItemComponent"
 import ResetToDefaultButton from "../Form/ResetToDefaultButton"
 import {observer} from "mobx-react"
+import CandleSizeSelectComponent from "../Candle/CandleSize/CandleSizeSelectComponent"
 
 type Props = {
   tooltip: string,
@@ -51,6 +52,13 @@ const ConfigurationStructureComponent = (
 
     } else if (directive.type === TYPE_DECIMAL) {
       element = <input {...inputProps} type="text"/>
+
+    } else if (directive.type === TYPE_CANDLE_SIZE) {
+      const onSelect = (selectedValue: string) => {
+        onChange({target: {name: directive.key, value: selectedValue}})
+      }
+
+      element = <CandleSizeSelectComponent defaultSelectedAggregation={directive.value} onSelect={onSelect}/>
     }
 
     return <Box key={key}>
