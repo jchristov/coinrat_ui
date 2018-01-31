@@ -59,6 +59,18 @@ class Order {
     this.closedAt = closedAt
     this.canceledAt = canceledAt
   }
+
+  getBaseCurrencyAmount() {
+    return this.quantity * this.rate
+  }
+
+  isBuy() {
+    return this.direction === DIRECTION_BUY
+  }
+
+  isSell() {
+    return this.direction === DIRECTION_SELL
+  }
 }
 
 class OrderDirectionAggregate {

@@ -4,6 +4,7 @@ import {Table, Column, Cell, TableLoadingOption} from "@blueprintjs/table"
 import {Order} from "./Order"
 import {ORDERS_DIRECTION_COLORS, ORDERS_STATUS_COLORS} from "./ChartColors"
 import ColoredDotComponent from "../Icon/ColoredDotComponent"
+import {Colors} from "@blueprintjs/core"
 
 type Props = {
   orders: Array<Order>
@@ -34,12 +35,30 @@ const OrdersTableComponent = ({orders}: Props) => {
     <Column name="Created" renderCell={(row: number) => <Cell>{orders[row].createdAt.toLocaleString()}</Cell>}/>
     <Column name="Pair" renderCell={(row: number) => <Cell>{orders[row].pair}</Cell>}/>
     <Column name="Type" renderCell={(row: number) => <Cell>{orders[row].type}</Cell>}/>
-    <Column name="Quantity" renderCell={(row: number) =>
-      <Cell style={{textAlign: 'right'}}><code>{Number(orders[row].quantity).toFixed(8)}</code></Cell>}
-    />
+    <Column name="Base currency" renderCell={(row: number) =>
+      <Cell
+        className="pt-monospace-text"
+        style={{textAlign: 'right', color: orders[row].isBuy() ? Colors.GREEN1 : Colors.RED1}}
+      >
+        {orders[row].isBuy() ? '-' : ''}{Number(orders[row].getBaseCurrencyAmount()).toFixed(8)}
+      </Cell>
+    }/>
+    <Column name="Market currency" renderCell={(row: number) =>
+      <Cell
+        className="pt-monospace-text"
+        style={{textAlign: 'right', color: orders[row].isBuy() ? Colors.RED1 : Colors.GREEN1}}
+      >
+        {orders[row].isBuy() ? '' : '-'}{Number(orders[row].quantity).toFixed(8)}
+      </Cell>
+    }/>
     <Column name="Rate" renderCell={(row: number) =>
-      <Cell style={{textAlign: 'right'}}><code>{Number(orders[row].rate).toFixed(2)}</code></Cell>}
-    />
+      <Cell
+        className="pt-monospace-text"
+        style={{textAlign: 'right'}}
+      >
+        {Number(orders[row].rate).toFixed(2)}
+      </Cell>
+    }/>
     <Column name="Id on market" renderCell={(row: number) => <Cell>{orders[row].idOnMarket}</Cell>}/>
     <Column name="Status" renderCell={statusCellRender}/>
     <Column name="Closed" renderCell={(row: number) =>
