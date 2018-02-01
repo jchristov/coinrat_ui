@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  style={
+    Object {
+      "marginTop": "25px",
+    }
+  }
+>
+  <h3>
+    Statistics of strategy run
+  </h3>
+  <ul>
+    <li>
+      Number of trades: 
+      1
+    </li>
+    <li>
+      Average trades per day: 
+      1.00000000
+    </li>
+  </ul>
+</div>
+`;

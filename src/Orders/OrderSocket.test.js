@@ -8,14 +8,22 @@ it('Reload orders calls emit function', () => {
   const emitFunctionMock = jest.fn()
   const socketMock = {emit: emitFunctionMock}
   const orderStorageSocket = new OrdersSocket(socketMock)
-  orderStorageSocket.reloadOrders('foo_market', 'USD_BTC', new Interval(null, null), 'order_storage:bar', () => undefined)
+  orderStorageSocket.reloadOrders(
+    'foo_market',
+    'USD_BTC',
+    new Interval(null, null),
+    'order_storage:bar',
+    'a31ba4c4-1eb3-4b1e-bd2d-f04ae03a98e3',
+    () => undefined
+  )
   expect(emitFunctionMock.mock.calls.length).toBe(1)
   expect(emitFunctionMock.mock.calls[0][0]).toBe('get_orders')
   expect(emitFunctionMock.mock.calls[0][1]).toEqual({
     "interval": {"since": null, "till": null},
     "market": "foo_market",
     "order_storage": "order_storage:bar",
-    "pair": "USD_BTC"
+    "pair": "USD_BTC",
+    "strategy_run_id": "a31ba4c4-1eb3-4b1e-bd2d-f04ae03a98e3",
   })
 })
 

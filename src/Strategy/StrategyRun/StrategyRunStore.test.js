@@ -19,7 +19,17 @@ it('reloadData calls socket load function', () => {
 it('processStrategyRuns saves new values', () => {
   const strategyRunStore = new StrategyRunStore({registerNewStrategyRunEvent: jest.fn()})
   expect(strategyRunStore.strategyRuns.toJS()).toEqual({})
-  const strategyRun = new StrategyRun('this is ID', new Date(), '', '', '', '', new Interval(), '', '')
+  const strategyRun = new StrategyRun(
+    'this is ID',
+    new Date(),
+    '',
+    '',
+    '',
+    '',
+    new Interval(new Date(2018, 0, 1, 0, 0, 0), new Date(2018, 0, 1, 0, 0, 0)),
+    '',
+    ''
+  )
   strategyRunStore.processStrategyRuns([strategyRun])
   expect(strategyRunStore.strategyRuns.toJS()).toEqual({'this is ID': strategyRun})
 })
