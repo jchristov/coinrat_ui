@@ -41,13 +41,17 @@ class DashboardComponent extends Component<Props> {
       || current.candleSize !== nextProps.candleSize
     ) {
       this.reloadStores()
+      return
     }
 
     if (current.candleStorage !== nextProps.candleStorage) {
       candleStoreInstance.reloadByFilter(filterStoreInstance, mainChartStoreInstance.candleSize)
     }
 
-    if (current.orderStorage !== nextProps.orderStorage) {
+    if (
+      current.orderStorage !== nextProps.orderStorage
+      || current.strategyRunId !== nextProps.strategyRunId
+    ) {
       orderStoreInstance.reloadByFilter(filterStoreInstance)
     }
   }

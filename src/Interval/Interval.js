@@ -35,6 +35,13 @@ class Interval {
   isEmpty = () => {
     return this.since === null || (this.till !== null && this.since.getTime() === this.till.getTime())
   }
+
+  getAbsInSeconds() {
+    if (this.since === null || this.till === 0) {
+      return Number('Infinity')
+    }
+    return (this.till.getTime() - this.since.getTime()) / 1000
+  }
 }
 
 const deserialize_interval = (raw: RawInterval): Interval => {

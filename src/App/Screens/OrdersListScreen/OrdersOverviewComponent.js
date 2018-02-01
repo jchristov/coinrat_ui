@@ -4,6 +4,7 @@ import OrdersTableContainer from "./OrdersTableContainer"
 import {Interval} from "../../../Interval/Interval"
 import {filterStoreInstance, orderStoreInstance} from "../../diContainer"
 import TopLineAllToolbarContainer from "../../TopFilter/TopLineAllToolbarContainer"
+import StrategyResultStatisticsContainer from "./StrategyResultStatisticsContainer"
 
 type Props = {
   pair: string,
@@ -12,6 +13,7 @@ type Props = {
   candleStorage: string,
   orderStorage: string,
   strategy: string,
+  strategyRunId: string,
 }
 
 class OrdersOverviewComponent extends Component<Props> {
@@ -27,11 +29,9 @@ class OrdersOverviewComponent extends Component<Props> {
       current.market !== nextProps.market
       || current.pair !== nextProps.pair
       || current.interval !== nextProps.interval
+      || current.orderStorage !== nextProps.orderStorage
+      || current.strategyRunId !== nextProps.strategyRunId
     ) {
-      orderStoreInstance.reloadByFilter(filterStoreInstance)
-    }
-
-    if (current.orderStorage !== nextProps.orderStorage) {
       orderStoreInstance.reloadByFilter(filterStoreInstance)
     }
   }
@@ -52,6 +52,7 @@ class OrdersOverviewComponent extends Component<Props> {
     return <div>
       <TopLineAllToolbarContainer {...toolbarProps}/>
       <OrdersTableContainer/>
+      {filterStoreInstance.strategyRunId && <StrategyResultStatisticsContainer/>}
     </div>
   }
 }

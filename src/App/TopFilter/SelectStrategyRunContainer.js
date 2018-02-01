@@ -1,7 +1,7 @@
 // @flow
 import React, {Component} from 'react'
 import {observer} from "mobx-react"
-import {filterStoreInstance, orderStoreInstance, strategyRunStoreInstance} from "../diContainer"
+import {filterStoreInstance, strategyRunStoreInstance} from "../diContainer"
 import SelectStrategyRunComponent from "../../Strategy/StrategyRun/SelectStrategyRunComponent"
 import {StrategyRun} from "../../Strategy/StrategyRun/StrategyRun"
 
@@ -18,9 +18,10 @@ class SelectStrategyRunContainer extends Component<{}> {
     })
   }
 
-  changeStrategyRun = (strategyRunName: string) => {
-    filterStoreInstance.changeStrategyRun(strategyRunName)
-    orderStoreInstance.reloadByFilter(filterStoreInstance)
+  changeStrategyRun = (strategyRunId: string) => {
+    filterStoreInstance.changeStrategyRun(strategyRunId)
+    const strategyRun: StrategyRun = strategyRunStoreInstance.strategyRuns.get(strategyRunId)
+    filterStoreInstance.changeInterval(strategyRun.interval)
   }
 
   static getItemsForStrategyRunSelectBox() {

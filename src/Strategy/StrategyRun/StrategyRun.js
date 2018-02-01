@@ -24,6 +24,12 @@ class StrategyRun {
     candleStorageName: string,
     orderStorageName: string
   ) {
+    if (interval.since === null) {
+      throw new Error('Strategy run MUST have since time filled in interval.')
+    }
+    if (interval.till === null) {
+      throw new Error('Strategy run MUST have till time filled in interval.')
+    }
     this.strategyRunId = strategyRunId
     this.runAt = runAt
     this.pair = pair
@@ -33,6 +39,10 @@ class StrategyRun {
     this.interval = interval
     this.candleStorageName = candleStorageName
     this.orderStorageName = orderStorageName
+  }
+
+  getStrategyRunLengthInSeconds() {
+    return this.interval.getAbsInSeconds()
   }
 }
 
