@@ -27,6 +27,16 @@ const CandlestickChartComponent = observer(class CandlestickChartComponent exten
     const sellOrders = Object.values(orderStoreInstance.sellOrders.toJS())
     const dataArray = createAggregateFromData(candles, buyOrders, sellOrders)
 
+    if (!filterStoreInstance.canLoadCandles()) {
+      return <div style={{marginTop: 25 + 'px'}}>
+        <NonIdealState
+          visual="multi-select"
+          title="Select market, pair and candle storage"
+          description={<span>Required filters must be provided in order to fetch candles.</span>}
+        />
+      </div>
+    }
+
     if (candleStoreInstance.isLoading) {
       return <div style={{marginTop: 25 + 'px'}}>
         <NonIdealState visual={<Spinner className="pt-large"/>} title="Loading candles..."/>

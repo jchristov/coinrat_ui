@@ -17,10 +17,7 @@ class MarketPluginSocket {
     this.socket = socket
   }
 
-  loadMarketPlugins = (
-    marketPluginName: string,
-    processMarketPlugins: (pairs: Array<SelectElement>) => void
-  ): MarketPluginHashMap => {
+  loadMarketPlugins = (processMarketPlugins: (pairs: Array<SelectElement>) => void): MarketPluginHashMap => {
     loadDataForSelectElementStore(
       this.socket,
       SOCKET_EVENT_GET_MARKET_PLUGINS,

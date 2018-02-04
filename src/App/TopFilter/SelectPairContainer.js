@@ -16,14 +16,20 @@ import SelectPairComponent from "../../Pair/SelectPairComponent"
 class SelectPairContainer extends Component<{}> {
 
   componentDidMount() {
-    pairStoreInstance.reloadData(filterStoreInstance.market)
+    pairStoreInstance.reloadData(filterStoreInstance.market, filterStoreInstance.marketPlugin)
   }
 
   changePair = (pair: string) => {
     filterStoreInstance.changePair(pair)
-    orderStoreInstance.reloadByFilter(filterStoreInstance)
-    candleStoreInstance.reloadByFilter(filterStoreInstance, mainChartStoreInstance.candleSize)
     marketStoreInstance.changeMarketConfigurationField(MOCK_MARKET_NAME, MOCKED_BASE_CURRENCY_FIELD, pair.split('_')[0])
+
+    if (filterStoreInstance.canLoadCandles()) {
+      candleStoreInstance.reloadByFilter(filterStoreInstance, mainChartStoreInstance.candleSize)
+    }
+
+    if (filterStoreInstance.canLoadOrders()) {
+      orderStoreInstance.reloadByFilter(filterStoreInstance)
+    }
   }
 
   render = () => {

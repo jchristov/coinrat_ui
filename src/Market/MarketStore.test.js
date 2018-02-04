@@ -10,7 +10,7 @@ it('Load balances calls emit function', () => {
   }
   const marketStore = new MarketStore(socketMock)
 
-  marketStore.reloadData(() => undefined)
+  marketStore.reloadData('yolo_plugin', () => undefined)
 
   expect(loadMarketStoragesMock.mock.calls.length).toBe(1)
 })

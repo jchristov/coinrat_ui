@@ -13,6 +13,7 @@ import StrategyConfigurationContainer from "./StrategyConfigurationContainer"
 import MarketConfigurationContainer from "./MarketConfigurationContainer"
 import SelectStrategyRunContainer from "./SelectStrategyRunContainer"
 import ResetStrategyRunButtonContainer from "./ResetStrategyRunButtonContainer"
+import SelectMarketPluginContainer from "./SelectMarketPluginContainer"
 
 type TopLineAllToolbarComponentProps = {
   isPairSelectorEnabled: boolean,
@@ -55,11 +56,14 @@ const TopLineToolbarComponent = (
     <Flex>
       <Box>
         <Flex column style={{minWidth: '300px'}}>
+          <Box {...elementProps}>{isMarketSelectorEnabled && <SelectMarketPluginContainer/>}</Box>
+          <Box>
+            <Flex>
+              <Box {...elementProps}>{isMarketSelectorEnabled && <SelectMarketContainer/>}</Box>
+              <Box {...elementProps}>{isMarketConfiguratorEnabled && <MarketConfigurationContainer/>}</Box>
+            </Flex>
+          </Box>
           <Box {...elementProps}>{isPairSelectorEnabled && <SelectPairContainer/>}</Box>
-          <Flex>
-            <Box {...elementProps}>{isMarketSelectorEnabled && <SelectMarketContainer/>}</Box>
-            <Box {...elementProps}>{isMarketConfiguratorEnabled && <MarketConfigurationContainer/>}</Box>
-          </Flex>
         </Flex>
       </Box>
       <Box {...elementProps}>

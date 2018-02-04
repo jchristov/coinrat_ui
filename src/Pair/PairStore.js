@@ -13,8 +13,8 @@ class PairStore {
     extendObservable(this, {pairs: {}})
   }
 
-  reloadData = action((marketName: string): void => {
-    this.pairSocket.loadPairs(marketName, this.setPairs)
+  reloadData = action((marketName: string, marketPluginName: string): void => {
+    this.pairSocket.loadPairs(marketName, marketPluginName, this.setPairs)
   })
 
   setPairs = action((pairs: PairHashMap): void => {

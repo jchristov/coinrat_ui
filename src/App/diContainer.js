@@ -26,6 +26,8 @@ import {UNIT_MINUTE} from "../Candle/CandleSize/CandleSize"
 import {MainChartStore} from "../MainChart/MainChartStore"
 import {StrategyRunSocket} from "../Strategy/StrategyRun/StrategyRunSocket"
 import {StrategyRunStore} from "../Strategy/StrategyRun/StrategyRunStore"
+import {MarketPluginStore} from "../MarketPlugin/MarketPluginStore"
+import {MarketPluginSocket} from "../MarketPlugin/MarketPluginSocket"
 
 const url = process.env.REACT_APP_BACKEND_SOCKET_URL
 const socketio = require('socket.io-client')(url)
@@ -61,6 +63,8 @@ const candleStorageStoreInstance: CandleStorageStore = new CandleStorageStore(ca
 const marketSocketInstance: MarketSocket = new MarketSocket(appSocketInstance)
 const marketStoreInstance: MarketStore = new MarketStore(marketSocketInstance)
 
+const marketPluginSocket: MarketPluginSocket = new MarketPluginSocket(appSocketInstance)
+const marketPluginStoreInstance: MarketPluginStore = new MarketPluginStore(marketPluginSocket)
 
 // Orders
 const orderSocketInstance: OrdersSocket = new OrdersSocket(appSocketInstance, flashMessageHandler)
@@ -105,6 +109,8 @@ export {
   candleStorageStoreInstance,
   marketSocketInstance,
   marketStoreInstance,
+  marketPluginSocket,
+  marketPluginStoreInstance,
   orderSocketInstance,
   orderStoreInstance,
   orderStorageSocketInstance,

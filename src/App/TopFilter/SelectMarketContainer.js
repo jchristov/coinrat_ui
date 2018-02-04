@@ -8,13 +8,20 @@ import SelectMarketComponent from "../../Market/SelectMarketComponent"
 
 class SelectMarketContainer extends Component<{}> {
 
+  constructor(props) {
+    super(props)
+    this.state = {isLoading: true}
+  }
+
   componentDidMount() {
-    marketStoreInstance.reloadData()
+    marketStoreInstance.reloadData(filterStoreInstance.marketPlugin, () => {
+      this.setState({isLoading: false})
+    })
   }
 
   changeMarket = (marketName: string) => {
     filterStoreInstance.changeMarket(marketName)
-    pairStoreInstance.reloadData(marketName)
+    pairStoreInstance.reloadData(marketName, filterStoreInstance.marketPlugin)
     marketStoreInstance.changeMarketConfigurationField(MOCK_MARKET_NAME, MOCKED_MARKET_NAME_FIELD, marketName)
   }
 
@@ -40,6 +47,7 @@ class SelectMarketContainer extends Component<{}> {
       availableMarkets={SelectMarketContainer.getItemsForMarketSelectBox()}
       defaultSelectedMarket={filterStoreInstance.market}
       onSelect={this.changeMarket}
+      isLoading={this.state.isLoading}
     />
   }
 }

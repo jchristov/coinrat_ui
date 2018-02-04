@@ -8,7 +8,7 @@ it('Load pairs calls emit function', () => {
   }
   const pairStore = new PairStore(socketMock)
 
-  pairStore.reloadData(() => undefined)
+  pairStore.reloadData('market_name', 'market_plugin_name', () => undefined)
 
   expect(loadPairStoragesMock.mock.calls.length).toBe(1)
 })

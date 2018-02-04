@@ -3,8 +3,9 @@ import {extendObservable, action} from "mobx"
 import {Interval} from "../Interval/Interval"
 
 class FilterStore {
-  pair: string
-  market: string
+  pair: ?string
+  market: ?string
+  marketPlugin: string
   interval: Interval
   candleStorage: string
   orderStorage: ?string
@@ -16,8 +17,9 @@ class FilterStore {
     since.setHours(since.getHours() - 12)
 
     extendObservable(this, {
-      pair: 'USD_BTC',
-      market: 'bittrex',
+      pair: null,
+      market: null,
+      marketPlugin: 'coinrat_mock',
       interval: new Interval(since),
       candleStorage: 'influx_db',
       orderStorage: null,
@@ -32,6 +34,10 @@ class FilterStore {
 
   changeMarket = action((market: string) => {
     this.market = market
+  })
+
+  changeMarketPlugin = action((marketPlugin: string) => {
+    this.marketPlugin = marketPlugin
   })
 
   changeInterval = action((interval: Interval) => {
@@ -53,6 +59,11 @@ class FilterStore {
   changeStrategyRun = action((strategyRunId: ?string) => {
     this.strategyRunId = strategyRunId
   })
+
+  canLoadCandles = (): boolean => this.pair !== null && this.market !== null && this.candleStorage !== null
+
+  canLoadOrders = (): boolean => this.pair !== null && this.market !== null && this.orderStorage !== null
+
 }
 
 export {

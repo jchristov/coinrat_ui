@@ -13,8 +13,11 @@ class MarketStore {
     this.markets = new ObservableMap()
   }
 
-  reloadData = action((): void => {
-    this.marketSocket.loadMarkets(this.setMarkets)
+  reloadData = action((marketPlugin: string, onSuccess: () => void): void => {
+    this.marketSocket.loadMarkets(marketPlugin, (markets: Array<Market>) => {
+      this.setMarkets(markets)
+      onSuccess()
+    })
   })
 
   setMarkets = action((markets: Array<Market>): void => {

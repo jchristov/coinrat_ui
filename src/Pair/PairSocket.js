@@ -18,7 +18,11 @@ class PairSocket {
     this.socket = socket
   }
 
-  loadPairs = (marketName: string, processPairs: (pairs: Array<SelectElement>) => void): PairHashMap => {
+  loadPairs = (
+    marketName: string,
+    marketPluginName: string,
+    processPairs: (pairs: Array<SelectElement>) => void
+  ): PairHashMap => {
     loadDataForSelectElementStore(
       this.socket,
       SOCKET_EVENT_GET_PAIRS,
@@ -26,7 +30,10 @@ class PairSocket {
         return {key: rawPair.key, title: rawPair.name}
       },
       processPairs,
-      {'market_name': marketName},
+      {
+        'market_name': marketName,
+        'market_plugin_name': marketPluginName,
+      },
     )
   }
 
