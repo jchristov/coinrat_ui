@@ -1,7 +1,7 @@
 // @flow
 import {PairStore} from "./PairStore"
 
-it('Load balances calls emit function', () => {
+it('Load pairs calls emit function', () => {
   const loadPairStoragesMock = jest.fn()
   const socketMock = {
     loadPairs: loadPairStoragesMock,
