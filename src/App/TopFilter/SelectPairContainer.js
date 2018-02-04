@@ -16,7 +16,7 @@ import SelectPairComponent from "../../Pair/SelectPairComponent"
 class SelectPairContainer extends Component<{}> {
 
   componentDidMount() {
-    pairStoreInstance.reloadData(filterStoreInstance.market, filterStoreInstance.marketPlugin)
+    pairStoreInstance.reloadData(filterStoreInstance.market, filterStoreInstance.marketPlugin, () => undefined)
   }
 
   changePair = (pair: string) => {

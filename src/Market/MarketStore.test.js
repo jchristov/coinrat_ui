@@ -18,10 +18,12 @@ it('Load balances calls emit function', () => {
 it('reloadData calls socket load function', () => {
   const marketStore = new MarketStore({loadMarkets: jest.fn()})
   expect(marketStore.markets.toJS()).toEqual({})
+  expect(marketStore.hasAnyMarket()).toBe(false)
 
   const market = new Market('name', 'Title', new ConfigurationStructure([]))
   const newMarkets = [market]
   marketStore.setMarkets(newMarkets)
 
   expect(marketStore.markets.toJS()['name']).toBe(market)
+  expect(marketStore.hasAnyMarket()).toBe(true)
 })

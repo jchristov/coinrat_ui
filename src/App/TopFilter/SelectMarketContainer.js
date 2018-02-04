@@ -21,7 +21,7 @@ class SelectMarketContainer extends Component<{}> {
 
   changeMarket = (marketName: string) => {
     filterStoreInstance.changeMarket(marketName)
-    pairStoreInstance.reloadData(marketName, filterStoreInstance.marketPlugin)
+    pairStoreInstance.reloadData(marketName, filterStoreInstance.marketPlugin, () => undefined)
     marketStoreInstance.changeMarketConfigurationField(MOCK_MARKET_NAME, MOCKED_MARKET_NAME_FIELD, marketName)
   }
 

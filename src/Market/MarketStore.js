@@ -27,13 +27,21 @@ class MarketStore {
     })
   })
 
-  changeMarketConfigurationField = action((market: string, key: string, value: string) => {
-    this.markets.get(market).setConfigurationField(key, value)
+  changeMarketConfigurationField = action((marketName: string, key: string, value: string) => {
+    const market = this.markets.get(marketName)
+    if (market === undefined) {
+      throw Error(`Market ${marketName} not in store.`)
+    }
+    market.setConfigurationField(key, value)
   })
 
   resetConfigurationValuesToDefault = action((market: string) => {
     this.markets.get(market).resetConfigurationToDefault()
   })
+
+  hasAnyMarket = (): boolean => this.markets.size > 0
+
+  getFirstMarket = (): Market => Object.values(this.markets.toJS())[0]
 }
 
 export {

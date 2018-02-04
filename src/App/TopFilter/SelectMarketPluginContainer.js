@@ -17,10 +17,15 @@ class SelectMarketPluginContainer extends Component<{}> {
   changeMarketPlugin = (marketPlugin: string) => {
     filterStoreInstance.changeMarketPlugin(marketPlugin)
     marketStoreInstance.reloadData(marketPlugin, () => {
-      const markets = Object.values(marketStoreInstance.markets.toJS())
-      if (markets.length > 0) {
-        filterStoreInstance.changeMarket(markets[0].name)
-        pairStoreInstance.reloadData(markets[0].name, marketPlugin)
+      if (marketStoreInstance.hasAnyMarket()) {
+        const market = marketStoreInstance.getFirstMarket()
+        filterStoreInstance.changeMarket(market.name)
+        pairStoreInstance.reloadData(market.name, marketPlugin, () => {
+          if (pairStoreInstance.hasAnyPair()) {
+            const pair = pairStoreInstance.getFirstPair()
+            filterStoreInstance.changePair(pair.key)
+          }
+        })
       }
     })
   }
