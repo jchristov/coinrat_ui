@@ -2,8 +2,6 @@
 import {extendObservable} from "mobx"
 import {ConfigurationDirective, ConfigurationStructure} from "../ConfigurationStructure/ConfigurationStructure"
 
-const MOCK_MARKET_NAME = 'mock'
-
 class Market {
   name: string
   title: string
@@ -35,5 +33,4 @@ class Market {
 
 export {
   Market,
-  MOCK_MARKET_NAME
 }

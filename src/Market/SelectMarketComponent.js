@@ -6,15 +6,16 @@ type Props = {
   availableMarkets: SelectItemsType,
   onSelect: (market: string) => void,
   defaultSelectedMarket: string,
+  isLoading: boolean,
 }
 
-const SelectMarketComponent = ({availableMarkets, defaultSelectedMarket, onSelect}: Props) => {
+const SelectMarketComponent = ({availableMarkets, defaultSelectedMarket, onSelect, isLoading}: Props) => {
   const item = availableMarkets[defaultSelectedMarket]
   return <SelectComponent
     label="Market"
     items={availableMarkets}
     selectedItem={item || null}
-    isLoading={!item}
+    isLoading={isLoading}
     onChange={(market: SelectElement) => onSelect(market.key)}
   />
 }

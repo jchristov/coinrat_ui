@@ -36,6 +36,9 @@ class OrderStore {
   })
 
   reloadByFilter = action((filterStore: FilterStore) => {
+    if (!filterStore.canLoadOrders()) {
+      return
+    }
     this.reloadData(
       filterStore.market,
       filterStore.pair,

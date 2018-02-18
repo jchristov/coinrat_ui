@@ -13,24 +13,50 @@ class MarketStore {
     this.markets = new ObservableMap()
   }
 
-  reloadData = action((): void => {
-    this.marketSocket.loadMarkets(this.setMarkets)
-  })
-
-  setMarkets = action((markets: Array<Market>): void => {
-    this.markets.clear()
-    markets.forEach((market: Market) => {
-      this.markets.set(market.name, market)
+  reloadData = action((marketPluginName: string, onSuccess: () => void): void => {
+    this.marketSocket.loadMarkets(marketPluginName, (markets: Array<Market>) => {
+      this.setMarkets(marketPluginName, markets)
+      onSuccess()
     })
   })
 
-  changeMarketConfigurationField = action((market: string, key: string, value: string) => {
-    this.markets.get(market).setConfigurationField(key, value)
+  setMarkets = action((marketPluginName: string, markets: Array<Market>): void => {
+    markets.forEach((market: Market) => {
+      this.markets.set(MarketStore.keyForMarket(marketPluginName, market.name), market)
+    })
   })
 
-  resetConfigurationValuesToDefault = action((market: string) => {
-    this.markets.get(market).resetConfigurationToDefault()
+  static keyForMarket = (marketPluginName: string, marketName: string) => {
+    return marketPluginName + '_' + marketName
+  }
+
+  changeMarketConfigurationField = action((
+    marketPluginName: string,
+    marketName: string,
+    key: string,
+    value: string
+  ) => {
+    const marketKey = MarketStore.keyForMarket(marketPluginName, marketName)
+    const market = this.markets.get(marketKey)
+    if (market === undefined) {
+      console.log(this.markets.toJS())
+      throw Error(`Plugin_Market ${marketKey} not in store.`)
+    }
+    market.setConfigurationField(key, value)
   })
+
+  resetConfigurationValuesToDefault = action((marketPluginName: string, marketName: string) => {
+    const marketKey = MarketStore.keyForMarket(marketPluginName, marketName)
+    this.markets.get(marketKey).resetConfigurationToDefault()
+  })
+
+  hasAnyMarket = (): boolean => this.markets.size > 0
+
+  getFirstMarket = (): Market => Object.values(this.markets.toJS())[0]
+
+  get = (marketPluginName: string, marketName: string) => {
+    return this.markets.get(MarketStore.keyForMarket(marketPluginName, marketName))
+  }
 }
 
 export {

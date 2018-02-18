@@ -6,8 +6,8 @@ it('Filter can be changed', () => {
   const newInterval = new Interval(new Date(2018, 0, 1), new Date(2018, 0, 2))
 
   const store: FilterStore = new FilterStore()
-  expect(store.pair).toBe('USD_BTC')
-  expect(store.market).toBe('bittrex')
+  expect(store.pair).toBe(null)
+  expect(store.market).toBe(null)
   expect(store.candleStorage).toBe('influx_db')
   expect(store.orderStorage).toBe(null)
   expect(store.strategy).toBe('double_crossover')

@@ -1,22 +1,28 @@
 // @flow
 import React, {Component} from "react"
 import {observer} from "mobx-react"
-import {marketStoreInstance} from "../diContainer"
-import {Market, MOCK_MARKET_NAME} from "../../Market/Market"
+import {filterStoreInstance, marketStoreInstance} from "../diContainer"
+import {Market} from "../../Market/Market"
 import ConfigurationStructureComponent from "../../ConfigurationStructure/ConfigurationStructureComponent"
+import {MOCK_MARKET_PLUGIN_NAME} from "../../MarketPlugin/MarketPlugin"
 
 class MarketConfigurationContainer extends Component<{}> {
 
   handleOnChange = (e) => {
-    marketStoreInstance.changeMarketConfigurationField(MOCK_MARKET_NAME, e.target.name, e.target.value)
+    marketStoreInstance.changeMarketConfigurationField(
+      MOCK_MARKET_PLUGIN_NAME,
+      filterStoreInstance.market,
+      e.target.name,
+      e.target.value
+    )
   }
 
   handleReset = () => {
-    marketStoreInstance.resetConfigurationValuesToDefault(MOCK_MARKET_NAME)
+    marketStoreInstance.resetConfigurationValuesToDefault(MOCK_MARKET_PLUGIN_NAME, filterStoreInstance.market)
   }
 
   render = () => {
-    const market: Market = marketStoreInstance.markets.get(MOCK_MARKET_NAME)
+    const market: Market = marketStoreInstance.get(MOCK_MARKET_PLUGIN_NAME, filterStoreInstance.market)
     if (market === undefined) {
       return null
     }

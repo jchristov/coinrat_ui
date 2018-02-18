@@ -17,18 +17,21 @@ class BalanceSocket {
     this.socket = socket
   }
 
-  loadBalances = (marketName: string, processBalances: ProcessBalanceCallbackType): void => {
+  loadBalances = (marketPluginName: string, marketName: string, processBalances: ProcessBalanceCallbackType): void => {
     const method = SOCKET_EVENT_GET_BALANCE
 
-    this.socket.emit(method, {market_name: marketName}, (status: String, rawBalances: Array<RawBalance>) => {
-      console.log('Received:', method, Object.values(rawBalances).length)
+    this.socket.emit(
+      method,
+      {market_plugin_name: marketPluginName, market_name: marketName},
+      (status: String, rawBalances: Array<RawBalance>) => {
+        console.log('Received:', method, Object.values(rawBalances).length)
 
-      const balances = rawBalances.map((rawBalance: RawBalance): Balance => {
-        return new Balance(rawBalance.currency, rawBalance.available_amount)
+        const balances = rawBalances.map((rawBalance: RawBalance): Balance => {
+          return new Balance(rawBalance.currency, rawBalance.available_amount)
+        })
+
+        processBalances(balances)
       })
-
-      processBalances(balances)
-    })
   }
 }
 

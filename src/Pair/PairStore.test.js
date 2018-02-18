@@ -1,14 +1,14 @@
 // @flow
 import {PairStore} from "./PairStore"
 
-it('Load balances calls emit function', () => {
+it('Load pairs calls emit function', () => {
   const loadPairStoragesMock = jest.fn()
   const socketMock = {
     loadPairs: loadPairStoragesMock,
   }
   const pairStore = new PairStore(socketMock)
 
-  pairStore.reloadData(() => undefined)
+  pairStore.reloadData('market_name', 'market_plugin_name', () => undefined)
 
   expect(loadPairStoragesMock.mock.calls.length).toBe(1)
 })

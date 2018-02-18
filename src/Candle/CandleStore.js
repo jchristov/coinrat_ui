@@ -24,8 +24,8 @@ class CandleStore {
     candles.forEach((candle: Candle) => {
       const key = calculateAggregateHash(candle.date)
       this.candles.set(key, candle)
-      this.isLoading = false
     })
+    this.isLoading = false
   })
 
   reloadData = action((
@@ -41,6 +41,9 @@ class CandleStore {
   })
 
   reloadByFilter = action((filterStore: FilterStore, candleSize: string) => {
+    if (!filterStore.canLoadCandles()) {
+      return
+    }
     this.reloadData(
       filterStore.market,
       filterStore.pair,

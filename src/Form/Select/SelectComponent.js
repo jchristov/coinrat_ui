@@ -25,7 +25,8 @@ type Props = {
   label: string,
   onChange: (element: SelectElement) => void,
   isLoading: boolean,
-  sort: SORTING_DESC | SORTING_ASC
+  sort: SORTING_DESC | SORTING_ASC,
+  disabled?: boolean,
 }
 
 class SelectComponent extends Component<Props> {
@@ -55,7 +56,7 @@ class SelectComponent extends Component<Props> {
       ? (item && Object.values(this.props.items).length > 0 ? item.title : 'Not selected')
       : <div style={{marginTop: 5 + 'px', marginBottom: -5 + 'px'}}><Spinner className="pt-small"/></div>
 
-    return <Button>
+    return <Button disabled={this.props.disabled}>
       <Flex wrap={false}>
         <Box style={{whiteSpace: 'nowrap'}}>{value}</Box>
         <Box><span className="pt-icon-standard pt-icon-caret-down"/></Box>
@@ -83,6 +84,7 @@ class SelectComponent extends Component<Props> {
       noResults={<MenuItem disabled text="No results."/>}
       onItemSelect={this.props.onChange}
       popoverProps={{popoverClassName: Classes.MINIMAL}}
+      disabled={this.props.disabled}
     >
       {this.renderButton()}
     </ConcreateSelect>

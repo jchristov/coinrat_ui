@@ -1,8 +1,8 @@
 // @flow
-import {AppSocket} from "../Sockets/socket"
+import type {AppSocket} from "../Sockets/socket"
 import {SOCKET_EVENT_GET_PAIRS} from "../Sockets/SocketEvents"
 import loadDataForSelectElementStore from "../Sockets/SynchronousDataLoader"
-import {SelectElement} from "../Form/Select/SelectComponent"
+import type {SelectElement} from "../Form/Select/SelectComponent"
 
 type RawPair = {
   key: string,
@@ -18,7 +18,11 @@ class PairSocket {
     this.socket = socket
   }
 
-  loadPairs = (marketName: string, processPairs: (pairs: Array<SelectElement>) => void): PairHashMap => {
+  loadPairs = (
+    marketName: string,
+    marketPluginName: string,
+    processPairs: (pairs: Array<SelectElement>) => void
+  ): PairHashMap => {
     loadDataForSelectElementStore(
       this.socket,
       SOCKET_EVENT_GET_PAIRS,
@@ -26,7 +30,10 @@ class PairSocket {
         return {key: rawPair.key, title: rawPair.name}
       },
       processPairs,
-      {'market_name': marketName},
+      {
+        'market_name': marketName,
+        'market_plugin_name': marketPluginName,
+      },
     )
   }
 

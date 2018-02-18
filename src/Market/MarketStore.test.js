@@ -10,7 +10,7 @@ it('Load balances calls emit function', () => {
   }
   const marketStore = new MarketStore(socketMock)
 
-  marketStore.reloadData(() => undefined)
+  marketStore.reloadData('yolo_plugin', () => undefined)
 
   expect(loadMarketStoragesMock.mock.calls.length).toBe(1)
 })
@@ -18,10 +18,12 @@ it('Load balances calls emit function', () => {
 it('reloadData calls socket load function', () => {
   const marketStore = new MarketStore({loadMarkets: jest.fn()})
   expect(marketStore.markets.toJS()).toEqual({})
+  expect(marketStore.hasAnyMarket()).toBe(false)
 
   const market = new Market('name', 'Title', new ConfigurationStructure([]))
   const newMarkets = [market]
-  marketStore.setMarkets(newMarkets)
+  marketStore.setMarkets('yolo_plugin', newMarkets)
 
-  expect(marketStore.markets.toJS()['name']).toBe(market)
+  expect(marketStore.markets.toJS()['yolo_plugin_name']).toBe(market)
+  expect(marketStore.hasAnyMarket()).toBe(true)
 })
