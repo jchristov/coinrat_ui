@@ -4,7 +4,7 @@ import {observer} from "mobx-react"
 import {
   filterStoreInstance,
   marketPluginStoreInstance,
-  marketStoreInstance, pairStoreInstance,
+  marketStoreInstance, pairStoreInstance, simulationModeStoreInstance,
 } from "../diContainer"
 import SelectMarketPluginComponent from "../../MarketPlugin/MarketPluginComponent"
 import {MOCK_MARKET_PLUGIN_NAME} from "../../MarketPlugin/MarketPlugin"
@@ -44,6 +44,7 @@ class SelectMarketPluginContainer extends Component<{}> {
       availableMarketPlugins={marketPluginStoreInstance.marketPlugins}
       defaultSelectedMarketPlugin={filterStoreInstance.marketPlugin}
       onSelect={this.changeMarketPlugin}
+      disabled={simulationModeStoreInstance.isSimulationModeEnabled}
     />
   }
 }

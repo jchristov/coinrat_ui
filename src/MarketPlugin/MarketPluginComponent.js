@@ -6,9 +6,16 @@ type Props = {
   availableMarketPlugins: SelectItemsType,
   onSelect: (marketPlugin: string) => void,
   defaultSelectedMarketPlugin: string,
+  disabled?: boolean
 }
 
-const SelectMarketPluginComponent = ({availableMarketPlugins, defaultSelectedMarketPlugin, onSelect}: Props) => {
+const SelectMarketPluginComponent = (
+  {
+    availableMarketPlugins,
+    defaultSelectedMarketPlugin,
+    onSelect,
+    disabled = false,
+  }: Props) => {
   const item = availableMarketPlugins[defaultSelectedMarketPlugin]
   return <SelectComponent
     label="Market plugin"
@@ -16,6 +23,7 @@ const SelectMarketPluginComponent = ({availableMarketPlugins, defaultSelectedMar
     selectedItem={item || null}
     isLoading={!item}
     onChange={(marketPlugin: SelectElement) => onSelect(marketPlugin.key)}
+    disabled={disabled}
   />
 }
 

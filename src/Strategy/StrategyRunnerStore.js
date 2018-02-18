@@ -36,10 +36,11 @@ class StrategyRunnerStore {
       return
     }
 
-    const market: Market = this.marketStoreInstance.markets.get(MOCK_MARKET_PLUGIN_NAME, this.filterStore.market)
+    const market: Market = this.marketStoreInstance.get(MOCK_MARKET_PLUGIN_NAME, this.filterStore.market)
     const strategy: Strategy = this.strategyStoreInstance.strategies.get(this.filterStore.strategy)
 
     const strategyRunData = {
+      market_plugin_name: this.filterStore.marketPlugin,
       market: market.name,
       pair: this.filterStore.pair,
       since: this.filterStore.interval.since.toISOString(),

@@ -22,7 +22,7 @@ class MarketConfigurationContainer extends Component<{}> {
   }
 
   render = () => {
-    const market: Market = marketStoreInstance.markets.get(MOCK_MARKET_PLUGIN_NAME, filterStoreInstance.market)
+    const market: Market = marketStoreInstance.get(MOCK_MARKET_PLUGIN_NAME, filterStoreInstance.market)
     if (market === undefined) {
       return null
     }

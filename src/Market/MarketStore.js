@@ -53,6 +53,10 @@ class MarketStore {
   hasAnyMarket = (): boolean => this.markets.size > 0
 
   getFirstMarket = (): Market => Object.values(this.markets.toJS())[0]
+
+  get = (marketPluginName: string, marketName: string) => {
+    return this.markets.get(this.keyForMarket(marketPluginName, marketName))
+  }
 }
 
 export {
