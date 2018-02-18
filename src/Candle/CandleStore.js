@@ -5,7 +5,6 @@ import {Candle} from "./Candle"
 import {Interval} from "../Interval/Interval"
 import {calculateAggregateHash} from "../MainChart/ChartAggregate"
 import {FilterStore} from "../TopFilter/FilterStore"
-import {filterStoreInstance} from "../App/diContainer"
 
 class CandleStore {
   isLoading: boolean
@@ -42,7 +41,7 @@ class CandleStore {
   })
 
   reloadByFilter = action((filterStore: FilterStore, candleSize: string) => {
-    if (!filterStoreInstance.canLoadCandles()) {
+    if (!filterStore.canLoadCandles()) {
       return
     }
     this.reloadData(

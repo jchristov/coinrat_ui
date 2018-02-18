@@ -24,6 +24,6 @@ it('reloadData calls socket load function', () => {
   const newMarkets = [market]
   marketStore.setMarkets('yolo_plugin', newMarkets)
 
-  expect(marketStore.markets.toJS()['name']).toBe(market)
+  expect(marketStore.markets.toJS()['yolo_plugin_name']).toBe(market)
   expect(marketStore.hasAnyMarket()).toBe(true)
 })

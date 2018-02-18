@@ -22,11 +22,11 @@ class MarketStore {
 
   setMarkets = action((marketPluginName: string, markets: Array<Market>): void => {
     markets.forEach((market: Market) => {
-      this.markets.set(this.keyForMarket(marketPluginName, market.name), market)
+      this.markets.set(MarketStore.keyForMarket(marketPluginName, market.name), market)
     })
   })
 
-  keyForMarket = (marketPluginName: string, marketName: string) => {
+  static keyForMarket = (marketPluginName: string, marketName: string) => {
     return marketPluginName + '_' + marketName
   }
 
@@ -36,7 +36,7 @@ class MarketStore {
     key: string,
     value: string
   ) => {
-    const marketKey = this.keyForMarket(marketPluginName, marketName)
+    const marketKey = MarketStore.keyForMarket(marketPluginName, marketName)
     const market = this.markets.get(marketKey)
     if (market === undefined) {
       console.log(this.markets.toJS())
@@ -46,7 +46,7 @@ class MarketStore {
   })
 
   resetConfigurationValuesToDefault = action((marketPluginName: string, marketName: string) => {
-    const marketKey = this.keyForMarket(marketPluginName, marketName)
+    const marketKey = MarketStore.keyForMarket(marketPluginName, marketName)
     this.markets.get(marketKey).resetConfigurationToDefault()
   })
 
@@ -55,7 +55,7 @@ class MarketStore {
   getFirstMarket = (): Market => Object.values(this.markets.toJS())[0]
 
   get = (marketPluginName: string, marketName: string) => {
-    return this.markets.get(this.keyForMarket(marketPluginName, marketName))
+    return this.markets.get(MarketStore.keyForMarket(marketPluginName, marketName))
   }
 }
 

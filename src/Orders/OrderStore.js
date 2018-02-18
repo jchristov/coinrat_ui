@@ -6,7 +6,6 @@ import type {OrdersSocket} from "./OrderSocket"
 import {calculateAggregateHash} from "../MainChart/ChartAggregate"
 import {minuteAggregationFunction} from "../DateAggregate/aggregatorFunctions"
 import type {FilterStore} from "../TopFilter/FilterStore"
-import {filterStoreInstance} from "../App/diContainer"
 
 class OrderStore {
   orders: Array<Order>
@@ -37,7 +36,7 @@ class OrderStore {
   })
 
   reloadByFilter = action((filterStore: FilterStore) => {
-    if (!filterStoreInstance.canLoadOrders()) {
+    if (!filterStore.canLoadOrders()) {
       return
     }
     this.reloadData(
