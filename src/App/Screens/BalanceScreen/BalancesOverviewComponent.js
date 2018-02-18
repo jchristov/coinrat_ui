@@ -6,19 +6,20 @@ import TopLineAllToolbarContainer from "../../TopFilter/TopLineAllToolbarContain
 
 type Props = {
   market: string,
+  marketPlugin: string,
 }
 
 class BalancesOverviewComponent extends Component<Props> {
 
   componentDidMount() {
-    balanceStoreInstance.reloadData(filterStoreInstance.market)
+    balanceStoreInstance.reloadDataByFilter(filterStoreInstance)
   }
 
   componentWillReceiveProps(nextProps: Props) {
     const current = this.props
 
-    if (current.market !== nextProps.market) {
-      balanceStoreInstance.reloadData(filterStoreInstance.market)
+    if (current.marketPlugin !== nextProps.marketPlugin || current.market !== nextProps.market) {
+      balanceStoreInstance.reloadDataByFilter(filterStoreInstance)
     }
   }
 

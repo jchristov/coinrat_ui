@@ -2,6 +2,7 @@
 import {action, extendObservable} from "mobx"
 import type {BalanceSocket} from "./BalanceSocket"
 import {Balance} from "./Balance"
+import {FilterStore} from "../TopFilter/FilterStore"
 
 class BalanceStore {
   balances: Array<Balance>
@@ -19,8 +20,17 @@ class BalanceStore {
     this.balances = balances
   })
 
-  reloadData = action((market: string): void => {
-    this.balancesSocket.loadBalances(market, this.processBalances)
+  reloadData = action((marketPluginName: string, marketName: string): void => {
+    this.balancesSocket.loadBalances(marketPluginName, marketName, this.processBalances)
+  })
+
+  reloadDataByFilter = action((filterStoreInstance: FilterStore): void => {
+    if (filterStoreInstance.canLoadBalances()) {
+      this.balancesSocket.loadBalances(
+        filterStoreInstance.marketPlugin,
+        filterStoreInstance.market,
+        this.processBalances)
+    }
   })
 
 }

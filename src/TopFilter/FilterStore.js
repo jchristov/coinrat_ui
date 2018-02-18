@@ -64,6 +64,8 @@ class FilterStore {
 
   canLoadOrders = (): boolean => this.pair !== null && this.market !== null && this.orderStorage !== null
 
+  canLoadBalances = (): boolean => this.market !== null && this.marketPlugin !== null
+
 }
 
 export {
