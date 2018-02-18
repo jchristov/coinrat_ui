@@ -7,11 +7,17 @@ import {
   marketStoreInstance, pairStoreInstance,
 } from "../diContainer"
 import SelectMarketPluginComponent from "../../MarketPlugin/MarketPluginComponent"
+import {MOCK_MARKET_PLUGIN_NAME} from "../../MarketPlugin/MarketPlugin"
 
 class SelectMarketPluginContainer extends Component<{}> {
 
   componentDidMount() {
-    marketPluginStoreInstance.reloadData(filterStoreInstance.market)
+    marketPluginStoreInstance.reloadData(() => {
+      if (marketPluginStoreInstance.hasAnyMarketPlugin()) {
+        const marketPlugin = marketPluginStoreInstance.getFirstMarketPluginName()
+        this.changeMarketPlugin(marketPlugin)
+      }
+    })
   }
 
   changeMarketPlugin = (marketPlugin: string) => {
@@ -26,6 +32,9 @@ class SelectMarketPluginContainer extends Component<{}> {
             filterStoreInstance.changePair(pair.key)
           }
         })
+      }
+      if (marketPlugin !== MOCK_MARKET_PLUGIN_NAME) {
+        marketStoreInstance.reloadData(MOCK_MARKET_PLUGIN_NAME, () => undefined)
       }
     })
   }

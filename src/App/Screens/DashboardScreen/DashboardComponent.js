@@ -27,12 +27,8 @@ class DashboardComponent extends Component<Props> {
   }
 
   reloadStores = () => {
-    if (filterStoreInstance.canLoadCandles()) {
-      candleStoreInstance.reloadByFilter(filterStoreInstance, mainChartStoreInstance.candleSize)
-    }
-    if (filterStoreInstance.canLoadOrders()) {
-      orderStoreInstance.reloadByFilter(filterStoreInstance)
-    }
+    candleStoreInstance.reloadByFilter(filterStoreInstance, mainChartStoreInstance.candleSize)
+    orderStoreInstance.reloadByFilter(filterStoreInstance)
   }
 
   componentWillReceiveProps(nextProps: Props) {

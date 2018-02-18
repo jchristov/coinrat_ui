@@ -3,11 +3,12 @@ import {AppSocket} from "../Sockets/socket"
 import {EVENT_RUN_REPLY} from "../Sockets/SocketEvents"
 import {Strategy} from "./Strategy"
 import {ConfigurationDirective, ConfigurationStructure} from "../ConfigurationStructure/ConfigurationStructure"
-import {Market, MOCK_MARKET_NAME} from "../Market/Market"
+import {Market} from "../Market/Market"
 import {FilterStore} from "../TopFilter/FilterStore"
 import {StrategyStore} from "./StrategyStore"
 import {MarketStore} from "../Market/MarketStore"
 import type {FlashMessageHandlerType} from "../FlashMessage/handling"
+import {MOCK_MARKET_PLUGIN_NAME} from "../MarketPlugin/MarketPlugin"
 
 class StrategyRunnerStore {
   socket: AppSocket
@@ -35,7 +36,7 @@ class StrategyRunnerStore {
       return
     }
 
-    const market: Market = this.marketStoreInstance.markets.get(MOCK_MARKET_NAME)
+    const market: Market = this.marketStoreInstance.markets.get(MOCK_MARKET_PLUGIN_NAME, this.filterStore.market)
     const strategy: Strategy = this.strategyStoreInstance.strategies.get(this.filterStore.strategy)
 
     const strategyRunData = {

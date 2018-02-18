@@ -2,9 +2,10 @@
 import React, {Component} from 'react'
 import {observer} from "mobx-react"
 import {filterStoreInstance, marketStoreInstance, pairStoreInstance} from "../diContainer"
-import {Market, MOCK_MARKET_NAME} from "../../Market/Market"
+import {Market} from "../../Market/Market"
 import {MOCKED_MARKET_NAME_FIELD} from "../../ConfigurationStructure/ConfigurationStructure"
 import SelectMarketComponent from "../../Market/SelectMarketComponent"
+import {MOCK_MARKET_PLUGIN_NAME} from "../../MarketPlugin/MarketPlugin"
 
 class SelectMarketContainer extends Component<{}> {
 
@@ -22,24 +23,26 @@ class SelectMarketContainer extends Component<{}> {
   changeMarket = (marketName: string) => {
     filterStoreInstance.changeMarket(marketName)
     pairStoreInstance.reloadData(marketName, filterStoreInstance.marketPlugin, () => undefined)
-    marketStoreInstance.changeMarketConfigurationField(MOCK_MARKET_NAME, MOCKED_MARKET_NAME_FIELD, marketName)
+    marketStoreInstance.changeMarketConfigurationField(
+      MOCK_MARKET_PLUGIN_NAME,
+      marketName,
+      MOCKED_MARKET_NAME_FIELD,
+      marketName
+    )
   }
 
   static getItemsForMarketSelectBox() {
     let availableMarkets = marketStoreInstance.markets.toJS()
 
+    let result = {}
     for (let key in availableMarkets) {
-      if (availableMarkets.hasOwnProperty(key)) {
+      if (key.startsWith(filterStoreInstance.marketPlugin) && availableMarkets.hasOwnProperty(key)) {
         const market: Market = availableMarkets[key]
-        availableMarkets[key] = {key: market.name, title: market.title}
-      }
-
-      if (key === MOCK_MARKET_NAME) {
-        delete availableMarkets[key]
+        result[market.name] = {key: market.name, title: market.title}
       }
     }
 
-    return availableMarkets
+    return result
   }
 
   render = () => {

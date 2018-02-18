@@ -2,7 +2,7 @@
 import {ObservableMap} from "mobx"
 import {StrategyRunnerStore} from "./StrategyRunnerStore"
 import {Interval} from "../Interval/Interval"
-import {Market, MOCK_MARKET_NAME} from "../Market/Market"
+import {Market} from "../Market/Market"
 import {
   ConfigurationDirective, ConfigurationStructure,
   TYPE_INTEGER
@@ -12,7 +12,7 @@ import {Strategy} from "./Strategy"
 it('strategy can be run', () => {
   const filterStoreMock = {
     pair: 'USD_BTC',
-    market: MOCK_MARKET_NAME,
+    market: 'market_xyz',
     interval: new Interval(new Date(Date.UTC(2018, 0, 1)), new Date(Date.UTC(2018, 0, 2))),
     candleStorage: 'influx_db',
     orderStorage: 'influx_db',
@@ -21,7 +21,7 @@ it('strategy can be run', () => {
 
   const marketStoreMock = {
     markets: new ObservableMap({
-      mock: new Market(MOCK_MARKET_NAME, 'Foo Market', new ConfigurationStructure([
+      mock: new Market('market_xyz', 'Foo Market', new ConfigurationStructure([
         new ConfigurationDirective('x', TYPE_INTEGER, '', 'XXX', '', true, false, ''),
       ]))
     }),

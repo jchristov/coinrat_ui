@@ -13,30 +13,41 @@ class MarketStore {
     this.markets = new ObservableMap()
   }
 
-  reloadData = action((marketPlugin: string, onSuccess: () => void): void => {
-    this.marketSocket.loadMarkets(marketPlugin, (markets: Array<Market>) => {
-      this.setMarkets(markets)
+  reloadData = action((marketPluginName: string, onSuccess: () => void): void => {
+    this.marketSocket.loadMarkets(marketPluginName, (markets: Array<Market>) => {
+      this.setMarkets(marketPluginName, markets)
       onSuccess()
     })
   })
 
-  setMarkets = action((markets: Array<Market>): void => {
-    this.markets.clear()
+  setMarkets = action((marketPluginName: string, markets: Array<Market>): void => {
     markets.forEach((market: Market) => {
-      this.markets.set(market.name, market)
+      this.markets.set(this.keyForMarket(marketPluginName, market.name), market)
     })
   })
 
-  changeMarketConfigurationField = action((marketName: string, key: string, value: string) => {
-    const market = this.markets.get(marketName)
+  keyForMarket = (marketPluginName: string, marketName: string) => {
+    return marketPluginName + '_' + marketName
+  }
+
+  changeMarketConfigurationField = action((
+    marketPluginName: string,
+    marketName: string,
+    key: string,
+    value: string
+  ) => {
+    const marketKey = this.keyForMarket(marketPluginName, marketName)
+    const market = this.markets.get(marketKey)
     if (market === undefined) {
-      throw Error(`Market ${marketName} not in store.`)
+      console.log(this.markets.toJS())
+      throw Error(`Plugin_Market ${marketKey} not in store.`)
     }
     market.setConfigurationField(key, value)
   })
 
-  resetConfigurationValuesToDefault = action((market: string) => {
-    this.markets.get(market).resetConfigurationToDefault()
+  resetConfigurationValuesToDefault = action((marketPluginName: string, marketName: string) => {
+    const marketKey = this.keyForMarket(marketPluginName, marketName)
+    this.markets.get(marketKey).resetConfigurationToDefault()
   })
 
   hasAnyMarket = (): boolean => this.markets.size > 0

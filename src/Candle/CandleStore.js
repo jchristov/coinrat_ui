@@ -5,6 +5,7 @@ import {Candle} from "./Candle"
 import {Interval} from "../Interval/Interval"
 import {calculateAggregateHash} from "../MainChart/ChartAggregate"
 import {FilterStore} from "../TopFilter/FilterStore"
+import {filterStoreInstance} from "../App/diContainer"
 
 class CandleStore {
   isLoading: boolean
@@ -24,8 +25,8 @@ class CandleStore {
     candles.forEach((candle: Candle) => {
       const key = calculateAggregateHash(candle.date)
       this.candles.set(key, candle)
-      this.isLoading = false
     })
+    this.isLoading = false
   })
 
   reloadData = action((
@@ -41,6 +42,9 @@ class CandleStore {
   })
 
   reloadByFilter = action((filterStore: FilterStore, candleSize: string) => {
+    if (!filterStoreInstance.canLoadCandles()) {
+      return
+    }
     this.reloadData(
       filterStore.market,
       filterStore.pair,

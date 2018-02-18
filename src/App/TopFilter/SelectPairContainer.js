@@ -9,9 +9,9 @@ import {
   candleStoreInstance,
   orderStoreInstance,
 } from "../diContainer"
-import {MOCK_MARKET_NAME} from "../../Market/Market"
 import {MOCKED_BASE_CURRENCY_FIELD} from "../../ConfigurationStructure/ConfigurationStructure"
 import SelectPairComponent from "../../Pair/SelectPairComponent"
+import {MOCK_MARKET_PLUGIN_NAME} from "../../MarketPlugin/MarketPlugin"
 
 class SelectPairContainer extends Component<{}> {
 
@@ -21,7 +21,12 @@ class SelectPairContainer extends Component<{}> {
 
   changePair = (pair: string) => {
     filterStoreInstance.changePair(pair)
-    marketStoreInstance.changeMarketConfigurationField(MOCK_MARKET_NAME, MOCKED_BASE_CURRENCY_FIELD, pair.split('_')[0])
+    marketStoreInstance.changeMarketConfigurationField(
+      MOCK_MARKET_PLUGIN_NAME,
+      filterStoreInstance.market,
+      MOCKED_BASE_CURRENCY_FIELD,
+      pair.split('_')[0]
+    )
 
     if (filterStoreInstance.canLoadCandles()) {
       candleStoreInstance.reloadByFilter(filterStoreInstance, mainChartStoreInstance.candleSize)

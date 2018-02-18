@@ -7,7 +7,7 @@ it('Load market plugins calls emit function', () => {
     loadMarketPlugins: loadMarketPluginStoragesMock,
   }
   const marketPluginStore = new MarketPluginStore(socketMock)
-  marketPluginStore.reloadData()
+  marketPluginStore.reloadData(() => undefined)
   expect(loadMarketPluginStoragesMock.mock.calls.length).toBe(1)
 })
 
