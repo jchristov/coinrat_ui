@@ -20,6 +20,25 @@ exports[`renders correctly 1`] = `
       Average trades per day: 
       1.00000000
     </li>
+    <li>
+      Profit factor: 
+      <span
+        className="pt-monospace-text"
+        style={
+          Object {
+            "color": "#10161A",
+          }
+        }
+      >
+        0.00000000
+      </span>
+    </li>
+    <li>
+      Average profit per trade: --todo--
+    </li>
+    <li>
+      Percent winning trades: --todo--
+    </li>
   </ul>
 </div>
 `;

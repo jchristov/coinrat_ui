@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly - colored - negative 1`] = `
+<span
+  className="pt-monospace-text"
+  style={
+    Object {
+      "color": "#A82A2A",
+    }
+  }
+>
+  -1.24000000
+</span>
+`;
+
+exports[`renders correctly - colored - positive 1`] = `
+<span
+  className="pt-monospace-text"
+  style={
+    Object {
+      "color": "#0A6640",
+    }
+  }
+>
+  1.24000000
+</span>
+`;
+
+exports[`renders correctly - uncolored 1`] = `
+<span
+  className="pt-monospace-text"
+  style={
+    Object {
+      "color": "#10161A",
+    }
+  }
+>
+  1.24000000
+</span>
+`;

@@ -4,7 +4,7 @@ import {Table, Column, Cell, TableLoadingOption} from "@blueprintjs/table"
 import {Order} from "./Order"
 import {ORDERS_DIRECTION_COLORS, ORDERS_STATUS_COLORS} from "./ChartColors"
 import ColoredDotComponent from "../Icon/ColoredDotComponent"
-import {Colors} from "@blueprintjs/core"
+import NumberComponent from "../Number/NumberComponent"
 
 type Props = {
   orders: Array<Order>
@@ -36,20 +36,10 @@ const OrdersTableComponent = ({orders}: Props) => {
     <Column name="Pair" renderCell={(row: number) => <Cell>{orders[row].pair}</Cell>}/>
     <Column name="Type" renderCell={(row: number) => <Cell>{orders[row].type}</Cell>}/>
     <Column name="Base currency" renderCell={(row: number) =>
-      <Cell
-        className="pt-monospace-text"
-        style={{textAlign: 'right', color: orders[row].isBuy() ? Colors.GREEN1 : Colors.RED1}}
-      >
-        {orders[row].isBuy() ? '-' : ''}{Number(orders[row].getBaseCurrencyAmount()).toFixed(8)}
-      </Cell>
+      <Cell style={{textAlign: 'right'}}><NumberComponent number={orders[row].transactionBaseCurrencyValue()} colored/></Cell>
     }/>
     <Column name="Market currency" renderCell={(row: number) =>
-      <Cell
-        className="pt-monospace-text"
-        style={{textAlign: 'right', color: orders[row].isBuy() ? Colors.RED1 : Colors.GREEN1}}
-      >
-        {orders[row].isBuy() ? '' : '-'}{Number(orders[row].quantity).toFixed(8)}
-      </Cell>
+      <Cell style={{textAlign: 'right'}}><NumberComponent number={orders[row].transactionMarketCurrencyValue()} colored/></Cell>
     }/>
     <Column name="Rate" renderCell={(row: number) =>
       <Cell

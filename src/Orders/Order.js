@@ -71,6 +71,14 @@ class Order {
   isSell() {
     return this.direction === DIRECTION_SELL
   }
+
+  transactionBaseCurrencyValue() {
+    return (this.isBuy() ? -1 : 1) * this.getBaseCurrencyAmount()
+  }
+
+  transactionMarketCurrencyValue() {
+    return (this.isBuy() ? 1 : -1) * this.quantity
+  }
 }
 
 class OrderDirectionAggregate {
