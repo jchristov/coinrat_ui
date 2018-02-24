@@ -22,6 +22,7 @@ class SelectStrategyRunContainer extends Component<{}> {
     filterStoreInstance.changeStrategyRun(strategyRunId)
     const strategyRun: StrategyRun = strategyRunStoreInstance.strategyRuns.get(strategyRunId)
     filterStoreInstance.changeInterval(strategyRun.interval)
+    filterStoreInstance.changePair(strategyRun.pair)
   }
 
   static getItemsForStrategyRunSelectBox() {
