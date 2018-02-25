@@ -39,15 +39,12 @@ const OrdersTableComponent = ({orders}: Props) => {
       <Cell style={{textAlign: 'right'}}><NumberComponent number={orders[row].transactionBaseCurrencyValue()} colored/></Cell>
     }/>
     <Column name="Market currency" renderCell={(row: number) =>
-      <Cell style={{textAlign: 'right'}}><NumberComponent number={orders[row].transactionMarketCurrencyValue()} colored/></Cell>
+      <Cell style={{textAlign: 'right'}}>
+        <NumberComponent number={orders[row].transactionMarketCurrencyValue()} colored/>
+      </Cell>
     }/>
     <Column name="Rate" renderCell={(row: number) =>
-      <Cell
-        className="pt-monospace-text"
-        style={{textAlign: 'right'}}
-      >
-        {Number(orders[row].rate).toFixed(2)}
-      </Cell>
+      <Cell style={{textAlign: 'right'}}><NumberComponent number={Number(orders[row].rate)}/></Cell>
     }/>
     <Column name="Id on market" renderCell={(row: number) => <Cell>{orders[row].idOnMarket}</Cell>}/>
     <Column name="Status" renderCell={statusCellRender}/>
