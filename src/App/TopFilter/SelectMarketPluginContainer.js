@@ -13,30 +13,35 @@ class SelectMarketPluginContainer extends Component<{}> {
 
   componentDidMount() {
     marketPluginStoreInstance.reloadData(() => {
+      let marketPlugin = filterStoreInstance.marketPlugin
       if (marketPluginStoreInstance.hasAnyMarketPlugin()) {
-        const marketPlugin = marketPluginStoreInstance.getFirstMarketPluginName()
+        marketPlugin = marketPluginStoreInstance.getFirstMarketPluginName()
+      }
+      if (marketPlugin) {
         this.changeMarketPlugin(marketPlugin)
       }
     })
   }
 
   changeMarketPlugin = (marketPlugin: string) => {
-    filterStoreInstance.changeMarketPlugin(marketPlugin)
-    marketStoreInstance.reloadData(marketPlugin, () => {
-      if (marketStoreInstance.hasAnyMarket()) {
-        const market = marketStoreInstance.getFirstMarket()
-        filterStoreInstance.changeMarket(market.name)
-        pairStoreInstance.reloadData(market.name, marketPlugin, () => {
-          if (pairStoreInstance.hasAnyPair()) {
-            const pair = pairStoreInstance.getFirstPair()
-            filterStoreInstance.changePair(pair.key)
-          }
-        })
-      }
-      if (marketPlugin !== MOCK_MARKET_PLUGIN_NAME) {
-        marketStoreInstance.reloadData(MOCK_MARKET_PLUGIN_NAME, () => undefined)
-      }
-    })
+    if (marketPlugin !== filterStoreInstance.marketPlugin) {
+      filterStoreInstance.changeMarketPlugin(marketPlugin)
+      marketStoreInstance.reloadData(marketPlugin, () => {
+        if (marketStoreInstance.hasAnyMarket()) {
+          const market = marketStoreInstance.getFirstMarket()
+          filterStoreInstance.changeMarket(market.name)
+          pairStoreInstance.reloadData(market.name, marketPlugin, () => {
+            if (pairStoreInstance.pairs[filterStoreInstance.pair] === undefined && pairStoreInstance.hasAnyPair()) {
+              const pair = pairStoreInstance.getFirstPair()
+              filterStoreInstance.changePair(pair.key)
+            }
+          })
+        }
+        if (marketPlugin !== MOCK_MARKET_PLUGIN_NAME) {
+          marketStoreInstance.reloadData(MOCK_MARKET_PLUGIN_NAME, () => undefined)
+        }
+      })
+    }
   }
 
   render = () => {

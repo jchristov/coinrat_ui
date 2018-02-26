@@ -4,7 +4,7 @@ import {Table, Column, Cell, TableLoadingOption} from "@blueprintjs/table"
 import {Order} from "./Order"
 import {ORDERS_DIRECTION_COLORS, ORDERS_STATUS_COLORS} from "./ChartColors"
 import ColoredDotComponent from "../Icon/ColoredDotComponent"
-import {Colors} from "@blueprintjs/core"
+import NumberComponent from "../Number/NumberComponent"
 
 type Props = {
   orders: Array<Order>
@@ -35,29 +35,42 @@ const OrdersTableComponent = ({orders}: Props) => {
     <Column name="Created" renderCell={(row: number) => <Cell>{orders[row].createdAt.toLocaleString()}</Cell>}/>
     <Column name="Pair" renderCell={(row: number) => <Cell>{orders[row].pair}</Cell>}/>
     <Column name="Type" renderCell={(row: number) => <Cell>{orders[row].type}</Cell>}/>
-    <Column name="Base currency" renderCell={(row: number) =>
-      <Cell
-        className="pt-monospace-text"
-        style={{textAlign: 'right', color: orders[row].isBuy() ? Colors.GREEN1 : Colors.RED1}}
-      >
-        {orders[row].isBuy() ? '-' : ''}{Number(orders[row].getBaseCurrencyAmount()).toFixed(8)}
-      </Cell>
+
+    <Column name="Base currency available" renderCell={(row: number) => {
+      let baseCurrencyRow = ''
+      if (orders[row].portfolioSnapshot !== null) {
+        const [base_currency] = orders[row].pair.split('_')
+        baseCurrencyRow = <NumberComponent
+          number={Number(orders[row].portfolioSnapshot.balances[base_currency].availableAmount)}
+          colored
+        />
+      }
+
+      return <Cell style={{textAlign: 'right'}}>{baseCurrencyRow}</Cell>
+    }}/>
+    <Column name="Market currency available" renderCell={(row: number) => {
+      let marketCurrencyRow = ''
+      if (orders[row].portfolioSnapshot !== null) {
+        const [, market_currency] = orders[row].pair.split('_')
+        marketCurrencyRow = <NumberComponent
+          number={Number(orders[row].portfolioSnapshot.balances[market_currency].availableAmount)}
+          colored
+        />
+      }
+
+      return <Cell style={{textAlign: 'right'}}>{marketCurrencyRow}</Cell>
+    }}/>
+
+    <Column name="Base currency change" renderCell={(row: number) =>
+      <Cell style={{textAlign: 'right'}}><NumberComponent number={orders[row].transactionBaseCurrencyValue()} colored/></Cell>
     }/>
-    <Column name="Market currency" renderCell={(row: number) =>
-      <Cell
-        className="pt-monospace-text"
-        style={{textAlign: 'right', color: orders[row].isBuy() ? Colors.RED1 : Colors.GREEN1}}
-      >
-        {orders[row].isBuy() ? '' : '-'}{Number(orders[row].quantity).toFixed(8)}
+    <Column name="Market currency change" renderCell={(row: number) =>
+      <Cell style={{textAlign: 'right'}}>
+        <NumberComponent number={orders[row].transactionMarketCurrencyValue()} colored/>
       </Cell>
     }/>
     <Column name="Rate" renderCell={(row: number) =>
-      <Cell
-        className="pt-monospace-text"
-        style={{textAlign: 'right'}}
-      >
-        {Number(orders[row].rate).toFixed(2)}
-      </Cell>
+      <Cell style={{textAlign: 'right'}}><NumberComponent number={Number(orders[row].rate)}/></Cell>
     }/>
     <Column name="Id on market" renderCell={(row: number) => <Cell>{orders[row].idOnMarket}</Cell>}/>
     <Column name="Status" renderCell={statusCellRender}/>

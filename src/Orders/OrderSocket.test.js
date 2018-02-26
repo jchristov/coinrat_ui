@@ -56,6 +56,7 @@ it('Test processing raw orders into objects', () => {
     "market": "foo_market",
     "orderId": "ABCDEF",
     "pair": "WTF_OMG",
+    "portfolioSnapshot": null,
     "quantity": "1.5",
     "rate": "10500",
     "status": "canceled",

@@ -1,5 +1,6 @@
 // @flow
 import {extendObservable} from "mobx"
+import type {PortfolioSnapshot} from "../PortfolioSnapshot/PortfolioSnapshot"
 
 const DIRECTION_SELL = 'sell'
 const DIRECTION_BUY = 'buy'
@@ -29,6 +30,7 @@ class Order {
   status: OrderStatusType
   closedAt: ?Date
   canceledAt: ?Date
+  portfolioSnapshot: ?PortfolioSnapshot
 
   constructor(
     orderId: string,
@@ -43,7 +45,8 @@ class Order {
     idOnMarket: string,
     status: OrderStatusType,
     closedAt: Date,
-    canceledAt: Date
+    canceledAt: Date,
+    portfolioSnapshot: ?PortfolioSnapshot
   ) {
     this.orderId = orderId
     this.strategyRunId = strategyRunId
@@ -58,6 +61,7 @@ class Order {
     this.status = status
     this.closedAt = closedAt
     this.canceledAt = canceledAt
+    this.portfolioSnapshot = portfolioSnapshot
   }
 
   getBaseCurrencyAmount() {
@@ -70,6 +74,14 @@ class Order {
 
   isSell() {
     return this.direction === DIRECTION_SELL
+  }
+
+  transactionBaseCurrencyValue() {
+    return (this.isBuy() ? -1 : 1) * this.getBaseCurrencyAmount()
+  }
+
+  transactionMarketCurrencyValue() {
+    return (this.isBuy() ? 1 : -1) * this.quantity
   }
 }
 
