@@ -9,6 +9,9 @@ import {
   SUBSCRIBED_EVENT_NEW_ORDER
 } from "../Sockets/SocketEvents"
 import type {FlashMessageHandlerType} from "../FlashMessage/handling"
+import {Balance} from "../Balance/Balance"
+import type {RawBalance} from "../Balance/BalanceSocket"
+import type {PortfolioSnapshot} from "../PortfolioSnapshot/PortfolioSnapshot"
 
 type RawOrder = {
   order_id: string,
@@ -114,8 +117,23 @@ class OrdersSocket {
       rawOrder.id_on_market,
       rawOrder.status,
       rawOrder.closed_at !== null ? new Date(Date.parse(rawOrder.closed_at)) : null,
-      rawOrder.canceled_at !== null ? new Date(Date.parse(rawOrder.canceled_at)) : null
+      rawOrder.canceled_at !== null ? new Date(Date.parse(rawOrder.canceled_at)) : null,
+      this.parsePortfolioSnapshot(rawOrder)
     )
+  }
+
+  static parsePortfolioSnapshot(rawOrder: RawOrder): ?PortfolioSnapshot {
+    const portfolioSnapshot = rawOrder['portfolio_snapshot'] !== undefined ? rawOrder['portfolio_snapshot'] : null
+    if (portfolioSnapshot !== null) {
+      const balances = {}
+      portfolioSnapshot.balances.forEach(
+        (rawBalance: RawBalance) => {
+          balances[rawBalance.currency] = new Balance(rawBalance.currency, rawBalance.available_amount)
+        }
+      )
+      portfolioSnapshot.balances = balances
+    }
+    return portfolioSnapshot
   }
 }
 

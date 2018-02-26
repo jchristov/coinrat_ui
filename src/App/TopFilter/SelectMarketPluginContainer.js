@@ -4,7 +4,7 @@ import {observer} from "mobx-react"
 import {
   filterStoreInstance,
   marketPluginStoreInstance,
-  marketStoreInstance, pairSocketInstance, pairStoreInstance, simulationModeStoreInstance,
+  marketStoreInstance, pairStoreInstance, simulationModeStoreInstance,
 } from "../diContainer"
 import SelectMarketPluginComponent from "../../MarketPlugin/MarketPluginComponent"
 import {MOCK_MARKET_PLUGIN_NAME} from "../../MarketPlugin/MarketPlugin"

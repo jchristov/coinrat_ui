@@ -35,10 +35,36 @@ const OrdersTableComponent = ({orders}: Props) => {
     <Column name="Created" renderCell={(row: number) => <Cell>{orders[row].createdAt.toLocaleString()}</Cell>}/>
     <Column name="Pair" renderCell={(row: number) => <Cell>{orders[row].pair}</Cell>}/>
     <Column name="Type" renderCell={(row: number) => <Cell>{orders[row].type}</Cell>}/>
-    <Column name="Base currency" renderCell={(row: number) =>
+
+    <Column name="Base currency available" renderCell={(row: number) => {
+      let baseCurrencyRow = ''
+      if (orders[row].portfolioSnapshot !== null) {
+        const [base_currency] = orders[row].pair.split('_')
+        baseCurrencyRow = <NumberComponent
+          number={Number(orders[row].portfolioSnapshot.balances[base_currency].availableAmount)}
+          colored
+        />
+      }
+
+      return <Cell style={{textAlign: 'right'}}>{baseCurrencyRow}</Cell>
+    }}/>
+    <Column name="Market currency available" renderCell={(row: number) => {
+      let marketCurrencyRow = ''
+      if (orders[row].portfolioSnapshot !== null) {
+        const [, market_currency] = orders[row].pair.split('_')
+        marketCurrencyRow = <NumberComponent
+          number={Number(orders[row].portfolioSnapshot.balances[market_currency].availableAmount)}
+          colored
+        />
+      }
+
+      return <Cell style={{textAlign: 'right'}}>{marketCurrencyRow}</Cell>
+    }}/>
+
+    <Column name="Base currency change" renderCell={(row: number) =>
       <Cell style={{textAlign: 'right'}}><NumberComponent number={orders[row].transactionBaseCurrencyValue()} colored/></Cell>
     }/>
-    <Column name="Market currency" renderCell={(row: number) =>
+    <Column name="Market currency change" renderCell={(row: number) =>
       <Cell style={{textAlign: 'right'}}>
         <NumberComponent number={orders[row].transactionMarketCurrencyValue()} colored/>
       </Cell>

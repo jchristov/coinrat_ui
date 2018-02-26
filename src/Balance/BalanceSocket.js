@@ -35,6 +35,9 @@ class BalanceSocket {
   }
 }
 
+export type {
+  RawBalance,
+}
 
 export {
   BalanceSocket,
