@@ -1,5 +1,5 @@
-Build: [![CircleCI](https://circleci.com/gh/Achse/coinrat_ui.svg?style=svg&circle-token=9fe64fcd447bc71baf0a465a3f6c14ccebb858ca)](https://circleci.com/gh/Achse/coinrat_ui)
-
+[![CircleCI](https://circleci.com/gh/Achse/coinrat_ui.svg?style=svg&circle-token=9fe64fcd447bc71baf0a465a3f6c14ccebb858ca)](https://circleci.com/gh/Achse/coinrat_ui)
+[![Latest Stable Version](https://poser.pugx.org/achse/coinrat_ui/v/stable)](https://github.com/achse/coinrat_ui/releases)
 > **Note**: This project started as a Thesis project at ČVUT FIT. [Assignment of diploma thesis here](https://github.com/Achse/coinrat/blob/master/docs/cvut.md).
 
 # Frontend App for Coinrat auto-trading platform
