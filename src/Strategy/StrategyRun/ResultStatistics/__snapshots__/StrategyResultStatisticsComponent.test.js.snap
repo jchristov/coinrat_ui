@@ -23,6 +23,7 @@ exports[`renders correctly 1`] = `
         }
       >
         1.00000000
+         
         
       </span>
     </li>
@@ -37,6 +38,7 @@ exports[`renders correctly 1`] = `
         }
       >
         1.00000000
+         
         
       </span>
     </li>
@@ -51,6 +53,7 @@ exports[`renders correctly 1`] = `
         }
       >
         0.00000000
+         
         
       </span>
     </li>
@@ -66,6 +69,7 @@ exports[`renders correctly 1`] = `
         }
       >
         NaN
+         
         %
       </span>
        
@@ -80,6 +84,7 @@ exports[`renders correctly 1`] = `
         }
       >
         0.00000000
+         
         
       </span>
       )
@@ -96,6 +101,7 @@ exports[`renders correctly 1`] = `
         }
       >
         0.00000000
+         
         
       </span>
     </li>
@@ -110,6 +116,7 @@ exports[`renders correctly 1`] = `
         }
       >
         0.00
+         
         %
       </span>
     </li>
@@ -125,6 +132,7 @@ exports[`renders correctly 1`] = `
         }
       >
         0.00000000
+         
         
       </span>
     </li>
