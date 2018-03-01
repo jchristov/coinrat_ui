@@ -40,7 +40,9 @@ class Interval {
     if (this.since === null || this.till === 0) {
       return Number('Infinity')
     }
-    return (this.till.getTime() - this.since.getTime()) / 1000
+    const till = this.till !== null ? this.till : new Date()
+
+    return (till.getTime() - this.since.getTime()) / 1000
   }
 }
 

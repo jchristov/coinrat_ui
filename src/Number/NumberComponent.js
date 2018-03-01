@@ -28,7 +28,7 @@ const NumberComponent = ({number, colored = false, percent = false, forceColor =
   const precision = percent ? 2 : 8
 
   return <span className="pt-monospace-text" style={{color: color}}>
-    {numberToDisplay.toFixed(precision)}{suffixToDisplay}
+    {numberToDisplay.toFixed(precision)} {suffixToDisplay}
   </span>
 }
 
