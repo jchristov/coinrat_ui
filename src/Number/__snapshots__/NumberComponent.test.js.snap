@@ -9,7 +9,8 @@ exports[`renders correctly - colored - negative 1`] = `
     }
   }
 >
-  -1.24000000
+  -1.24565986
+  
 </span>
 `;
 
@@ -22,7 +23,36 @@ exports[`renders correctly - colored - positive 1`] = `
     }
   }
 >
-  1.24000000
+  1.24565980
+  
+</span>
+`;
+
+exports[`renders correctly - percent 1`] = `
+<span
+  className="pt-monospace-text"
+  style={
+    Object {
+      "color": "#A82A2A",
+    }
+  }
+>
+  -124.57
+  %
+</span>
+`;
+
+exports[`renders correctly - suffix, forceColor 1`] = `
+<span
+  className="pt-monospace-text"
+  style={
+    Object {
+      "color": "#0E5A8A",
+    }
+  }
+>
+  -124.00
+  yolo
 </span>
 `;
 
@@ -35,6 +65,7 @@ exports[`renders correctly - uncolored 1`] = `
     }
   }
 >
-  1.24000000
+  1.24565980
+  
 </span>
 `;

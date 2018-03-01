@@ -44,6 +44,14 @@ class StrategyRun {
   getStrategyRunLengthInSeconds() {
     return this.interval.getAbsInSeconds()
   }
+
+  getBaseCurrencyName(): string {
+    return this.pair.split('_')[0]
+  }
+
+  getMarketCurrencyName(): string {
+    return this.pair.split('_')[1]
+  }
 }
 
 export {

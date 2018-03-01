@@ -1,5 +1,6 @@
 // @flow
 import React from "react"
+import {Colors} from "@blueprintjs/core"
 import {Table, Column, Cell, TableLoadingOption} from "@blueprintjs/table"
 import {Order} from "./Order"
 import {ORDERS_DIRECTION_COLORS, ORDERS_STATUS_COLORS} from "./ChartColors"
@@ -36,7 +37,7 @@ const OrdersTableComponent = ({orders}: Props) => {
     <Column name="Pair" renderCell={(row: number) => <Cell>{orders[row].pair}</Cell>}/>
     <Column name="Type" renderCell={(row: number) => <Cell>{orders[row].type}</Cell>}/>
 
-    <Column name="Base currency available" renderCell={(row: number) => {
+    <Column name="Base curr. before" renderCell={(row: number) => {
       let baseCurrencyRow = ''
       if (orders[row].portfolioSnapshot !== null) {
         const [base_currency] = orders[row].pair.split('_')
@@ -48,7 +49,7 @@ const OrdersTableComponent = ({orders}: Props) => {
 
       return <Cell style={{textAlign: 'right'}}>{baseCurrencyRow}</Cell>
     }}/>
-    <Column name="Market currency available" renderCell={(row: number) => {
+    <Column name="Market curr. before" renderCell={(row: number) => {
       let marketCurrencyRow = ''
       if (orders[row].portfolioSnapshot !== null) {
         const [, market_currency] = orders[row].pair.split('_')
@@ -61,17 +62,35 @@ const OrdersTableComponent = ({orders}: Props) => {
       return <Cell style={{textAlign: 'right'}}>{marketCurrencyRow}</Cell>
     }}/>
 
-    <Column name="Base currency change" renderCell={(row: number) =>
-      <Cell style={{textAlign: 'right'}}><NumberComponent number={orders[row].transactionBaseCurrencyValue()} colored/></Cell>
+    <Column name="Total in base curr." renderCell={(row: number) => {
+      let change = null
+      if (row > 0) {
+        change = orders[row].getTotalAfterOrderInBaseCurrency() - orders[row - 1].getTotalAfterOrderInBaseCurrency()
+      }
+
+      const forceColor = change !== null ? (change > 0 ? Colors.GREEN1 : Colors.RED1) : null
+
+      return <Cell style={{textAlign: 'right'}}>
+        <NumberComponent number={orders[row].getTotalAfterOrderInBaseCurrency()} colored forceColor={forceColor}/>
+      </Cell>
+    }}/>
+
+    <Column name="Base curr. change" renderCell={(row: number) =>
+      <Cell style={{textAlign: 'right'}}>
+        <NumberComponent number={orders[row].transactionBaseCurrencyValue()} colored/>
+      </Cell>
     }/>
-    <Column name="Market currency change" renderCell={(row: number) =>
+
+    <Column name="Market curr. change" renderCell={(row: number) =>
       <Cell style={{textAlign: 'right'}}>
         <NumberComponent number={orders[row].transactionMarketCurrencyValue()} colored/>
       </Cell>
     }/>
+
     <Column name="Rate" renderCell={(row: number) =>
       <Cell style={{textAlign: 'right'}}><NumberComponent number={Number(orders[row].rate)}/></Cell>
     }/>
+
     <Column name="Id on market" renderCell={(row: number) => <Cell>{orders[row].idOnMarket}</Cell>}/>
     <Column name="Status" renderCell={statusCellRender}/>
     <Column name="Closed" renderCell={(row: number) =>

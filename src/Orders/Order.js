@@ -64,24 +64,46 @@ class Order {
     this.portfolioSnapshot = portfolioSnapshot
   }
 
-  getBaseCurrencyAmount() {
-    return this.quantity * this.rate
+  getBaseCurrencyAmount(): Number {
+    return Number(this.quantity) * Number(this.rate)
   }
 
-  isBuy() {
+  getMarketCurrencyAmount(): string {
+    return this.quantity
+  }
+
+  isBuy(): boolean {
     return this.direction === DIRECTION_BUY
   }
 
-  isSell() {
+  isSell(): boolean {
     return this.direction === DIRECTION_SELL
   }
 
-  transactionBaseCurrencyValue() {
+  transactionBaseCurrencyValue(): Number {
     return (this.isBuy() ? -1 : 1) * this.getBaseCurrencyAmount()
   }
 
-  transactionMarketCurrencyValue() {
+  transactionMarketCurrencyValue(): Number {
     return (this.isBuy() ? 1 : -1) * this.quantity
+  }
+
+  getBaseCurrencyName(): string {
+    return this.pair.split('_')[0]
+  }
+
+  getMarketCurrencyName(): string {
+    return this.pair.split('_')[1]
+  }
+
+  getTotalAfterOrderInBaseCurrency(): Number {
+    const baseCurrencyBeforeOrder = this.portfolioSnapshot.balances[this.getBaseCurrencyName()].availableAmount
+    const marketCurrencyBeforeOrder = this.portfolioSnapshot.balances[this.getMarketCurrencyName()].availableAmount
+
+    return Math.abs(
+      (baseCurrencyBeforeOrder - this.getBaseCurrencyAmount())
+      + (marketCurrencyBeforeOrder - this.getMarketCurrencyAmount()) * this.rate
+    )
   }
 }
 

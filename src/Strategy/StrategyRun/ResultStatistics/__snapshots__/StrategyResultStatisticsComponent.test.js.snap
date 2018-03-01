@@ -14,14 +14,108 @@ exports[`renders correctly 1`] = `
   <ul>
     <li>
       Number of trades: 
-      1
+      <span
+        className="pt-monospace-text"
+        style={
+          Object {
+            "color": "#10161A",
+          }
+        }
+      >
+        1.00000000
+        
+      </span>
     </li>
     <li>
       Average trades per day: 
-      1.00000000
+      <span
+        className="pt-monospace-text"
+        style={
+          Object {
+            "color": "#10161A",
+          }
+        }
+      >
+        1.00000000
+        
+      </span>
     </li>
     <li>
-      Profit factor: 
+      Profit: 
+      <span
+        className="pt-monospace-text"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        0.00000000
+        
+      </span>
+    </li>
+    <li>
+      Profitability against HODL:
+       
+      <span
+        className="pt-monospace-text"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        NaN
+        %
+      </span>
+       
+      (Hodl profit factor would be:
+       
+      <span
+        className="pt-monospace-text"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        0.00000000
+        
+      </span>
+      )
+    </li>
+    <li>
+      Average profit per trade:
+       
+      <span
+        className="pt-monospace-text"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        0.00000000
+        
+      </span>
+    </li>
+    <li>
+      Percent winning trades: 
+      <span
+        className="pt-monospace-text"
+        style={
+          Object {
+            "color": "#10161A",
+          }
+        }
+      >
+        0.00
+        %
+      </span>
+    </li>
+    <li>
+      Standard deviation:
+       
       <span
         className="pt-monospace-text"
         style={
@@ -31,13 +125,8 @@ exports[`renders correctly 1`] = `
         }
       >
         0.00000000
+        
       </span>
-    </li>
-    <li>
-      Average profit per trade: --todo--
-    </li>
-    <li>
-      Percent winning trades: --todo--
     </li>
   </ul>
 </div>
