@@ -68,7 +68,15 @@ class OrdersSocket {
 
   static processRawOrders(rawOrders: Array<RawOrder>, processOrders: (order: Array<Order>) => void) {
     console.log('Received ORDER', Object.values(rawOrders).length)
-    const orders = OrdersSocket.parseOrdersDataIntoStateObject(rawOrders)
+    let orders = OrdersSocket.parseOrdersDataIntoStateObject(rawOrders)
+
+    // Sometimes there is an error in backend simulation that can create "empty" order.
+    // We simply filter it out at it dow not affect the system.
+    // See https://github.com/Achse/coinrat/issues/50 for more info.
+    orders = orders.filter((order: Order) => {
+      return order.getBaseCurrencyAmount() > 0.0000001 && order.getMarketCurrencyAmount() > 0.0000001
+    })
+
     processOrders(orders)
   }
 

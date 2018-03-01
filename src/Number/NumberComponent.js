@@ -4,20 +4,32 @@ import {Colors} from "@blueprintjs/core"
 
 type Props = {
   number: Number,
-  colored: boolean
+  colored: boolean,
+  forceColor: ?string,
+  percent: boolean,
+  suffix: ?string,
 }
 
-const NumberComponent = ({number, colored = false}: Props) => {
-  let color = Colors.BLACK
-  if (colored) {
-    if (number > 0) {
-      color = Colors.GREEN1
-    } else if (number < 0) {
-      color = Colors.RED1
-    }
+function calculateColor(number: Number, forceColor: ?string): string {
+  if (forceColor !== null) {
+    return forceColor
   }
+  if (number > 0) {
+    return Colors.GREEN1
+  } else if (number < 0) {
+    return Colors.RED1
+  }
+}
 
-  return <span className="pt-monospace-text" style={{color: color}}>{number.toFixed(8)}</span>
+const NumberComponent = ({number, colored = false, percent = false, forceColor = null, suffix = null}: Props) => {
+  const color = colored ? calculateColor(number, forceColor) : Colors.BLACK
+  const numberToDisplay = percent ? number * 100 : number
+  const suffixToDisplay = suffix !== null ? suffix : (percent ? '%' : '')
+  const precision = percent ? 2 : 8
+
+  return <span className="pt-monospace-text" style={{color: color}}>
+    {numberToDisplay.toFixed(precision)}{suffixToDisplay}
+  </span>
 }
 
 export default NumberComponent
