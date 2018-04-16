@@ -29,8 +29,10 @@ import {StrategyRunStore} from "../Strategy/StrategyRun/StrategyRunStore"
 import {MarketPluginStore} from "../MarketPlugin/MarketPluginStore"
 import {MarketPluginSocket} from "../MarketPlugin/MarketPluginSocket"
 
+const io = require('socket.io-client')
+
 const url = process.env.REACT_APP_BACKEND_SOCKET_URL
-const socketio = require('socket.io-client')(url)
+const socketio = io.connect(url, {secure: true})
 
 // Toaster / Flesh Messages
 const _appMainToaster = Toaster.create({
