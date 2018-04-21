@@ -10,6 +10,7 @@ type Props = {
 
 const SelectStrategyComponent = ({availableStrategies, defaultSelectedStrategy, onSelect}: Props) => {
   const item = availableStrategies[defaultSelectedStrategy]
+  console.log(item)
   return <SelectComponent
     label="Strategy"
     items={availableStrategies}

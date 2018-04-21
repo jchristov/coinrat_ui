@@ -9,7 +9,16 @@ type Props = {
 
 const CleanOrderStorageButtonComponent = ({onClick}: Props) => {
   return <Tooltip2 content="Delete all orders from selected storage in given time range">
-    <Button style={{marginTop: 1 + 'px'}} className="pt-intent-danger" iconName="pt-icon-eraser" onClick={onClick}/>
+    <Button
+      style={{marginTop: 1 + 'px'}}
+      className="pt-intent-danger"
+      iconName="pt-icon-eraser"
+      onClick={() => {
+        if (window.confirm('Are you sure you wish to erase this storage?')) {
+          onClick()
+        }
+      }}
+    />
   </Tooltip2>
 }
 
