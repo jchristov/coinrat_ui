@@ -62,6 +62,7 @@ class CandleSocket {
 
       CandleSocket.processRawCandles(rawCandles, processCandles, validateFilterFunction)
       this.subscribeToCandlesFeed(candleStorage, market, pair, candleSize)
+      this.socket.onConnect('subscriptionToCandlesFeed', () => this.subscribeToCandlesFeed(candleStorage, market, pair, candleSize))
     })
   }
 
@@ -76,6 +77,7 @@ class CandleSocket {
   }
 
   subscribeToCandlesFeed(candleStorage: string, market: string, pair: string, candleSize: string) {
+    console.log('SUBSCRIPTION:', SUBSCRIBED_EVENT_LAST_CANDLE_UPDATED, candleStorage, market, pair, candleSize)
     this.socket.emit(
       SOCKET_EVENT_UNSUBSCRIBE,
       {event: SUBSCRIBED_EVENT_LAST_CANDLE_UPDATED},

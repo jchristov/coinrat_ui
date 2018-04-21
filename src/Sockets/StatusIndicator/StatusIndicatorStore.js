@@ -10,7 +10,7 @@ class StatusIndicatorStore {
       isOnline: false
     })
 
-    socket.onConnect(action(() => this.isOnline = true))
+    socket.onConnect('onlineIndicator', action(() => this.isOnline = true))
     socket.onDisconnect(action(() => this.isOnline = false))
   }
 

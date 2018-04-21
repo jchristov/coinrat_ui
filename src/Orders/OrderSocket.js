@@ -5,8 +5,7 @@ import {Order, OrderDirectionType, OrderType} from "./Order"
 import {OrderStatusType} from "./Order"
 import {
   SOCKET_EVENT_CLEAR_ORDERS, SOCKET_EVENT_GET_ORDERS, SOCKET_EVENT_NEW_ORDERS, SOCKET_EVENT_SUBSCRIBE,
-  SOCKET_EVENT_UNSUBSCRIBE,
-  SUBSCRIBED_EVENT_NEW_ORDER
+  SOCKET_EVENT_UNSUBSCRIBE, SUBSCRIBED_EVENT_NEW_ORDER
 } from "../Sockets/SocketEvents"
 import type {FlashMessageHandlerType} from "../FlashMessage/handling"
 import {Balance} from "../Balance/Balance"
@@ -63,6 +62,7 @@ class OrdersSocket {
     this.socket.emit(SOCKET_EVENT_GET_ORDERS, getOrdersData, (status: string, rawOrders: Array<RawOrder>) => {
       OrdersSocket.processRawOrders(rawOrders, processOrders)
       this.subscribeToOrdersFeed(orderStorage, market, pair, interval)
+      this.socket.onConnect('subscriptionToOrdersFeed', () => this.subscribeToOrdersFeed(orderStorage, market, pair, interval))
     })
   }
 
@@ -81,6 +81,7 @@ class OrdersSocket {
   }
 
   subscribeToOrdersFeed(orderStorage: string, market: string, pair: string, interval: Interval) {
+    console.log('SUBSCRIPTION:', SUBSCRIBED_EVENT_NEW_ORDER, orderStorage, market, pair, interval.toString())
     this.socket.emit(
       SOCKET_EVENT_UNSUBSCRIBE,
       {event: SUBSCRIBED_EVENT_NEW_ORDER},

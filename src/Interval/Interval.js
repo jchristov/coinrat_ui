@@ -44,6 +44,11 @@ class Interval {
 
     return (till.getTime() - this.since.getTime()) / 1000
   }
+
+  toString() {
+    const iso = this.toIso()
+    return `${iso.since} - ${iso.till}`
+  }
 }
 
 const deserialize_interval = (raw: RawInterval): Interval => {

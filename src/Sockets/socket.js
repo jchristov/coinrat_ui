@@ -13,10 +13,11 @@ import type {FlashMessageHandlerType} from "../FlashMessage/handling"
 
 class AppSocket {
   socketio
+  onConnectListeners = {}
 
   constructor(socketio, flashMessageHandler: FlashMessageHandlerType) {
     this.socketio = socketio
-    this.onConnect(() => {
+    this.onConnect('errorHandler', () => {
       socketio.on('error', (data) => {
         flashMessageHandler(JSON.stringify(data), 'pt-intent-danger')
       })
@@ -35,10 +36,15 @@ class AppSocket {
     })
   }
 
-  onConnect(callback: () => void) {
-    this.socketio.on('connect', () => {
-      callback()
-    })
+  onConnect(name: string, callback: () => void) {
+    this.onConnectListeners[name] = callback
+    this.socketio.removeAllListeners('connect')
+
+    for (let key in this.onConnectListeners) {
+      if (this.onConnectListeners.hasOwnProperty(key)) {
+        this.socketio.on('connect', this.onConnectListeners[key])
+      }
+    }
   }
 
   onDisconnect(callback: () => void) {
