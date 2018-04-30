@@ -26,8 +26,8 @@ const sortCandleByDate = (first: Candle, second: Candle) => {
 }
 
 const sortOrderAggregatesByDate = (first: OrderDirectionAggregate, second: OrderDirectionAggregate) => {
-  if (first.dateBucket < second.dateBucket) return -1
-  if (first.dateBucket > second.dateBucket) return 1
+  if (first.dateBucket < second.dateBucket) return 1
+  if (first.dateBucket > second.dateBucket) return -1
   return 0
 }
 
@@ -83,20 +83,20 @@ const createAggregateFromData = (
       return order.dateBucket >= candle.date && (i + 1 === candles.length || order.dateBucket < candles[i + 1].date)
     }
 
-    let lastBuyOrder = buyOrderAggregates[0]
+    let lastBuyOrder = buyOrderAggregates[buyOrderAggregates.length - 1]
     while (lastBuyOrder !== undefined && isOrderInCandleBucket(lastBuyOrder)) {
       data[key].aggregate.buyOrderAggregate.addAggregate(lastBuyOrder)
       updateMaxValue(data[key].aggregate)
-      buyOrderAggregates.shift()
-      lastBuyOrder = buyOrderAggregates[0]
+      buyOrderAggregates.pop()
+      lastBuyOrder = buyOrderAggregates[buyOrderAggregates.length - 1]
     }
 
-    let lastSellOrder = sellOrderAggregates[0]
+    let lastSellOrder = sellOrderAggregates[sellOrderAggregates.length - 1]
     while (lastSellOrder !== undefined && isOrderInCandleBucket(lastSellOrder)) {
       data[key].aggregate.sellOrderAggregate.addAggregate(lastSellOrder)
       updateMaxValue(data[key].aggregate)
-      sellOrderAggregates.shift()
-      lastSellOrder = sellOrderAggregates[0]
+      sellOrderAggregates.pop()
+      lastSellOrder = sellOrderAggregates[sellOrderAggregates.length - 1]
     }
   }
 
